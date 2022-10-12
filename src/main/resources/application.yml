@@ -1,0 +1,23 @@
+server:
+  port: 8011
+spring:
+  datasource:
+    name: dm8
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      driverClassName: dm.jdbc.driver.DmDriver
+      url: jdbc:dm://127.0.0.1:5236/SCJGJ_NDWC?zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=utf-8
+      username: SCJGJ_NDWC
+      password: password
+# 生成token的相关配置
+jwt:
+  #请求头
+  header: Authorization
+  #盐值
+  base64Secret: scjgjndwcxt
+  #过期时间 10秒
+  tokenValidityInSeconds: 3600000
+
+
+
+
