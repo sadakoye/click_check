@@ -1,5 +1,6 @@
-package com.clickAndCheck.pojo.dto;
+package com.clickAndCheck.security.pojo;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.util.Date;
@@ -8,7 +9,8 @@ import java.util.Date;
  * @author zzc
  */
 @Data
-public class MenuDto {
+@TableName("SYS_MENU")
+public class SysMenu {
 
   private Long menuId;
   private Long pid;

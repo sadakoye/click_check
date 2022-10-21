@@ -1,7 +1,7 @@
-package com.clickAndCheck.config;
+package com.clickAndCheck.security.config;
 
 import com.alibaba.fastjson.JSON;
-import com.clickAndCheck.utils.JWTUtils;
+import com.clickAndCheck.security.utils.JWTUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.Authentication;

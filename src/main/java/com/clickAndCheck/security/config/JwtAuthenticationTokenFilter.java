@@ -1,6 +1,6 @@
-package com.clickAndCheck.config;
+package com.clickAndCheck.security.config;
 
-import com.clickAndCheck.utils.JWTUtils;
+import com.clickAndCheck.security.utils.JWTUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;

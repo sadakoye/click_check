@@ -1,9 +1,8 @@
-package com.clickAndCheck.mapper;
+package com.clickAndCheck.security.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.clickAndCheck.config.JwtUser;
-import com.clickAndCheck.config.User;
-import com.clickAndCheck.pojo.SysUser;
+import com.clickAndCheck.security.config.User;
+import com.clickAndCheck.security.pojo.SysUser;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 

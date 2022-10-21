@@ -1,13 +1,12 @@
-package com.clickAndCheck.config;
+package com.clickAndCheck.security.config;
 
-import com.clickAndCheck.mapper.SysMenuMapper;
-import com.clickAndCheck.mapper.SysRoleMapper;
-import com.clickAndCheck.mapper.SysUserMapper;
-import com.clickAndCheck.utils.EmptyUtil;
+import com.clickAndCheck.security.mapper.SysMenuMapper;
+import com.clickAndCheck.security.mapper.SysRoleMapper;
+import com.clickAndCheck.security.mapper.SysUserMapper;
+import com.clickAndCheck.security.utils.EmptyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

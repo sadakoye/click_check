@@ -1,4 +1,4 @@
-package com.clickAndCheck.config;
+package com.clickAndCheck.security.config;
 
 
 import org.springframework.beans.factory.annotation.Autowired;

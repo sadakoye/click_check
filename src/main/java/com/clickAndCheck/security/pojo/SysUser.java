@@ -1,4 +1,4 @@
-package com.clickAndCheck.pojo;
+package com.clickAndCheck.security.pojo;
 
 import java.util.Date;
 

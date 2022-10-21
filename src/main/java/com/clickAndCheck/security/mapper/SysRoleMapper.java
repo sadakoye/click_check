@@ -1,8 +1,8 @@
-package com.clickAndCheck.mapper;
+package com.clickAndCheck.security.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.clickAndCheck.pojo.SysRole;
-import com.clickAndCheck.pojo.dto.RoleDto;
+import com.clickAndCheck.security.pojo.SysRole;
+import com.clickAndCheck.security.pojo.dto.RoleDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 

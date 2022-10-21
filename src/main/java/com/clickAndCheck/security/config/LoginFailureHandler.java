@@ -1,4 +1,4 @@
-package com.clickAndCheck.config;
+package com.clickAndCheck.security.config;
 
 import com.alibaba.fastjson.JSON;
 import org.springframework.context.annotation.Configuration;

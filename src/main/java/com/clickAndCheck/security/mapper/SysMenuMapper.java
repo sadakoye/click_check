@@ -1,8 +1,8 @@
-package com.clickAndCheck.mapper;
+package com.clickAndCheck.security.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.clickAndCheck.pojo.SysMenu;
-import com.clickAndCheck.pojo.dto.MenuDto;
+import com.clickAndCheck.security.pojo.SysMenu;
+import com.clickAndCheck.security.pojo.dto.MenuDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 

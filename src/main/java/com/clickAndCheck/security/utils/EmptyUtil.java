@@ -1,4 +1,4 @@
-package com.clickAndCheck.utils;
+package com.clickAndCheck.security.utils;
 
 import org.apache.commons.lang3.StringUtils;
 

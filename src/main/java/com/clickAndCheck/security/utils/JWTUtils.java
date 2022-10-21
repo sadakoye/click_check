@@ -1,6 +1,6 @@
-package com.clickAndCheck.utils;
+package com.clickAndCheck.security.utils;
 
-import com.clickAndCheck.config.JwtProperties;
+import com.clickAndCheck.security.config.JwtProperties;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

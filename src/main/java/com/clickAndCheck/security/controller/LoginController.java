@@ -1,10 +1,8 @@
-package com.clickAndCheck.controller;
+package com.clickAndCheck.security.controller;
 
-import com.clickAndCheck.config.JwtUserServiceImpl;
-import com.clickAndCheck.config.User;
-import com.clickAndCheck.mapper.SysUserMapper;
+import com.clickAndCheck.security.config.User;
+import com.clickAndCheck.security.mapper.SysUserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -1,8 +1,8 @@
-package com.clickAndCheck.config;
+package com.clickAndCheck.security.config;
 
-import com.clickAndCheck.pojo.dto.MenuDto;
-import com.clickAndCheck.pojo.dto.RoleDto;
-import com.clickAndCheck.utils.EmptyUtil;
+import com.clickAndCheck.security.pojo.dto.MenuDto;
+import com.clickAndCheck.security.pojo.dto.RoleDto;
+import com.clickAndCheck.security.utils.EmptyUtil;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
