@@ -16,13 +16,13 @@ public interface SysMenuMapper extends BaseMapper<SysMenu> {
 
 
     /**
-     * 根据用户id查询菜单
+     * 根据用户code查询菜单
      *
-     * @param userId 用户id
+     * @param code 用户code
      * @return List<MenuDto>
      * @author zzc
      */
-    @Select("SELECT * FROM SYS_MENU m LEFT JOIN sys_roles_menus rm ON m.menu_id = rm.menu_id LEFT JOIN \n" +
-            "sys_users_roles ur ON rm.role_id = ur.role_id WHERE ur.user_id = #{userId}")
-    List<MenuDto> getUserMenus(Long userId);
+    @Select("SELECT * FROM SYS_MENU m LEFT JOIN sys_roles_menus rm ON m.code = rm.menu_code LEFT JOIN \n" +
+            "sys_users_roles ur ON rm.role_code = ur.role_code WHERE ur.user_code = #{code}")
+    List<MenuDto> getUserMenus(String code);
 }

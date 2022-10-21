@@ -28,5 +28,6 @@ public class MenuDto {
   private String updateBy;
   private Date createTime;
   private Date updateTime;
+  private String code;
 
 }

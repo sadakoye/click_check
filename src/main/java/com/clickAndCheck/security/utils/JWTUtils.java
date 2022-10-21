@@ -4,9 +4,13 @@ import com.clickAndCheck.security.config.JwtProperties;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.HashMap;
@@ -27,10 +31,10 @@ public class JWTUtils {
      * @param name 用户名称
      * @return
      */
-    public  String generateToken(String name){
+    public String generateToken(String name){
         Map<String,Object> map = new HashMap<>();
         map.put("username",name);
-//        map.put("password",user.getPassword());
+        //map.put("password",user.getPassword());
         return Jwts.builder()
                 //设置用户信息
                 .setClaims(map)
@@ -47,14 +51,29 @@ public class JWTUtils {
      * 解析token
      * @param token token
      */
-    public   String analysisToken(String token){
-        Claims body = Jwts.parser()
-                .setSigningKey(jwtProperties.getBase64Secret().getBytes(StandardCharsets.UTF_8))
-                .parseClaimsJws(token)
-                .getBody();
+    public String analysisToken(String token){
+        if (StringUtils.isNotBlank(token)) {
+            Claims body = Jwts.parser()
+                    .setSigningKey(jwtProperties.getBase64Secret().getBytes(StandardCharsets.UTF_8))
+                    .parseClaimsJws(token)
+                    .getBody();
 
-        return body.get("username").toString();
+            return body.get("username").toString();
+        }
+        return null;
     }
 
+    /**
+     * 获取userName
+     */
+    public String getUserName(){
+        ServletRequestAttributes servletRequestAttributes =  (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+       if (servletRequestAttributes != null) {
+           HttpServletRequest request = servletRequestAttributes.getRequest();
+           String token = request.getHeader(jwtProperties.getHeader());
+           return analysisToken(token);
+       }
+       return null;
+    }
 
 }

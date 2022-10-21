@@ -15,8 +15,8 @@ jwt:
   header: Authorization
   #盐值
   base64Secret: scjgjndwcxt
-  #过期时间 10秒
-  tokenValidityInSeconds: 3600000
+  #过期时间 10000秒
+  tokenValidityInSeconds: 3600000000
 
 
 

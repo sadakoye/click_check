@@ -16,12 +16,12 @@ public interface SysRoleMapper extends BaseMapper<SysRole> {
 
 
     /**
-     * 根据用户id查询角色
+     * 根据用户code查询角色
      *
-     * @param userId 用户id
+     * @param code 用户code
      * @return List<RoleDto>
      * @author zzc
      */
-    @Select("SELECT r.* FROM sys_role r LEFT JOIN sys_users_roles ur ON r.role_id = ur.role_id WHERE ur.user_id = #{userId}")
-    List<RoleDto> getUserRoles(Long userId);
+    @Select("SELECT r.* FROM sys_role r LEFT JOIN sys_users_roles ur ON r.code = ur.role_code WHERE ur.user_code = #{code}")
+    List<RoleDto> getUserRoles(String code);
 }

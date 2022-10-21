@@ -48,6 +48,11 @@ public class User implements UserDetails, Serializable {
     private String token;
 
     /**
+     * 用户code
+     */
+    private String code;
+
+    /**
      * 包含的角色
      */
     private List<RoleDto> roles;
@@ -58,16 +63,16 @@ public class User implements UserDetails, Serializable {
     private List<MenuDto> menus;
 
     /**
-     * 将用户的角色作为权限
+     * 将用户的菜单作为权限
      *
      * @return Collection
      */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> auth = new ArrayList<>();
-        if (EmptyUtil.isNotEmpty(roles)) {
-            for (RoleDto role : roles) {
-                auth.add(new SimpleGrantedAuthority(role.getRoleId().toString()));
+        if (EmptyUtil.isNotEmpty(menus)) {
+            for (MenuDto menu : menus) {
+                auth.add(new SimpleGrantedAuthority(menu.getTitle()));
             }
         }
         return auth;

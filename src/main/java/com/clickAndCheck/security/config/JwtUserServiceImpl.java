@@ -6,7 +6,6 @@ import com.clickAndCheck.security.mapper.SysUserMapper;
 import com.clickAndCheck.security.utils.EmptyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -15,9 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.Base64;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -26,8 +23,6 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 @Component
 public class JwtUserServiceImpl  implements UserDetailsService {
-
-    private final PasswordEncoder passwordEncoder = passwordEncoder();
 
     @Autowired
     private SysUserMapper userMapper;
@@ -45,10 +40,6 @@ public class JwtUserServiceImpl  implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        List<GrantedAuthority> list = new ArrayList<>();
-        ///设置admin角色 角色前面加 ROLE_
-        //list.add(new SimpleGrantedAuthority("ROLE_admin"));
-
         // 用户基本信息
         User user;
 
@@ -60,9 +51,9 @@ public class JwtUserServiceImpl  implements UserDetailsService {
             if (EmptyUtil.isNotEmpty(user)) {
 
                 // 用户角色列表
-                user.setRoles(roleMapper.getUserRoles(user.getUserId()));
+                user.setRoles(roleMapper.getUserRoles(user.getCode()));
                 // 用户菜单列表
-                user.setMenus(menuMapper.getUserMenus(user.getUserId()));
+                user.setMenus(menuMapper.getUserMenus(user.getCode()));
                 // token
                 String token = Base64.getEncoder().encodeToString((user.getUsername() + "_" + System.currentTimeMillis()).getBytes(StandardCharsets.UTF_8));
                 user.setToken(token);
@@ -71,12 +62,7 @@ public class JwtUserServiceImpl  implements UserDetailsService {
             }
         }
 
-
-        return new JwtUser(
-                username,
-                passwordEncoder.encode("123"),
-                list
-        );
+        return user;
     }
 
     @Bean

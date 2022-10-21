@@ -24,5 +24,6 @@ public class SysUser {
   private Date pwdResetTime;
   private Date createTime;
   private Date updateTime;
+  private String code;
 
 }
