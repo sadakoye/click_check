@@ -9,6 +9,8 @@ spring:
       url: jdbc:dm://127.0.0.1:5236/SCJGJ_NDWC?zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=utf-8
       username: SCJGJ_NDWC
       password: password
+      validationQuery: SELECT 1
+      testWhileIdle: true
 # 生成token的相关配置
 jwt:
   #请求头
@@ -17,6 +19,13 @@ jwt:
   base64Secret: scjgjndwcxt
   #过期时间 10000秒
   tokenValidityInSeconds: 3600000000
+mybatis-plus:
+  configuration:
+    #控制台打印日记
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    #配置返回数据库(column下划线命名&&返回java实体是驼峰命名)，自动匹配无需as（没开启这个，SQL需要写as： select user_id as userId）
+    map-underscore-to-camel-case: true
+
 
 
 
