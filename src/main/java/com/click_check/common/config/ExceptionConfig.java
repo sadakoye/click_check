@@ -1,7 +1,7 @@
 package com.click_check.common.config;
 
 
-import com.click_check.common.pojo.Result;
+import com.click_check.common.pojo.bean.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -21,7 +21,7 @@ public class ExceptionConfig {
     private final static String LINE_SEPARATOR = System.getProperty("line.separator");
 
     @ExceptionHandler(Exception.class)
-    public String handleException(Exception e) {
+    public Result handleException(Exception e) {
         StringWriter sw = new StringWriter();
         e.printStackTrace(new PrintWriter(sw, true));
         log.error("系统异常：" + LINE_SEPARATOR + sw);
