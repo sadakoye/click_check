@@ -1,6 +1,9 @@
 package com.check.security.utils;
 
+import com.check.common.util.RedisUtils;
 import com.check.security.config.JwtProperties;
+import com.check.security.config.User;
+import com.check.security.mapper.SysUserMapper;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -25,6 +28,8 @@ public class JWTUtils {
     @Resource
     private JwtProperties jwtProperties;
 
+    @Resource
+    private SysUserMapper userMapper;
 
     /**
      * 生成token
@@ -35,16 +40,20 @@ public class JWTUtils {
         Map<String,Object> map = new HashMap<>();
         map.put("username",name);
         //map.put("password",user.getPassword());
-        return Jwts.builder()
+        User securityUser = userMapper.getSecurityUser(name);
+        String token = Jwts.builder()
                 //设置用户信息
                 .setClaims(map)
                 //token过期时间
-                .setExpiration(new Date(System.currentTimeMillis()+jwtProperties.getTokenValidityInSeconds()))
+                //.setExpiration(new Date(System.currentTimeMillis()+jwtProperties.getTokenValidityInSeconds()))
                 //设置主题
                 .setSubject("Wsl_system")
                 //设置签名
-                .signWith(SignatureAlgorithm.HS512,jwtProperties.getBase64Secret().getBytes(StandardCharsets.UTF_8))
+                .signWith(SignatureAlgorithm.HS512, jwtProperties.getBase64Secret().getBytes(StandardCharsets.UTF_8))
                 .compact();
+
+        //RedisUtils.saveValue(name, )
+        return token;
     }
 
     /**

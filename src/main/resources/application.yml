@@ -15,15 +15,14 @@ spring:
     database: 5
     host: 172.31.129.103
     port: 6379
-    connect-timeout: 0
 # 生成token的相关配置
 jwt:
   #请求头
   header: Authorization
   #盐值
   base64Secret: scjgjndwcxt
-  #过期时间 10000秒
-  tokenValidityInSeconds: 3600000000
+  #过期时间 10秒
+  tokenValidityInSeconds: 10000
 mybatis-plus:
   configuration:
     #控制台打印日记
