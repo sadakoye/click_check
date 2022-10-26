@@ -11,6 +11,11 @@ spring:
       password: password
       validationQuery: SELECT 1
       testWhileIdle: true
+  redis:
+    database: 5
+    host: 172.31.129.103
+    port: 6379
+    connect-timeout: 0
 # 生成token的相关配置
 jwt:
   #请求头
