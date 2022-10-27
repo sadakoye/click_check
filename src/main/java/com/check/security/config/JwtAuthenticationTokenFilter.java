@@ -1,5 +1,8 @@
 package com.check.security.config;
 
+import com.check.common.Exception.CommonException;
+import com.check.common.config.ConstantString;
+import com.check.common.util.RedisUtils;
 import com.check.security.utils.JWTUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -39,6 +42,11 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             String name = jwtUtils.analysisToken(token);
             //当token中的username不为空时进行验证token是否是有效的token
             if (name != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+
+                if (RedisUtils.contain(ConstantString.USER + name)){
+                    throw new CommonException("token无效或过期");
+                }
+
                 UserDetails userDetails = jwtUserService.loadUserByUsername(name);
                 //认证
                 UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());

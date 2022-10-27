@@ -1,5 +1,6 @@
 package com.check.security.utils;
 
+import com.check.common.config.ConstantString;
 import com.check.common.util.RedisUtils;
 import com.check.security.config.JwtProperties;
 import com.check.security.config.User;
@@ -18,6 +19,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author zzc
@@ -52,7 +54,7 @@ public class JWTUtils {
                 .signWith(SignatureAlgorithm.HS512, jwtProperties.getBase64Secret().getBytes(StandardCharsets.UTF_8))
                 .compact();
 
-        //RedisUtils.saveValue(name, )
+        RedisUtils.saveValue(ConstantString.USER + name, securityUser, jwtProperties.getTokenValidityInSeconds(), TimeUnit.MINUTES);
         return token;
     }
 
@@ -75,12 +77,13 @@ public class JWTUtils {
     /**
      * 获取userName
      */
-    public String getUserName(){
+    public User getUserName(){
         ServletRequestAttributes servletRequestAttributes =  (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
        if (servletRequestAttributes != null) {
            HttpServletRequest request = servletRequestAttributes.getRequest();
            String token = request.getHeader(jwtProperties.getHeader());
-           return analysisToken(token);
+           String name = analysisToken(token);
+           return (User) RedisUtils.getValue(name);
        }
        return null;
     }

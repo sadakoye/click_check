@@ -21,8 +21,8 @@ jwt:
   header: Authorization
   #盐值
   base64Secret: scjgjndwcxt
-  #过期时间 10秒
-  tokenValidityInSeconds: 10000
+  #过期时间 分钟
+  tokenValidityInSeconds: 30
 mybatis-plus:
   configuration:
     #控制台打印日记

@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 public class RedisUtils {
 
     @Resource
-    private RedisTemplate redisTemplate;
+    private RedisTemplate<String, Object> redisTemplate;
 
 
     private static RedisUtils redisUtils ;
@@ -39,8 +39,8 @@ public class RedisUtils {
      * 获取redis中的值
      * @param key 键名
      * */
-    public static <T> T getValue(String key){
-        ValueOperations<String,T> valueOperations = redisUtils.redisTemplate.opsForValue();
+    public static Object getValue(String key){
+        ValueOperations<String, Object> valueOperations = redisUtils.redisTemplate.opsForValue();
         return valueOperations.get(key);
     }
 
@@ -49,6 +49,14 @@ public class RedisUtils {
      * @param key 键名
      * */
     public static  boolean deleteValue(String key){
-        return  redisUtils.redisTemplate.delete(key);
+        return Boolean.TRUE.equals(redisUtils.redisTemplate.delete(key));
+    }
+
+    /**
+     * 删除单个对象
+     * @param key 键名
+     * */
+    public static  boolean contain(String key){
+        return Boolean.TRUE.equals(redisUtils.redisTemplate.hasKey(key));
     }
 }

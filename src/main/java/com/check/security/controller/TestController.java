@@ -1,5 +1,7 @@
 package com.check.security.controller;
 
+import com.check.common.pojo.bean.Result;
+import com.check.security.config.User;
 import com.check.security.utils.JWTUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -28,8 +30,10 @@ public class TestController {
     @GetMapping("/delete")
     //需要admin角色
     @PreAuthorize("hasAnyAuthority('MENU_admin')")
-    public String delete() {
-        return jwtUtils.getUserName();
+    public Result delete() {
+//        User user = jwtUtils.getUserName();
+//        return Result.success(user);
+        return Result.success();
     }
 
     @PostMapping("/add")

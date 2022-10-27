@@ -1,6 +1,7 @@
 package com.check.common.config;
 
 
+import com.check.common.Exception.CommonException;
 import com.check.common.pojo.bean.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.ObjectError;
@@ -56,6 +57,19 @@ public class ExceptionConfig {
                 .collect(Collectors.toList()).get(0);
         // 从异常对象中拿到ObjectError对象
         return Result.error(s);
+    }
+
+    /**
+     * 捕捉自定义异常
+     *
+     * @param e 异常
+     * @return Result
+     * @author zzc
+     */
+    @ExceptionHandler(CommonException.class)
+    public Result handleException(CommonException e) {
+        log.error("系统异常：" + e.getMsg());
+        return Result.error(e.getMsg());
     }
 
     /**

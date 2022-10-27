@@ -19,5 +19,5 @@ public class JwtProperties {
     private String base64Secret;
 
     /** 令牌过期时间 此处单位/毫秒 */
-    private Long tokenValidityInSeconds;
+    private Integer tokenValidityInSeconds;
 }
