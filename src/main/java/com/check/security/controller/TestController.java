@@ -27,13 +27,11 @@ public class TestController {
         return "SUCCESS";
     }
 
-    @GetMapping("/delete")
+    @GetMapping("/getUser")
     //需要admin角色
     @PreAuthorize("hasAnyAuthority('MENU_admin')")
     public Result delete() {
-//        User user = jwtUtils.getUserName();
-//        return Result.success(user);
-        return Result.success();
+        return Result.success(jwtUtils.getUserName());
     }
 
     @PostMapping("/add")

@@ -20,11 +20,11 @@ public class Result implements Serializable {
 
     private static final long serialVersionUID = 4921061998653835814L;
 
-    private static final String ERROR_CODE = "500";
+    private static final int ERROR_CODE = 500;
 
-    private static final String SUCCESS_CODE = "200";
+    private static final int SUCCESS_CODE = 200;
 
-    private String code;
+    private Integer code;
 
     private String msg;
 

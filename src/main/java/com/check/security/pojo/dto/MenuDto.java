@@ -24,10 +24,6 @@ public class MenuDto {
   private String cache;
   private String hidden;
   private String permission;
-  private String createBy;
-  private String updateBy;
-  private Date createTime;
-  private Date updateTime;
   private String code;
 
 }

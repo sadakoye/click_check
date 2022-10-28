@@ -15,11 +15,6 @@ public class RoleDto {
   private String name;
   private Long level;
   private String description;
-  private String dataScope;
-  private String createBy;
-  private String updateBy;
-  private Date createTime;
-  private Date updateTime;
   private String code;
 
 }

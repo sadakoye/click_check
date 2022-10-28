@@ -34,10 +34,10 @@ public class JwtAuthenticationSuccessHandler implements AuthenticationSuccessHan
         //将生成的authentication放入容器中，生成安全的上下文
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        Map<String,Object> ret = new HashMap<>();
-        ret.put("code",200);
-        ret.put("message","登录成功");
-        ret.put("token",token);
+        Map<String, Object> ret = new HashMap<>();
+        ret.put("code", 200);
+        ret.put("message", "登录成功");
+        ret.put("token", token);
         httpServletResponse.setContentType("text/json;charset=utf-8");
         httpServletResponse.getWriter().write(JSON.toJSONString(ret));
     }

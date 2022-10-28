@@ -17,6 +17,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author zzc
@@ -43,8 +44,10 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             //当token中的username不为空时进行验证token是否是有效的token
             if (name != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
-                if (RedisUtils.contain(ConstantString.USER + name)){
-                    throw new CommonException("token无效或过期");
+                if (RedisUtils.contain(ConstantString.USER + name)) {
+                    RedisUtils.expire(ConstantString.USER + name, jwtProperties.getTokenValidityInSeconds(), TimeUnit.MINUTES);
+                } else {
+                    throw new CommonException(401, "token无效或过期");
                 }
 
                 UserDetails userDetails = jwtUserService.loadUserByUsername(name);
@@ -54,10 +57,10 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             }
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally {
-            filterChain.doFilter(request,response);
+        } finally {
+            filterChain.doFilter(request, response);
         }
     }
 }

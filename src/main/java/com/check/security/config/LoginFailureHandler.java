@@ -20,7 +20,7 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
         Map<String,Object> ret = new HashMap<>(3);
-        ret.put("code",401);
+        ret.put("code",403);
         ret.put("message","用户名或密码错误");
         ret.put("data",null);
         response.setContentType("text/json;charset=utf-8");

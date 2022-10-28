@@ -9,6 +9,9 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -36,7 +39,7 @@ public class JWTUtils {
     /**
      * 生成token
      * @param name 用户名称
-     * @return
+     * @return String
      */
     public String generateToken(String name){
         Map<String,Object> map = new HashMap<>();
@@ -54,7 +57,11 @@ public class JWTUtils {
                 .signWith(SignatureAlgorithm.HS512, jwtProperties.getBase64Secret().getBytes(StandardCharsets.UTF_8))
                 .compact();
 
-        RedisUtils.saveValue(ConstantString.USER + name, securityUser, jwtProperties.getTokenValidityInSeconds(), TimeUnit.MINUTES);
+        if (RedisUtils.contain(ConstantString.USER + name)) {
+            RedisUtils.expire(ConstantString.USER + name, jwtProperties.getTokenValidityInSeconds(), TimeUnit.MINUTES);
+        }else {
+            RedisUtils.saveValue(ConstantString.USER + name, securityUser, jwtProperties.getTokenValidityInSeconds(), TimeUnit.MINUTES);
+        }
         return token;
     }
 
@@ -78,14 +85,9 @@ public class JWTUtils {
      * 获取userName
      */
     public User getUserName(){
-        ServletRequestAttributes servletRequestAttributes =  (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-       if (servletRequestAttributes != null) {
-           HttpServletRequest request = servletRequestAttributes.getRequest();
-           String token = request.getHeader(jwtProperties.getHeader());
-           String name = analysisToken(token);
-           return (User) RedisUtils.getValue(name);
-       }
-       return null;
+           SecurityContext context = SecurityContextHolder.getContext();
+           Authentication authentication = context.getAuthentication();
+        return (User) authentication.getPrincipal();
     }
 
 }

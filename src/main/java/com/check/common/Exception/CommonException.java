@@ -15,6 +15,8 @@ import lombok.NoArgsConstructor;
 public class CommonException extends RuntimeException{
     private static final long serialVersionUID = 1L;
 
+    private Integer code;
+
     private String msg;
 
 }
