@@ -1,10 +1,10 @@
-package com.check.common.controller;
+package com.check.system.controller;
 
 import com.check.common.pojo.bean.Result;
-import com.check.common.pojo.dto.DictAddDto;
-import com.check.common.pojo.dto.DictDto;
-import com.check.common.pojo.dto.DictUpdateDto;
-import com.check.common.service.DictService;
+import com.check.system.pojo.dto.DictAddDto;
+import com.check.system.pojo.dto.DictDto;
+import com.check.system.pojo.dto.DictUpdateDto;
+import com.check.system.service.DictService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;

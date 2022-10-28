@@ -1,8 +1,9 @@
-package com.check.security.config;
+package com.check.security.pojo.bean;
 
-import com.check.security.pojo.dto.MenuDto;
-import com.check.security.pojo.dto.RoleDto;
 import com.check.security.utils.EmptyUtil;
+import com.check.system.pojo.vo.MenuVo;
+import com.check.system.pojo.vo.RoleVo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -55,12 +56,12 @@ public class User implements UserDetails, Serializable {
     /**
      * 包含的角色
      */
-    private List<RoleDto> roles;
+    private List<RoleVo> roles;
 
     /**
      * 拥有的菜单权限
      */
-    private List<MenuDto> menus;
+    private List<MenuVo> menus;
 
     /**
      * 将用户的菜单作为权限
@@ -68,10 +69,11 @@ public class User implements UserDetails, Serializable {
      * @return Collection
      */
     @Override
+    @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> auth = new ArrayList<>();
         if (EmptyUtil.isNotEmpty(menus)) {
-            for (MenuDto menu : menus) {
+            for (MenuVo menu : menus) {
                 auth.add(new SimpleGrantedAuthority(menu.getTitle()));
             }
         }

@@ -1,6 +1,6 @@
 package com.check.common.util;
 
-import com.check.common.pojo.vo.DictVo;
+import com.check.system.pojo.vo.DictVo;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.BeanUtils;
 

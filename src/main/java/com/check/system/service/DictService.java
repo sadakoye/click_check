@@ -1,11 +1,11 @@
-package com.check.common.service;
+package com.check.system.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.check.common.pojo.SysDict;
+import com.check.system.pojo.SysDict;
 import com.check.common.pojo.bean.Result;
-import com.check.common.pojo.dto.DictAddDto;
-import com.check.common.pojo.dto.DictDto;
-import com.check.common.pojo.dto.DictUpdateDto;
+import com.check.system.pojo.dto.DictAddDto;
+import com.check.system.pojo.dto.DictDto;
+import com.check.system.pojo.dto.DictUpdateDto;
 
 import java.util.List;
 

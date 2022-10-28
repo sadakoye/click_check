@@ -1,8 +1,8 @@
-package com.check.security.mapper;
+package com.check.system.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.check.security.config.User;
-import com.check.security.pojo.SysUser;
+import com.check.security.pojo.bean.User;
+import com.check.system.pojo.SysUser;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 

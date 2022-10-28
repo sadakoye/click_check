@@ -1,9 +1,9 @@
-package com.check.common.pojo;
+package com.check.system.pojo.vo;
 
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
+import com.check.common.pojo.vo.BaseVo;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.Date;
 
@@ -11,8 +11,9 @@ import java.util.Date;
  * @author zzc
  */
 @Data
-public class SysDict {
-  @TableId(type = IdType.AUTO)
+@EqualsAndHashCode(callSuper = true)
+public class DictVo extends BaseVo {
+
   private Long id;
   private String dictKey;
   private String dictValue;

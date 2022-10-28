@@ -1,9 +1,13 @@
 package com.check.security.config;
 
-import com.check.security.mapper.SysMenuMapper;
-import com.check.security.mapper.SysRoleMapper;
-import com.check.security.mapper.SysUserMapper;
+import com.check.common.config.ConstantString;
+import com.check.common.util.RedisUtils;
+import com.check.system.mapper.SysMenuMapper;
+import com.check.system.mapper.SysRoleMapper;
+import com.check.system.mapper.SysUserMapper;
+import com.check.security.pojo.bean.User;
 import com.check.security.utils.EmptyUtil;
+import com.check.security.utils.JWTUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,10 +17,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import java.nio.charset.StandardCharsets;
-import java.util.Base64;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import javax.annotation.Resource;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author zzc
@@ -33,35 +35,35 @@ public class JwtUserServiceImpl  implements UserDetailsService {
     @Autowired
     private SysMenuMapper menuMapper;
 
-    /**
-     * 用户信息缓存
-     */
-    static Map<String, User> userCache = new ConcurrentHashMap<>();
+    @Autowired
+    private JWTUtils jwtUtils;
+
+    @Resource
+    private JwtProperties jwtProperties;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         // 用户基本信息
         User user;
 
-        if (userCache.containsKey(username)) {
-            user = userCache.get(username);
+        if (RedisUtils.contain(ConstantString.USER + username)) {
+            user = (User) RedisUtils.getValue(ConstantString.USER + username);
         } else {
             user = userMapper.getSecurityUser(username);
 
             if (EmptyUtil.isNotEmpty(user)) {
-
                 // 用户角色列表
                 user.setRoles(roleMapper.getUserRoles(user.getCode()));
                 // 用户菜单列表
                 user.setMenus(menuMapper.getUserMenus(user.getCode()));
                 // token
-                String token = Base64.getEncoder().encodeToString((user.getUsername() + "_" + System.currentTimeMillis()).getBytes(StandardCharsets.UTF_8));
+                String token = jwtUtils.generateToken(username);
+                //String token = Base64.getEncoder().encodeToString((user.getUsername() + "_" + System.currentTimeMillis()).getBytes(StandardCharsets.UTF_8));
                 user.setToken(token);
                 // 将用户信息保存在缓存中
-                userCache.put(username, user);
+                RedisUtils.saveValue(ConstantString.USER + username, user, jwtProperties.getTokenValidityInSeconds(), TimeUnit.MINUTES);
             }
         }
-
         return user;
     }
 

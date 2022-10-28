@@ -1,6 +1,7 @@
 package com.check.security.config;
 
 import com.alibaba.fastjson.JSON;
+import com.check.security.pojo.bean.User;
 import com.check.security.utils.JWTUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -29,15 +30,19 @@ public class JwtAuthenticationSuccessHandler implements AuthenticationSuccessHan
     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
         String name = authentication.getName();
         //生成token
-        String token = jwtUtils.generateToken(name);
+        //String token = jwtUtils.generateToken(name);
 
         //将生成的authentication放入容器中，生成安全的上下文
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        Map<String, Object> ret = new HashMap<>();
+        User user = jwtUtils.getUser();
+        user.setPassword(null);
+        user.setUserId(null);
+        user.setCode(null);
+        Map<String, Object> ret = new HashMap<>(3);
         ret.put("code", 200);
         ret.put("message", "登录成功");
-        ret.put("token", token);
+        ret.put("token", user);
         httpServletResponse.setContentType("text/json;charset=utf-8");
         httpServletResponse.getWriter().write(JSON.toJSONString(ret));
     }

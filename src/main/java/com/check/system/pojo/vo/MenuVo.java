@@ -1,4 +1,4 @@
-package com.check.security.pojo.dto;
+package com.check.system.pojo.vo;
 
 import lombok.Data;
 
@@ -8,7 +8,7 @@ import java.util.Date;
  * @author zzc
  */
 @Data
-public class MenuDto {
+public class MenuVo {
 
   private Long menuId;
   private Long pid;

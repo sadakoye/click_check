@@ -1,16 +1,16 @@
-package com.check.common.service.impl;
+package com.check.system.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.check.common.mapper.DictMapper;
-import com.check.common.pojo.SysDict;
+import com.check.system.mapper.DictMapper;
+import com.check.system.pojo.SysDict;
 import com.check.common.pojo.bean.Result;
-import com.check.common.pojo.dto.DictAddDto;
-import com.check.common.pojo.dto.DictDto;
-import com.check.common.pojo.dto.DictUpdateDto;
-import com.check.common.pojo.vo.DictVo;
-import com.check.common.service.DictService;
+import com.check.system.pojo.dto.DictAddDto;
+import com.check.system.pojo.dto.DictDto;
+import com.check.system.pojo.dto.DictUpdateDto;
+import com.check.system.pojo.vo.DictVo;
+import com.check.system.service.DictService;
 import com.check.common.util.DataUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;

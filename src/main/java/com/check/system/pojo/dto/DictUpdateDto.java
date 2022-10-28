@@ -1,4 +1,4 @@
-package com.check.common.pojo.dto;
+package com.check.system.pojo.dto;
 
 
 import lombok.Data;

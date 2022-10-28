@@ -1,6 +1,7 @@
-package com.check.common.pojo.dto;
+package com.check.system.pojo.dto;
 
 
+import com.check.common.pojo.dto.BaseDto;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

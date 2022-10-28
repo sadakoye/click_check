@@ -1,7 +1,7 @@
-package com.check.common.mapper;
+package com.check.system.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.check.common.pojo.SysDict;
+import com.check.system.pojo.SysDict;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

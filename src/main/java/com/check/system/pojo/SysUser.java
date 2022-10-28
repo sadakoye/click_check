@@ -1,4 +1,4 @@
-package com.check.security.pojo;
+package com.check.system.pojo;
 
 import java.util.Date;
 
