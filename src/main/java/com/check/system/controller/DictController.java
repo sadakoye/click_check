@@ -4,13 +4,15 @@ import com.check.common.pojo.bean.Result;
 import com.check.system.pojo.dto.DictAddDto;
 import com.check.system.pojo.dto.DictDto;
 import com.check.system.pojo.dto.DictUpdateDto;
+import com.check.system.pojo.vo.DictVo;
 import com.check.system.service.DictService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.github.pagehelper.PageInfo;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -21,9 +23,10 @@ import java.util.List;
 @CrossOrigin
 @RequestMapping("/dict")
 @RestController
+@Api(tags = "字典")
 public class DictController {
 
-    @Autowired
+    @Resource
     DictService service;
 
     /**
@@ -33,8 +36,9 @@ public class DictController {
      * @return Result
      * @author zzc
      */
-    @RequestMapping("/list")
-    public Result list(@RequestBody DictDto dto) {
+    @ApiOperation(value = "列表查询")
+    @PostMapping("/list")
+    public Result<PageInfo<DictVo>> list(@RequestBody DictDto dto) {
         return service.list(dto);
     }
 
@@ -45,8 +49,9 @@ public class DictController {
      * @return Result
      * @author zzc
      */
-    @RequestMapping("/add")
-    public Result add(@RequestBody @Valid DictAddDto dto) {
+    @ApiOperation(value = "新增")
+    @PostMapping("/add")
+    public Result<Object> add(@RequestBody @Valid DictAddDto dto) {
         return service.add(dto);
     }
 
@@ -57,8 +62,9 @@ public class DictController {
      * @return Result
      * @author zzc
      */
-    @RequestMapping("/update")
-    public Result update(@RequestBody @Valid DictUpdateDto dto) {
+    @ApiOperation(value = "修改")
+    @PostMapping("/update")
+    public Result<Object> update(@RequestBody @Valid DictUpdateDto dto) {
         return service.update(dto);
     }
 
@@ -69,8 +75,9 @@ public class DictController {
      * @return Result
      * @author zzc
      */
-    @RequestMapping("/delete")
-    public Result delete(@RequestBody @NotNull List<Long> ids) {
+    @ApiOperation(value = "删除")
+    @PostMapping("/delete")
+    public Result<Object> delete(@RequestBody @NotNull @ApiParam("id集合") List<Long> ids) {
         return service.delete(ids);
     }
 }

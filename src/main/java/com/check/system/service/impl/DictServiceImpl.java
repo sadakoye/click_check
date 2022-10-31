@@ -19,6 +19,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -26,9 +27,6 @@ import java.util.List;
  */
 @Service
 public class DictServiceImpl extends ServiceImpl<DictMapper, SysDict> implements DictService {
-
-    @Autowired
-    DictMapper mapper;
 
     /**
      * 列表查询
@@ -38,7 +36,7 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, SysDict> implements
      * @author zzc
      */
     @Override
-    public Result list(DictDto dto) {
+    public Result<PageInfo<DictVo>> list(DictDto dto) {
         QueryWrapper<SysDict> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("IS_DELETE", 0);
         if (dto.getId() != null) {
@@ -50,6 +48,7 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, SysDict> implements
         if (StringUtils.isNotBlank(dto.getDictGroup())) {
             queryWrapper.like("DICT_GROUP", "%" + dto.getDictGroup() + "%");
         }
+        queryWrapper.orderByDesc("CREATE_TIME");
         PageHelper.startPage(dto.getPageNum(), dto.getPageSize());
 
         List<SysDict> list = list(queryWrapper);
@@ -69,7 +68,7 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, SysDict> implements
      * @author zzc
      */
     @Override
-    public Result add(DictAddDto dto) {
+    public Result<Object> add(DictAddDto dto) {
         SysDict dict = new SysDict();
         BeanUtils.copyProperties(dto, dict);
         save(dict);
@@ -84,7 +83,7 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, SysDict> implements
      * @author zzc
      */
     @Override
-    public Result update(DictUpdateDto dto) {
+    public Result<Object> update(DictUpdateDto dto) {
         SysDict dict = new SysDict();
         BeanUtils.copyProperties(dto, dict);
         updateById(dict);
@@ -92,7 +91,7 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, SysDict> implements
     }
 
     @Override
-    public Result delete(List<Long> ids) {
+    public Result<Object> delete(List<Long> ids) {
         UpdateWrapper<SysDict> updateWrapper = new UpdateWrapper<>();
         updateWrapper.in("ID", ids);
         SysDict dict = new SysDict();

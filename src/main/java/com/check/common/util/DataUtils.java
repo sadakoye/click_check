@@ -24,8 +24,9 @@ public class DataUtils {
             }
             return vo;
         }).collect(Collectors.toList());
-        PageInfo<T> tPageInfo = new PageInfo<>(voList);
+        PageInfo<T> tPageInfo = new PageInfo<>();
         BeanUtils.copyProperties(new PageInfo<>(list), tPageInfo);
+        tPageInfo.setList(voList);
         return tPageInfo;
     }
 

@@ -1,9 +1,11 @@
 package com.check.common.config;
 
 
+import com.alibaba.fastjson.JSON;
 import com.check.common.Exception.CommonException;
 import com.check.common.pojo.bean.Result;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -13,6 +15,7 @@ import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -34,12 +37,28 @@ public class ExceptionConfig {
      * @author zzc
      */
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
-    public Result handleValidException(MethodArgumentNotValidException e) {
+    public Result<Object> handleValidException(MethodArgumentNotValidException e) {
         // 从异常对象中拿到ObjectError对象
         ObjectError objectError = e.getBindingResult().getAllErrors().get(0);
         // 然后提取错误提示信息进行返回
-        String defaultMessage = objectError.getDefaultMessage();
-        return Result.error(defaultMessage);
+        StringBuilder stringBuilder = new StringBuilder();
+        String defaultMessage = "";
+        if (objectError != null ) {
+            if (objectError.getArguments() != null) {
+                for (Object argument : objectError.getArguments()) {
+                    DefaultMessageSourceResolvable defaultMessageSourceResolvable = (DefaultMessageSourceResolvable) argument;
+                    stringBuilder.append(defaultMessageSourceResolvable.getDefaultMessage());
+                    stringBuilder.append(",");
+                }
+            }
+            defaultMessage = objectError.getDefaultMessage();
+        }
+        if (stringBuilder.length() > 0){
+            stringBuilder.deleteCharAt(stringBuilder.length() - 1);
+        }
+
+
+        return Result.error(402, stringBuilder + defaultMessage);
     }
 
     /**
@@ -50,13 +69,13 @@ public class ExceptionConfig {
      * @author zzc
      */
     @ExceptionHandler(value = ConstraintViolationException.class)
-    public Result handleConstraintViolationException(ConstraintViolationException e) {
+    public Result<Object> handleConstraintViolationException(ConstraintViolationException e) {
         String s = e.getConstraintViolations()
                 .stream()
                 .map(ConstraintViolation::getMessage)
                 .collect(Collectors.toList()).get(0);
         // 从异常对象中拿到ObjectError对象
-        return Result.error(s);
+        return Result.error(402, s);
     }
 
     /**
@@ -67,7 +86,7 @@ public class ExceptionConfig {
      * @author zzc
      */
     @ExceptionHandler(CommonException.class)
-    public Result handleException(CommonException e) {
+    public Result<Object> handleException(CommonException e) {
         log.error("系统异常：" + e.getMsg());
         return Result.error(e.getMsg());
     }
@@ -80,7 +99,7 @@ public class ExceptionConfig {
      * @author zzc
      */
     @ExceptionHandler(Exception.class)
-    public Result handleException(Exception e) {
+    public Result<Object> handleException(Exception e) {
         StringWriter sw = new StringWriter();
         e.printStackTrace(new PrintWriter(sw, true));
         log.error("系统异常：" + LINE_SEPARATOR + sw);

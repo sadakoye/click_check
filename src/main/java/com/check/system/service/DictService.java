@@ -6,6 +6,8 @@ import com.check.common.pojo.bean.Result;
 import com.check.system.pojo.dto.DictAddDto;
 import com.check.system.pojo.dto.DictDto;
 import com.check.system.pojo.dto.DictUpdateDto;
+import com.check.system.pojo.vo.DictVo;
+import com.github.pagehelper.PageInfo;
 
 import java.util.List;
 
@@ -21,7 +23,7 @@ public interface DictService extends IService<SysDict> {
      * @return Result
      * @author zzc
      */
-    Result list(DictDto dto);
+    Result<PageInfo<DictVo>> list(DictDto dto);
 
     /**
      * 新增
@@ -30,7 +32,7 @@ public interface DictService extends IService<SysDict> {
      * @return Result
      * @author zzc
      */
-    Result add(DictAddDto dto);
+    Result<Object> add(DictAddDto dto);
 
     /**
      * 修改
@@ -39,7 +41,7 @@ public interface DictService extends IService<SysDict> {
      * @return Result
      * @author zzc
      */
-    Result update(DictUpdateDto dto);
+    Result<Object> update(DictUpdateDto dto);
 
     /**
      * 删除
@@ -48,5 +50,5 @@ public interface DictService extends IService<SysDict> {
      * @return Result
      * @author zzc
      */
-    Result delete(List<Long> ids);
+    Result<Object> delete(List<Long> ids);
 }
