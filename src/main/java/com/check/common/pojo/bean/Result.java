@@ -1,11 +1,11 @@
 package com.check.common.pojo.bean;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * 统一返回对象
@@ -33,10 +33,13 @@ public class Result<T> implements Serializable {
 
     private T data;
 
+    private String date;
+
     public static <T> Result<T> error(String msg){
         Result<T> result = new Result<>();
         result.setCode(ERROR_CODE);
         result.setMsg(msg);
+        result.setDate(new Date().toString());
         return result;
     }
 
@@ -45,6 +48,7 @@ public class Result<T> implements Serializable {
         result.setData(data);
         result.setCode(SUCCESS_CODE);
         result.setMsg(msg);
+        result.setDate(new Date().toString());
         return result;
     }
 
@@ -52,6 +56,7 @@ public class Result<T> implements Serializable {
         Result<T> result = new Result<>();
         result.setCode(SUCCESS_CODE);
         result.setMsg(msg);
+        result.setDate(new Date().toString());
         return result;
     }
 
@@ -60,6 +65,7 @@ public class Result<T> implements Serializable {
         result.setData(data);
         result.setCode(SUCCESS_CODE);
         result.setMsg(SUCCESS);
+        result.setDate(new Date().toString());
         return result;
     }
 
@@ -67,6 +73,7 @@ public class Result<T> implements Serializable {
         Result<T> result = new Result<>();
         result.setCode(SUCCESS_CODE);
         result.setMsg(SUCCESS);
+        result.setDate(new Date().toString());
         return result;
     }
 
@@ -74,6 +81,7 @@ public class Result<T> implements Serializable {
         Result<T> result = new Result<>();
         result.setCode(code);
         result.setMsg(msg);
+        result.setDate(new Date().toString());
         return result;
     }
 

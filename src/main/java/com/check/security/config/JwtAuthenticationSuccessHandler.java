@@ -13,6 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,7 +29,7 @@ public class JwtAuthenticationSuccessHandler implements AuthenticationSuccessHan
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
-        String name = authentication.getName();
+        //String name = authentication.getName();
         //生成token
         //String token = jwtUtils.generateToken(name);
 
@@ -39,10 +40,11 @@ public class JwtAuthenticationSuccessHandler implements AuthenticationSuccessHan
         user.setPassword(null);
         user.setUserId(null);
         user.setCode(null);
-        Map<String, Object> ret = new HashMap<>(3);
+        Map<String, Object> ret = new HashMap<>(4);
         ret.put("code", 200);
         ret.put("message", "登录成功");
         ret.put("user", user);
+        ret.put("date", new Date().toString());
         httpServletResponse.setContentType("text/json;charset=utf-8");
         httpServletResponse.getWriter().write(JSON.toJSONString(ret));
     }
