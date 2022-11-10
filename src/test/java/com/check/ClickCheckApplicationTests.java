@@ -1,12 +1,22 @@
 package com.check;
 
-import com.check.system.controller.DictController;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.check.common.pojo.dto.BaseDto;
+import com.check.common.util.DataUtils;
 import com.check.common.util.RedisUtils;
 import com.check.security.pojo.bean.User;
+import com.check.system.controller.DictController;
+import com.check.system.pojo.SysDict;
+import com.check.system.service.DictService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @SpringBootTest
 class ClickCheckApplicationTests {
@@ -16,16 +26,6 @@ class ClickCheckApplicationTests {
 
     @Test
     void contextLoads() {
-//        DictDto dictDto = new DictDto();
-//        dictDto.setPageSize(1);
-//        Result list = dictController.list(dictDto);
-//        System.out.println(list);
-
-//        DictAddDto addDto = new DictAddDto();
-//        addDto.setDictGroup("TEST_GROUP");
-//        addDto.setDictKey("TEST_KEY_2");
-//        addDto.setDictValue("TEST_VALUE_2");
-//        System.out.println(dictController.add(addDto));
 
         Object user_admin = RedisUtils.getValue("user_admin");
         User user = new User();
@@ -34,8 +34,32 @@ class ClickCheckApplicationTests {
 
     }
 
+    @Autowired
+    DictService dictService;
+
     @Test
-    void saveUser() {
+    void query() {
+
+        Map<String, List<Object>> eqMap = new HashMap<>(1);
+        eqMap.put("DICT_KEY", Collections.singletonList("a"));
+        eqMap.put("DICT_VALUE", Collections.singletonList(""));
+        eqMap.put("DICT_GROUP", null);
+//        QueryWrapper<SysDict> queryWrapper = DataUtils.baseQuery(eqMap, null);
+//        List<SysDict> list = dictService.list(queryWrapper);
+//        System.out.println(list);
+
+    }
+
+
+    @Test
+    void test() {
+
+        SysDict dict = new SysDict();
+        dict.setDictKey("a");
+        dict.setDictValue("");
+        QueryWrapper<SysDict> query = DataUtils.query(dict, new BaseDto());
+        List<SysDict> list = dictService.list(query);
+        System.out.println(list);
 
     }
 

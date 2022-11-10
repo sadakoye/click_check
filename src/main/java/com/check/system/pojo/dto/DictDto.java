@@ -6,6 +6,9 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import springfox.documentation.annotations.ApiIgnore;
+
+import java.util.Date;
 
 /**
  * @author zzc
@@ -16,9 +19,12 @@ import lombok.EqualsAndHashCode;
 @Api("字典查询类")
 public class DictDto extends BaseDto {
 
+    @ApiModelProperty("id")
     private Long id;
     @ApiModelProperty("字典键")
     private String dictKey;
     @ApiModelProperty("字典所属组")
     private String dictGroup;
+    @ApiModelProperty(hidden = true)
+    private Date createTime;
 }

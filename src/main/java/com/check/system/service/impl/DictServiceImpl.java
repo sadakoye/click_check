@@ -3,23 +3,20 @@ package com.check.system.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.check.common.pojo.bean.Result;
+import com.check.common.util.DataUtils;
 import com.check.system.mapper.DictMapper;
 import com.check.system.pojo.SysDict;
-import com.check.common.pojo.bean.Result;
 import com.check.system.pojo.dto.DictAddDto;
 import com.check.system.pojo.dto.DictDto;
 import com.check.system.pojo.dto.DictUpdateDto;
 import com.check.system.pojo.vo.DictVo;
 import com.check.system.service.DictService;
-import com.check.common.util.DataUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -37,18 +34,9 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, SysDict> implements
      */
     @Override
     public Result<PageInfo<DictVo>> list(DictDto dto) {
-        QueryWrapper<SysDict> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("IS_DELETE", 0);
-        if (dto.getId() != null) {
-            queryWrapper.eq("ID", dto.getId());
-        }
-        if (StringUtils.isNotBlank(dto.getDictKey())) {
-            queryWrapper.like("DICT_KEY", "%" + dto.getDictKey() + "%");
-        }
-        if (StringUtils.isNotBlank(dto.getDictGroup())) {
-            queryWrapper.like("DICT_GROUP", "%" + dto.getDictGroup() + "%");
-        }
-        queryWrapper.orderByDesc("CREATE_TIME");
+        SysDict dict = new SysDict();
+        BeanUtils.copyProperties(dto, dict);
+        QueryWrapper<SysDict> queryWrapper = DataUtils.query(dict, dto);
         PageHelper.startPage(dto.getPageNum(), dto.getPageSize());
 
         List<SysDict> list = list(queryWrapper);
