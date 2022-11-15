@@ -35,9 +35,9 @@ public class UserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impleme
      */
     @Override
     public Result<PageInfo<UserVo>> list(UserDto dto) {
-        SysUser User = new SysUser();
-        BeanUtils.copyProperties(dto, User);
-        QueryWrapper<SysUser> queryWrapper = DataUtils.query(User, dto);
+        SysUser user = new SysUser();
+        BeanUtils.copyProperties(dto, user);
+        QueryWrapper<SysUser> queryWrapper = DataUtils.query(user, dto);
         PageHelper.startPage(dto.getPageNum(), dto.getPageSize());
 
         List<SysUser> list = list(queryWrapper);
@@ -58,9 +58,9 @@ public class UserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impleme
      */
     @Override
     public Result<Object> add(UserAddDto dto) {
-        SysUser User = new SysUser();
-        BeanUtils.copyProperties(dto, User);
-        save(User);
+        SysUser user = new SysUser();
+        BeanUtils.copyProperties(dto, user);
+        save(user);
         return Result.success();
     }
 
@@ -73,9 +73,9 @@ public class UserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impleme
      */
     @Override
     public Result<Object> update(UserUpdateDto dto) {
-        SysUser User = new SysUser();
-        BeanUtils.copyProperties(dto, User);
-        updateById(User);
+        SysUser user = new SysUser();
+        BeanUtils.copyProperties(dto, user);
+        updateById(user);
         return Result.success();
     }
 
@@ -83,9 +83,9 @@ public class UserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impleme
     public Result<Object> delete(List<Long> ids) {
         UpdateWrapper<SysUser> updateWrapper = new UpdateWrapper<>();
         updateWrapper.in("ID", ids);
-        SysUser User = new SysUser();
-        User.setEnabled(0L);
-        update(User, updateWrapper);
+        SysUser user = new SysUser();
+        user.setEnabled(0L);
+        update(user, updateWrapper);
         return Result.success();
     }
 }
