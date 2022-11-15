@@ -2,9 +2,7 @@ package com.check.common.pojo.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
-import io.swagger.annotations.ApiParam;
 import lombok.Data;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -26,11 +24,9 @@ public class BaseDto {
     private String keyword;
     @ApiModelProperty("开始时间")
     @JsonFormat( pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    @DateTimeFormat( pattern = "yyyy-MM-dd HH:mm:ss")
     private Date baseStartTime;
     @ApiModelProperty("结束时间")
     @JsonFormat( pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    @DateTimeFormat( pattern = "yyyy-MM-dd HH:mm:ss")
     private Date baseEndTime;
     @ApiModelProperty("时间字段名")
     private String baseTime;

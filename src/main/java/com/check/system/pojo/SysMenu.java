@@ -9,7 +9,6 @@ import java.util.Date;
  * @author zzc
  */
 @Data
-@TableName("SYS_MENU")
 public class SysMenu {
 
   private Long menuId;
@@ -31,5 +30,6 @@ public class SysMenu {
   private Date createTime;
   private Date updateTime;
   private String code;
+  private String casId;
 
 }

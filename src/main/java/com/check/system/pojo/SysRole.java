@@ -10,7 +10,6 @@ import java.util.Date;
  * @author zzc
  */
 @Data
-@TableName("SYS_ROLE")
 public class SysRole {
 
   private Long roleId;
@@ -23,5 +22,6 @@ public class SysRole {
   private Date createTime;
   private Date updateTime;
   private String code;
+  private String casId;
 
 }

@@ -2,7 +2,7 @@ package com.check.common.util;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.check.common.pojo.dto.BaseDto;
-import com.check.system.pojo.vo.DictVo;
+import com.check.common.pojo.vo.BaseVo;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -22,7 +22,7 @@ public class DataUtils {
     static final Pattern COMPILE = Pattern.compile("[A-Z]");
 
     @SuppressWarnings("unchecked")
-    public static <T> PageInfo<T> getPageInfo(List<?> list, Class<? extends DictVo> voClass) {
+    public static <T> PageInfo<T> getPageInfo(List<?> list, Class<? extends BaseVo> voClass) {
         List<T> voList = list.stream().map(item -> {
             T vo = null;
             try {

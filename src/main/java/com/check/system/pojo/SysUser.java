@@ -1,14 +1,17 @@
 package com.check.system.pojo;
 
+import lombok.Data;
+
 import java.util.Date;
 
 /**
  * @author zzc
  */
+@Data
 public class SysUser {
 
   private Long userId;
-  private Long deptId;
+  private Long deptCode;
   private String username;
   private String nickName;
   private String gender;
@@ -25,5 +28,6 @@ public class SysUser {
   private Date createTime;
   private Date updateTime;
   private String code;
+  private String casId;
 
 }

@@ -7,6 +7,7 @@ import com.check.common.util.RedisUtils;
 import com.check.security.pojo.bean.User;
 import com.check.system.controller.DictController;
 import com.check.system.pojo.SysDict;
+import com.check.system.pojo.dto.DictDto;
 import com.check.system.service.DictService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.BeanUtils;
@@ -62,5 +63,18 @@ class ClickCheckApplicationTests {
         System.out.println(list);
 
     }
+
+
+    @Test
+    void test2() {
+
+        DictDto dto = new DictDto();
+        dto.setDictKey("a");
+        SysDict dict = new SysDict();
+        BeanUtils.copyProperties(dto, dict);
+
+
+    }
+
 
 }
