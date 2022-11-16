@@ -1,6 +1,7 @@
 package com.check.common.util;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.check.common.Exception.CommonException;
 import com.check.common.pojo.dto.BaseDto;
 import com.check.common.pojo.vo.BaseVo;
 import com.github.pagehelper.PageInfo;
@@ -39,7 +40,7 @@ public class DataUtils {
         return tPageInfo;
     }
 
-    public static <T> QueryWrapper<T> query(T bean, BaseDto dto) {
+    public static <T> QueryWrapper<T> query(T bean, BaseDto dto, BaseVo vo) {
         String[] fieldName = getFieldName(bean);
         Map<String, Object> eqMap = new HashMap<>(fieldName.length);
         Map<String, String> likeMap = new HashMap<>(fieldName.length);
@@ -80,6 +81,18 @@ public class DataUtils {
             queryWrapper = baseQuery(eqMap, likeMap);
         } else {
             queryWrapper = keywordQuery(keywordMap);
+        }
+
+        //只查询vo含有的属性
+        String[] fieldNameVo = getFieldName(vo);
+        StringBuilder select = new StringBuilder();
+        for (String s : fieldNameVo) {
+            String underline = toUnderline(s);
+            select.append(underline).append(",");
+        }
+        if (select.length() > 0){
+            select.deleteCharAt(select.length() - 1);
+            queryWrapper.select(select.toString());
         }
 
         if (isTime == 1 && StringUtils.isNotBlank(dto.getBaseTime())) {

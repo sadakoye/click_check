@@ -34,16 +34,15 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, SysDict> implements
      */
     @Override
     public Result<PageInfo<DictVo>> list(DictDto dto) {
-        SysDict dict = new SysDict();
-        BeanUtils.copyProperties(dto, dict);
-        QueryWrapper<SysDict> queryWrapper = DataUtils.query(dict, dto);
+        SysDict bean = new SysDict();
+        DictVo vo = new DictVo();
+        BeanUtils.copyProperties(dto, bean);
+        QueryWrapper<SysDict> queryWrapper = DataUtils.query(bean, dto, vo);
         PageHelper.startPage(dto.getPageNum(), dto.getPageSize());
 
         List<SysDict> list = list(queryWrapper);
 
-        DictVo dictVo = new DictVo();
-
-        PageInfo<DictVo> page = DataUtils.getPageInfo(list, dictVo.getClass());
+        PageInfo<DictVo> page = DataUtils.getPageInfo(list, vo.getClass());
 
         return Result.success(page);
     }
@@ -57,9 +56,9 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, SysDict> implements
      */
     @Override
     public Result<Object> add(DictAddDto dto) {
-        SysDict dict = new SysDict();
-        BeanUtils.copyProperties(dto, dict);
-        save(dict);
+        SysDict bean = new SysDict();
+        BeanUtils.copyProperties(dto, bean);
+        save(bean);
         return Result.success();
     }
 
@@ -72,9 +71,9 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, SysDict> implements
      */
     @Override
     public Result<Object> update(DictUpdateDto dto) {
-        SysDict dict = new SysDict();
-        BeanUtils.copyProperties(dto, dict);
-        updateById(dict);
+        SysDict bean = new SysDict();
+        BeanUtils.copyProperties(dto, bean);
+        updateById(bean);
         return Result.success();
     }
 
@@ -82,9 +81,9 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, SysDict> implements
     public Result<Object> delete(List<Long> ids) {
         UpdateWrapper<SysDict> updateWrapper = new UpdateWrapper<>();
         updateWrapper.in("ID", ids);
-        SysDict dict = new SysDict();
-        dict.setIsDelete("1");
-        update(dict, updateWrapper);
+        SysDict bean = new SysDict();
+        bean.setIsDelete("1");
+        update(bean, updateWrapper);
         return Result.success();
     }
 }

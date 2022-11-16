@@ -26,16 +26,16 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class JwtUserServiceImpl  implements UserDetailsService {
 
-    @Autowired
+    @Resource
     private SysUserMapper userMapper;
 
-    @Autowired
+    @Resource
     private SysRoleMapper roleMapper;
 
-    @Autowired
+    @Resource
     private SysMenuMapper menuMapper;
 
-    @Autowired
+    @Resource
     private JWTUtils jwtUtils;
 
     @Resource

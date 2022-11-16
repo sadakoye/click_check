@@ -35,16 +35,15 @@ public class UserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impleme
      */
     @Override
     public Result<PageInfo<UserVo>> list(UserDto dto) {
-        SysUser user = new SysUser();
-        BeanUtils.copyProperties(dto, user);
-        QueryWrapper<SysUser> queryWrapper = DataUtils.query(user, dto);
+        SysUser bean = new SysUser();
+        UserVo vo = new UserVo();
+        BeanUtils.copyProperties(dto, bean);
+        QueryWrapper<SysUser> queryWrapper = DataUtils.query(bean, dto, vo);
         PageHelper.startPage(dto.getPageNum(), dto.getPageSize());
 
         List<SysUser> list = list(queryWrapper);
 
-        UserVo userVo = new UserVo();
-
-        PageInfo<UserVo> page = DataUtils.getPageInfo(list, userVo.getClass());
+        PageInfo<UserVo> page = DataUtils.getPageInfo(list, vo.getClass());
 
         return Result.success(page);
     }
@@ -58,9 +57,9 @@ public class UserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impleme
      */
     @Override
     public Result<Object> add(UserAddDto dto) {
-        SysUser user = new SysUser();
-        BeanUtils.copyProperties(dto, user);
-        save(user);
+        SysUser bean = new SysUser();
+        BeanUtils.copyProperties(dto, bean);
+        save(bean);
         return Result.success();
     }
 
@@ -73,9 +72,9 @@ public class UserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impleme
      */
     @Override
     public Result<Object> update(UserUpdateDto dto) {
-        SysUser user = new SysUser();
-        BeanUtils.copyProperties(dto, user);
-        updateById(user);
+        SysUser bean = new SysUser();
+        BeanUtils.copyProperties(dto, bean);
+        updateById(bean);
         return Result.success();
     }
 
@@ -83,9 +82,9 @@ public class UserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impleme
     public Result<Object> delete(List<Long> ids) {
         UpdateWrapper<SysUser> updateWrapper = new UpdateWrapper<>();
         updateWrapper.in("ID", ids);
-        SysUser user = new SysUser();
-        user.setEnabled(0L);
-        update(user, updateWrapper);
+        SysUser bean = new SysUser();
+        bean.setEnabled(0L);
+        update(bean, updateWrapper);
         return Result.success();
     }
 }
