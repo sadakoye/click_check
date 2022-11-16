@@ -1,7 +1,6 @@
 package com.check.common.config;
 
 
-import com.alibaba.fastjson.JSON;
 import com.check.common.Exception.CommonException;
 import com.check.common.pojo.bean.Result;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +14,6 @@ import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -43,7 +41,7 @@ public class ExceptionConfig {
         // 然后提取错误提示信息进行返回
         StringBuilder stringBuilder = new StringBuilder();
         String defaultMessage = "";
-        if (objectError != null ) {
+        if (objectError != null) {
             if (objectError.getArguments() != null) {
                 for (Object argument : objectError.getArguments()) {
                     DefaultMessageSourceResolvable defaultMessageSourceResolvable = (DefaultMessageSourceResolvable) argument;
@@ -53,11 +51,10 @@ public class ExceptionConfig {
             }
             defaultMessage = objectError.getDefaultMessage();
         }
-        if (stringBuilder.length() > 0){
+        if (stringBuilder.length() > 0) {
             stringBuilder.deleteCharAt(stringBuilder.length() - 1);
         }
-
-
+        log.error("参数校验异常:" + stringBuilder + defaultMessage);
         return Result.error(402, stringBuilder + defaultMessage);
     }
 
@@ -75,6 +72,7 @@ public class ExceptionConfig {
                 .map(ConstraintViolation::getMessage)
                 .collect(Collectors.toList()).get(0);
         // 从异常对象中拿到ObjectError对象
+        log.error("多参数校验异常：" + s);
         return Result.error(402, s);
     }
 
