@@ -77,6 +77,13 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, SysDict> implements
         return Result.success();
     }
 
+    /**
+     * 删除
+     *
+     * @param ids ids
+     * @return Result
+     * @author zzc
+     */
     @Override
     public Result<Object> delete(List<Long> ids) {
         UpdateWrapper<SysDict> updateWrapper = new UpdateWrapper<>();

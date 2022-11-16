@@ -8,6 +8,7 @@ import com.check.security.pojo.bean.User;
 import com.check.system.controller.DictController;
 import com.check.system.pojo.SysDict;
 import com.check.system.pojo.dto.DictDto;
+import com.check.system.pojo.vo.DictVo;
 import com.check.system.service.DictService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.BeanUtils;
@@ -58,7 +59,8 @@ class ClickCheckApplicationTests {
         SysDict dict = new SysDict();
         dict.setDictKey("a");
         dict.setDictValue("");
-        QueryWrapper<SysDict> query = DataUtils.query(dict, new BaseDto());
+        DictVo vo = new DictVo();
+        QueryWrapper<SysDict> query = DataUtils.query(dict, new BaseDto(), vo);
         List<SysDict> list = dictService.list(query);
         System.out.println(list);
 

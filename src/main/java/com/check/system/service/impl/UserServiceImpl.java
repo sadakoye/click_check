@@ -78,6 +78,13 @@ public class UserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impleme
         return Result.success();
     }
 
+    /**
+     * 删除
+     *
+     * @param ids ids
+     * @return Result
+     * @author zzc
+     */
     @Override
     public Result<Object> delete(List<Long> ids) {
         UpdateWrapper<SysUser> updateWrapper = new UpdateWrapper<>();
