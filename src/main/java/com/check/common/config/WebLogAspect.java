@@ -9,12 +9,12 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.Date;
@@ -31,7 +31,7 @@ public class WebLogAspect {
     private final static String LINE_SEPARATOR = System.getProperty("line.separator");
     private final static String DOT = ".";
 
-    @Autowired
+    @Resource
     private JWTUtils jwtUtils;
 
     @Pointcut("execution(public * com.check..*.*Controller.*(..))")
