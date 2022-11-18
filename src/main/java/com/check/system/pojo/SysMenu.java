@@ -1,6 +1,5 @@
 package com.check.system.pojo;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.util.Date;
@@ -11,7 +10,7 @@ import java.util.Date;
 @Data
 public class SysMenu {
 
-  private Long menuId;
+  private Long id;
   private Long pid;
   private Long subCount;
   private Long type;
@@ -31,5 +30,6 @@ public class SysMenu {
   private Date updateTime;
   private String code;
   private String casId;
+  private String isDelete;
 
 }

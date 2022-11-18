@@ -10,7 +10,7 @@ import java.util.Date;
 @Data
 public class SysUser {
 
-  private Long userId;
+  private Long id;
   private Long deptCode;
   private String username;
   private String nickName;

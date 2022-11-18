@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.check.common.pojo.dto.BaseDto;
 import com.check.common.util.DataUtils;
 import com.check.common.util.RedisUtils;
+import com.check.security.config.JwtUserServiceImpl;
 import com.check.security.pojo.bean.User;
 import com.check.system.controller.DictController;
 import com.check.system.pojo.SysDict;
@@ -14,6 +15,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -41,14 +44,10 @@ class ClickCheckApplicationTests {
 
     @Test
     void query() {
+        //JwtUserServiceImpl jwtUserService = new JwtUserServiceImpl();
 
-        Map<String, List<Object>> eqMap = new HashMap<>(1);
-        eqMap.put("DICT_KEY", Collections.singletonList("a"));
-        eqMap.put("DICT_VALUE", Collections.singletonList(""));
-        eqMap.put("DICT_GROUP", null);
-//        QueryWrapper<SysDict> queryWrapper = DataUtils.baseQuery(eqMap, null);
-//        List<SysDict> list = dictService.list(queryWrapper);
-//        System.out.println(list);
+        System.out.println(new BCryptPasswordEncoder().encode("123"));
+        System.out.println(new BCryptPasswordEncoder().encode("123"));
 
     }
 
@@ -74,7 +73,6 @@ class ClickCheckApplicationTests {
         dto.setDictKey("a");
         SysDict dict = new SysDict();
         BeanUtils.copyProperties(dto, dict);
-
 
     }
 

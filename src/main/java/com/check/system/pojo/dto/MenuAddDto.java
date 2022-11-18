@@ -1,30 +1,26 @@
-package com.check.system.pojo.vo;
+package com.check.system.pojo.dto;
 
-import com.check.common.pojo.vo.BaseVo;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
-import java.util.Date;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author zzc
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
-@Api("菜单输出类")
-public class MenuVo extends BaseVo {
+@Api("菜单新增类")
+public class MenuAddDto {
 
-  @ApiModelProperty("ID")
-  private Long id;
+  @NotNull
   @ApiModelProperty("上级菜单ID")
   private Long pid;
-  @ApiModelProperty("子菜单数目")
-  private Long subCount;
+  @NotNull
   @ApiModelProperty("菜单类型")
   private Long type;
+  @NotBlank
   @ApiModelProperty("菜单标题")
   private String title;
   @ApiModelProperty("组件名称")
@@ -45,14 +41,9 @@ public class MenuVo extends BaseVo {
   private String hidden;
   @ApiModelProperty("权限")
   private String permission;
+  @NotBlank
   @ApiModelProperty("CODE")
   private String code;
-  @JsonFormat( pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-  @ApiModelProperty("创建时间")
-  private Date createTime;
-  @JsonFormat( pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-  @ApiModelProperty("修改时间")
-  private Date updateTime;
   @ApiModelProperty("casId")
   private String casId;
 

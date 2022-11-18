@@ -18,7 +18,7 @@ import java.util.Date;
 public class UserVo extends BaseVo {
 
   @ApiModelProperty("ID")
-  private Long userId;
+  private Long id;
   @ApiModelProperty("部门code")
   private Long deptCode;
   @ApiModelProperty("用户名")

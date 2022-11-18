@@ -2,6 +2,7 @@ package com.check.common.util;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.check.common.Exception.CommonException;
+import com.check.common.config.ConstantString;
 import com.check.common.pojo.dto.BaseDto;
 import com.check.common.pojo.vo.BaseVo;
 import com.github.pagehelper.PageInfo;
@@ -49,6 +50,11 @@ public class DataUtils {
         int isTime = 0;
         int isOrder = 0;
         for (String s : fieldName) {
+            if (ConstantString.IS_DELETE.equals(s)){
+                String underline = toUnderline(s);
+                eqMap.put(underline, 0);
+                continue;
+            }
             if (s.equals(dto.getBaseTime())) {
                 isTime = 1;
             }

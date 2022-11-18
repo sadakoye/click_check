@@ -1,0 +1,123 @@
+package com.check.system.service.impl;
+
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.check.common.config.ConstantString;
+import com.check.common.pojo.bean.Result;
+import com.check.common.util.DataUtils;
+import com.check.system.mapper.SysRoleMapper;
+import com.check.system.pojo.SysRole;
+import com.check.system.pojo.dto.RoleAddDto;
+import com.check.system.pojo.dto.RoleDto;
+import com.check.system.pojo.dto.RoleUpdateDto;
+import com.check.system.pojo.vo.RoleVo;
+import com.check.system.service.RoleService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+/**
+ * @author zzc
+ */
+@Service
+public class RoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> implements RoleService {
+
+    /**
+     * 列表查询
+     *
+     * @param dto dto
+     * @return Result
+     * @author zzc
+     */
+    @Override
+    public Result<PageInfo<RoleVo>> list(RoleDto dto) {
+        SysRole bean = new SysRole();
+        RoleVo vo = new RoleVo();
+        BeanUtils.copyProperties(dto, bean);
+        QueryWrapper<SysRole> queryWrapper = DataUtils.query(bean, dto, vo);
+        PageHelper.startPage(dto.getPageNum(), dto.getPageSize());
+
+        List<SysRole> list = list(queryWrapper);
+
+        PageInfo<RoleVo> page = DataUtils.getPageInfo(list, vo.getClass());
+
+        return Result.success(page);
+    }
+
+    /**
+     * 新增
+     *
+     * @param dto dto
+     * @return Result
+     * @author zzc
+     */
+    @Override
+    public Result<Object> add(RoleAddDto dto) {
+        SysRole bean = new SysRole();
+        BeanUtils.copyProperties(dto, bean);
+        save(bean);
+        return Result.success();
+    }
+
+    /**
+     * 修改
+     *
+     * @param dto dto
+     * @return Result
+     * @author zzc
+     */
+    @Override
+    public Result<Object> update(RoleUpdateDto dto) {
+        SysRole bean = new SysRole();
+        BeanUtils.copyProperties(dto, bean);
+        updateById(bean);
+        return Result.success();
+    }
+
+    /**
+     * 删除
+     *
+     * @param ids ids
+     * @return Result
+     * @author zzc
+     */
+    @Override
+    public Result<Object> delete(List<Long> ids) {
+        UpdateWrapper<SysRole> updateWrapper = new UpdateWrapper<>();
+        updateWrapper.in("ID", ids);
+        SysRole bean = new SysRole();
+        bean.setIsDelete(ConstantString.ONE);
+        update(bean, updateWrapper);
+        return Result.success();
+    }
+
+    /**
+     * 根据用户查询角色
+     *
+     * @param userCode 用户code
+     * @return Result
+     * @author zzc
+     */
+    @Override
+    public Result<List<RoleVo>> listByUserCode(String userCode) {
+        LambdaQueryWrapper<SysRole> queryWrapper = new LambdaQueryWrapper<>();
+        String sql = "SELECT ROLE_CODE FROM sys_users_roles WHERE user_code = " + userCode;
+        queryWrapper.select(SysRole::getCode, SysRole::getId, SysRole::getLevel,
+                SysRole::getName);
+        queryWrapper.eq(SysRole::getIsDelete, "0");
+        queryWrapper.inSql(SysRole::getCode, sql);
+        List<SysRole> list = list(queryWrapper);
+        List<RoleVo> resultList = list.stream().map(item -> {
+            RoleVo roleVo = new RoleVo();
+            BeanUtils.copyProperties(item, roleVo);
+            return roleVo;
+        }).collect(Collectors.toList());
+        return Result.success(resultList);
+    }
+}

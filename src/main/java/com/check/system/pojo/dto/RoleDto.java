@@ -1,6 +1,7 @@
-package com.check.system.pojo.vo;
+package com.check.system.pojo.dto;
 
 
+import com.check.common.pojo.dto.BaseDto;
 import com.check.common.pojo.vo.BaseVo;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.Api;
@@ -15,8 +16,8 @@ import java.util.Date;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@Api("角色输出类")
-public class RoleVo extends BaseVo {
+@Api("角色查询类")
+public class RoleDto extends BaseDto {
 
   @ApiModelProperty("ID")
   private Long id;
@@ -28,11 +29,9 @@ public class RoleVo extends BaseVo {
   private String description;
   @ApiModelProperty("CODE")
   private String code;
-  @JsonFormat( pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-  @ApiModelProperty("创建时间")
+  @ApiModelProperty(hidden = true)
   private Date createTime;
-  @JsonFormat( pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-  @ApiModelProperty("修改时间")
+  @ApiModelProperty(hidden = true)
   private Date updateTime;
   @ApiModelProperty("casId")
   private String casId;

@@ -26,4 +26,6 @@ public class DictDto extends BaseDto {
     private String dictGroup;
     @ApiModelProperty(hidden = true)
     private Date createTime;
+    @ApiModelProperty(hidden = true)
+    private Date updateTime;
 }

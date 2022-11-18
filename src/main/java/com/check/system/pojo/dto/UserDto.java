@@ -18,7 +18,7 @@ import java.util.Date;
 public class UserDto extends BaseDto {
 
     @ApiModelProperty("ID")
-    private Long userId;
+    private Long id;
     @ApiModelProperty("部门code")
     private Long deptCode;
     @ApiModelProperty("用户名")
@@ -35,5 +35,9 @@ public class UserDto extends BaseDto {
     private Long enabled;
     @ApiModelProperty("code")
     private String code;
+    @ApiModelProperty(hidden = true)
+    private Date createTime;
+    @ApiModelProperty(hidden = true)
+    private Date updateTime;
 
 }

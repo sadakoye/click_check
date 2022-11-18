@@ -38,7 +38,7 @@ public class JwtAuthenticationSuccessHandler implements AuthenticationSuccessHan
 
         User user = jwtUtils.getUser();
         user.setPassword(null);
-        user.setUserId(null);
+        user.setId(null);
         user.setCode(null);
         Map<String, Object> ret = new HashMap<>(4);
         ret.put("code", 200);

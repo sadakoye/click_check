@@ -1,7 +1,6 @@
 package com.check.system.pojo;
 
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.util.Date;
@@ -12,7 +11,7 @@ import java.util.Date;
 @Data
 public class SysRole {
 
-  private Long roleId;
+  private Long id;
   private String name;
   private Long level;
   private String description;
@@ -23,5 +22,6 @@ public class SysRole {
   private Date updateTime;
   private String code;
   private String casId;
+  private String isDelete;
 
 }

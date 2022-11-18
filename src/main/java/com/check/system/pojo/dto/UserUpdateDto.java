@@ -15,7 +15,7 @@ public class UserUpdateDto {
 
     @NotNull
     @ApiModelProperty("ID")
-    private Long userId;
+    private Long id;
     @ApiModelProperty("部门code")
     private Long deptCode;
     @ApiModelProperty("用户名")

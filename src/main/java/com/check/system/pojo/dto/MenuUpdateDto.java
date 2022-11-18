@@ -1,22 +1,19 @@
-package com.check.system.pojo.vo;
+package com.check.system.pojo.dto;
 
-import com.check.common.pojo.vo.BaseVo;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
-import java.util.Date;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author zzc
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
-@Api("菜单输出类")
-public class MenuVo extends BaseVo {
+@Api("菜单修改类")
+public class MenuUpdateDto{
 
+  @NotNull
   @ApiModelProperty("ID")
   private Long id;
   @ApiModelProperty("上级菜单ID")
@@ -39,20 +36,12 @@ public class MenuVo extends BaseVo {
   private String path;
   @ApiModelProperty("是否外链")
   private String iFrame;
-  @ApiModelProperty("缓存")
-  private String cache;
   @ApiModelProperty("隐藏")
   private String hidden;
   @ApiModelProperty("权限")
   private String permission;
   @ApiModelProperty("CODE")
   private String code;
-  @JsonFormat( pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-  @ApiModelProperty("创建时间")
-  private Date createTime;
-  @JsonFormat( pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-  @ApiModelProperty("修改时间")
-  private Date updateTime;
   @ApiModelProperty("casId")
   private String casId;
 
