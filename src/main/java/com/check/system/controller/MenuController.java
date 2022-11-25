@@ -4,6 +4,7 @@ import com.check.common.pojo.bean.Result;
 import com.check.system.pojo.dto.MenuAddDto;
 import com.check.system.pojo.dto.MenuDto;
 import com.check.system.pojo.dto.MenuUpdateDto;
+import com.check.system.pojo.dto.RolesMenusDto;
 import com.check.system.pojo.vo.MenuVo;
 import com.check.system.service.MenuService;
 import com.github.pagehelper.PageInfo;
@@ -79,5 +80,31 @@ public class MenuController {
     @PostMapping("/delete")
     public Result<Object> delete(@RequestBody @NotNull @ApiParam("id集合") List<Long> ids) {
         return service.delete(ids);
+    }
+
+    /**
+     * 角色新增菜单
+     *
+     * @param dtoList List<RolesMenusDto>
+     * @return Result
+     * @author zzc
+     */
+    @ApiOperation(value = "角色新增菜单")
+    @PostMapping("/addRoleMenu")
+    public Result<Object> addRoleMenu(@RequestBody @Valid List<RolesMenusDto> dtoList) {
+        return service.addRoleMenu(dtoList);
+    }
+
+    /**
+     * 角色删除菜单
+     *
+     * @param dtoList List<RolesMenusDto>
+     * @return Result
+     * @author zzc
+     */
+    @ApiOperation(value = "角色删除菜单")
+    @PostMapping("/deleteRoleMenu")
+    public Result<Object> deleteRoleMenu(@RequestBody @Valid List<RolesMenusDto> dtoList) {
+        return service.deleteRoleMenu(dtoList);
     }
 }

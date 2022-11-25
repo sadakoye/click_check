@@ -6,6 +6,7 @@ import com.check.system.pojo.SysMenu;
 import com.check.system.pojo.dto.MenuAddDto;
 import com.check.system.pojo.dto.MenuDto;
 import com.check.system.pojo.dto.MenuUpdateDto;
+import com.check.system.pojo.dto.RolesMenusDto;
 import com.check.system.pojo.vo.MenuVo;
 import com.github.pagehelper.PageInfo;
 
@@ -51,4 +52,22 @@ public interface MenuService extends IService<SysMenu> {
      * @author zzc
      */
     Result<Object> delete(List<Long> ids);
+
+    /**
+     * 角色新增菜单
+     *
+     * @param dtoList List<RolesMenusDto>
+     * @return Result
+     * @author zzc
+     */
+    Result<Object> addRoleMenu(List<RolesMenusDto> dtoList);
+
+    /**
+     * 角色删除菜单
+     *
+     * @param dtoList List<RolesMenusDto>
+     * @return Result
+     * @author zzc
+     */
+    Result<Object> deleteRoleMenu(List<RolesMenusDto> dtoList);
 }

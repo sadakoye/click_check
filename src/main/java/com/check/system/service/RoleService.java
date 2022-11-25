@@ -6,6 +6,7 @@ import com.check.system.pojo.SysRole;
 import com.check.system.pojo.dto.RoleAddDto;
 import com.check.system.pojo.dto.RoleDto;
 import com.check.system.pojo.dto.RoleUpdateDto;
+import com.check.system.pojo.dto.UsersRolesDto;
 import com.check.system.pojo.vo.RoleVo;
 import com.github.pagehelper.PageInfo;
 
@@ -60,4 +61,22 @@ public interface RoleService extends IService<SysRole> {
      * @author zzc
      */
     Result<List<RoleVo>> listByUserCode(String userCode);
+
+    /**
+     * 用户新增角色
+     *
+     * @param dtoList UsersRolesDto
+     * @return Result
+     * @author zzc
+     */
+    Result<Object> addUserRole(List<UsersRolesDto> dtoList);
+
+    /**
+     * 用户删除角色
+     *
+     * @param dtoList UsersRolesDto
+     * @return Result
+     * @author zzc
+     */
+    Result<Object> deleteUserRole(List<UsersRolesDto> dtoList);
 }

@@ -4,6 +4,7 @@ import com.check.common.pojo.bean.Result;
 import com.check.system.pojo.dto.RoleAddDto;
 import com.check.system.pojo.dto.RoleDto;
 import com.check.system.pojo.dto.RoleUpdateDto;
+import com.check.system.pojo.dto.UsersRolesDto;
 import com.check.system.pojo.vo.RoleVo;
 import com.check.system.service.RoleService;
 import com.github.pagehelper.PageInfo;
@@ -88,9 +89,35 @@ public class RoleController {
      * @return Result
      * @author zzc
      */
-    @ApiOperation(value = "列表查询")
+    @ApiOperation(value = "根据用户查询角色")
     @PostMapping("/listByUserCode")
     public Result<List<RoleVo>> listByUserCode(@RequestBody @ApiParam("用户code") String userCode) {
         return service.listByUserCode(userCode);
+    }
+
+    /**
+     * 用户新增角色
+     *
+     * @param dtoList UsersRolesDto
+     * @return Result
+     * @author zzc
+     */
+    @ApiOperation(value = "用户新增角色")
+    @PostMapping("/addUserRole")
+    public Result<Object> addUserRole(@RequestBody @Valid List<UsersRolesDto> dtoList) {
+        return service.addUserRole(dtoList);
+    }
+
+    /**
+     * 用户删除角色
+     *
+     * @param dtoList UsersRolesDto
+     * @return Result
+     * @author zzc
+     */
+    @ApiOperation(value = "用户删除角色")
+    @PostMapping("/deleteUserRole")
+    public Result<Object> deleteUserRole(@RequestBody @Valid List<UsersRolesDto> dtoList) {
+        return service.deleteUserRole(dtoList);
     }
 }

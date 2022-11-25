@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 public class SysUsersRoles {
 
-  private long userId;
-  private long roleId;
+  private long userCode;
+  private long roleCode;
 
 }

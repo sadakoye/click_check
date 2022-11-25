@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 public class SysRolesMenus {
 
-  private long menuId;
-  private long roleId;
+  private long menuCode;
+  private long roleCode;
 
 }

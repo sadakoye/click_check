@@ -8,25 +8,35 @@ import com.check.common.config.ConstantString;
 import com.check.common.pojo.bean.Result;
 import com.check.common.util.DataUtils;
 import com.check.system.mapper.SysRoleMapper;
+import com.check.system.mapper.SysUserRolesMapper;
 import com.check.system.pojo.SysRole;
+import com.check.system.pojo.SysUsersRoles;
 import com.check.system.pojo.dto.RoleAddDto;
 import com.check.system.pojo.dto.RoleDto;
 import com.check.system.pojo.dto.RoleUpdateDto;
+import com.check.system.pojo.dto.UsersRolesDto;
 import com.check.system.pojo.vo.RoleVo;
 import com.check.system.service.RoleService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.BeansException;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.stream.Collectors;
 
 /**
  * @author zzc
  */
+@Slf4j
 @Service
 public class RoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> implements RoleService {
+
+    @Resource
+    SysUserRolesMapper userRolesMapper;
 
     /**
      * 列表查询
@@ -119,5 +129,54 @@ public class RoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impleme
             return roleVo;
         }).collect(Collectors.toList());
         return Result.success(resultList);
+    }
+
+    /**
+     * 用户新增角色
+     *
+     * @param dtoList UsersRolesDto
+     * @return Result
+     * @author zzc
+     */
+    @Override
+    public Result<Object> addUserRole(List<UsersRolesDto> dtoList) {
+        if (dtoList != null && dtoList.size() > 0) {
+            dtoList.forEach(usersRolesDto -> {
+                try {
+                    SysUsersRoles usersRoles = new SysUsersRoles();
+                    BeanUtils.copyProperties(usersRolesDto, usersRoles);
+                    userRolesMapper.insert(usersRoles);
+                } catch (BeansException e) {
+                    log.error("用户角色添加失败" + usersRolesDto);
+                    e.printStackTrace();
+                }
+            });
+        }
+        return Result.success();
+    }
+
+    /**
+     * 用户删除角色
+     *
+     * @param dtoList UsersRolesDto
+     * @return Result
+     * @author zzc
+     */
+    @Override
+    public Result<Object> deleteUserRole(List<UsersRolesDto> dtoList) {
+        if (dtoList != null && dtoList.size() > 0){
+            dtoList.forEach(usersRolesDto -> {
+                try {
+                    LambdaQueryWrapper<SysUsersRoles> queryWrapper = new LambdaQueryWrapper<>();
+                    queryWrapper.eq(SysUsersRoles::getRoleCode, usersRolesDto.getRoleCode())
+                            .eq(SysUsersRoles::getUserCode, usersRolesDto.getUserCode());
+                    userRolesMapper.delete(queryWrapper);
+                } catch (Exception e) {
+                    log.error("用户角色删除失败" + usersRolesDto);
+                    e.printStackTrace();
+                }
+            });
+        }
+        return Result.success();
     }
 }
