@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.check.common.config.ConstantString;
+import com.check.common.constant.ConstantString;
 import com.check.common.pojo.bean.Result;
 import com.check.common.util.DataUtils;
 import com.check.system.mapper.SysRoleMapper;

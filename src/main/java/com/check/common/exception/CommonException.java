@@ -1,4 +1,4 @@
-package com.check.common.Exception;
+package com.check.common.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

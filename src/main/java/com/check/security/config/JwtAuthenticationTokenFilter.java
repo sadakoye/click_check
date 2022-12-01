@@ -1,7 +1,7 @@
 package com.check.security.config;
 
-import com.check.common.Exception.CommonException;
-import com.check.common.config.ConstantString;
+import com.check.common.exception.CommonException;
+import com.check.common.constant.ConstantString;
 import com.check.common.util.RedisUtils;
 import com.check.security.utils.JWTUtils;
 import org.springframework.beans.factory.annotation.Autowired;

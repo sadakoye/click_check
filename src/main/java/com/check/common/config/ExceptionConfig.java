@@ -1,7 +1,7 @@
 package com.check.common.config;
 
 
-import com.check.common.Exception.CommonException;
+import com.check.common.exception.CommonException;
 import com.check.common.pojo.bean.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.support.DefaultMessageSourceResolvable;

@@ -1,8 +1,7 @@
 package com.check.common.util;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.check.common.Exception.CommonException;
-import com.check.common.config.ConstantString;
+import com.check.common.constant.ConstantString;
 import com.check.common.pojo.dto.BaseDto;
 import com.check.common.pojo.vo.BaseVo;
 import com.github.pagehelper.PageInfo;
