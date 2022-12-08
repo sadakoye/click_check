@@ -3,7 +3,8 @@ package com.check.common.config;
 import com.alibaba.druid.util.StringUtils;
 import com.alibaba.fastjson.JSONObject;
 import com.check.security.pojo.bean.User;
-import com.check.security.utils.JWTUtils;
+
+import com.check.security.utils.JwtUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -32,7 +33,7 @@ public class WebLogAspect {
     private final static String DOT = ".";
 
     @Resource
-    private JWTUtils jwtUtils;
+    private JwtUtils jwtUtils;
 
     @Pointcut("execution(public * com.check..*.*Controller.*(..))")
     public void controllerMethodAop() {

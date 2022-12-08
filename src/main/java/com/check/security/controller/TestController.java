@@ -3,7 +3,7 @@ package com.check.security.controller;
 import com.check.common.pojo.bean.Result;
 import com.check.common.util.RedisUtils;
 import com.check.security.pojo.bean.User;
-import com.check.security.utils.JWTUtils;
+import com.check.security.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +21,7 @@ public class TestController {
     private HttpServletRequest request;
 
     @Autowired
-    private JWTUtils jwtUtils;
+    private JwtUtils jwtUtils;
 
     @GetMapping("/get")
     public Result get() {

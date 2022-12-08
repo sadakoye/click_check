@@ -3,7 +3,7 @@ package com.check.security.config;
 import com.check.common.exception.CommonException;
 import com.check.common.constant.ConstantString;
 import com.check.common.util.RedisUtils;
-import com.check.security.utils.JWTUtils;
+import com.check.security.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -12,6 +12,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import javax.annotation.Resource;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -25,14 +26,14 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 
-    @Autowired
+    @Resource
     private JwtUserServiceImpl jwtUserService;
 
-    @Autowired
+    @Resource
     private JwtProperties jwtProperties;
 
-    @Autowired
-    private JWTUtils jwtUtils;
+    @Resource
+    private JwtUtils jwtUtils;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -44,8 +45,8 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             //当token中的username不为空时进行验证token是否是有效的token
             if (name != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
-                if (RedisUtils.contain(ConstantString.USER + name)) {
-                    RedisUtils.expire(ConstantString.USER + name, jwtProperties.getTokenValidityInSeconds(), TimeUnit.MINUTES);
+                if (RedisUtils.contain(ConstantString.REDIS_USER + name)) {
+                    RedisUtils.expire(ConstantString.REDIS_USER + name, jwtProperties.getTokenValidityInSeconds(), TimeUnit.MINUTES);
                 } else {
                     throw new CommonException(401, "token无效或过期");
                 }

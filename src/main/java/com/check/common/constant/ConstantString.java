@@ -7,9 +7,12 @@ package com.check.common.constant;
  */
 public interface ConstantString {
 
-    String USER = "user:";
+
     String IS_DELETE = "isDelete";
     String ZERO = "0";
     String ONE = "1";
+
+    String REDIS_USER = "user:";
+    String REDIS_PICK = "pick:";
 
 }

@@ -14,32 +14,34 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import javax.annotation.Resource;
+
 /**
  * 其中@EnableWebSecurity 表示是Spring Security的配置类
  * 其中@EnableGlobalMethodSecurity(prePostEnabled = true)表示开启@PreAuthorize、@PostAuthorize, @Secured这三个注解支持
  * 4、定义Spring Security配置类
+ * 开启注解权限控制
  *
  * @author zzc
  */
 @Configuration
 @EnableWebSecurity
-//开启注解权限控制
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
+    @Resource
     private JwtAuthenticationSuccessHandler jwtAuthenticationSuccessHandler;
 
-    @Autowired
+    @Resource
     private LoginFailureHandler loginFailureHandler;
 
-    @Autowired
+    @Resource
     private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
-    @Autowired
+    @Resource
     private JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
 
-    @Autowired
+    @Resource
     private JwtAccessDeniedHandler jwtAccessDeniedHandler;
 
 

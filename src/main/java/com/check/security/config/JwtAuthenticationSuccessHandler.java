@@ -2,13 +2,14 @@ package com.check.security.config;
 
 import com.alibaba.fastjson.JSON;
 import com.check.security.pojo.bean.User;
-import com.check.security.utils.JWTUtils;
+import com.check.security.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
+import javax.annotation.Resource;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,8 +25,8 @@ import java.util.Map;
 public class JwtAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
 
-    @Autowired
-    private JWTUtils jwtUtils;
+    @Resource
+    private JwtUtils jwtUtils;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {

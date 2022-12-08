@@ -81,7 +81,7 @@ public class UserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impleme
         LambdaQueryWrapper<SysUser> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(SysUser::getId, dto.getId());
         SysUser one = getOne(queryWrapper);
-        RedisUtils.deleteValue(ConstantString.USER + one.getUsername());
+        RedisUtils.deleteValue(ConstantString.REDIS_USER + one.getUsername());
         return Result.success();
     }
 

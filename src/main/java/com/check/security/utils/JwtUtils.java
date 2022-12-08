@@ -20,7 +20,7 @@ import java.util.Map;
  * @author zzc
  */
 @Component
-public class JWTUtils {
+public class JwtUtils {
 
     @Resource
     private JwtProperties jwtProperties;

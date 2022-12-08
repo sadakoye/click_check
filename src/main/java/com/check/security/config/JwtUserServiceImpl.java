@@ -2,12 +2,12 @@ package com.check.security.config;
 
 import com.check.common.constant.ConstantString;
 import com.check.common.util.RedisUtils;
+import com.check.security.utils.JwtUtils;
 import com.check.system.mapper.SysMenuMapper;
 import com.check.system.mapper.SysRoleMapper;
 import com.check.system.mapper.SysUserMapper;
 import com.check.security.pojo.bean.User;
 import com.check.security.utils.EmptyUtil;
-import com.check.security.utils.JWTUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -35,7 +35,7 @@ public class JwtUserServiceImpl  implements UserDetailsService {
     private SysMenuMapper menuMapper;
 
     @Resource
-    private JWTUtils jwtUtils;
+    private JwtUtils jwtUtils;
 
     @Resource
     private JwtProperties jwtProperties;
@@ -45,8 +45,8 @@ public class JwtUserServiceImpl  implements UserDetailsService {
         // 用户基本信息
         User user;
 
-        if (RedisUtils.contain(ConstantString.USER + username)) {
-            user = (User) RedisUtils.getValue(ConstantString.USER + username);
+        if (RedisUtils.contain(ConstantString.REDIS_USER + username)) {
+            user = (User) RedisUtils.getValue(ConstantString.REDIS_USER + username);
         } else {
             user = userMapper.getSecurityUser(username);
 
@@ -60,7 +60,7 @@ public class JwtUserServiceImpl  implements UserDetailsService {
                 //String token = Base64.getEncoder().encodeToString((user.getUsername() + "_" + System.currentTimeMillis()).getBytes(StandardCharsets.UTF_8));
                 user.setToken(token);
                 // 将用户信息保存在缓存中
-                RedisUtils.saveValue(ConstantString.USER + username, user, jwtProperties.getTokenValidityInSeconds(), TimeUnit.MINUTES);
+                RedisUtils.saveValue(ConstantString.REDIS_USER + username, user, jwtProperties.getTokenValidityInSeconds(), TimeUnit.MINUTES);
             }
         }
         return user;

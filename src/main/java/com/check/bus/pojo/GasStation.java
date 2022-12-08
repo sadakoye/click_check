@@ -1,6 +1,7 @@
 package com.check.bus.pojo;
 
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.util.Date;
@@ -11,7 +12,8 @@ import java.util.Date;
  * @author zzc
  */
 @Data
-public class TGasStation {
+@TableName(value = "T_GAS_STATION")
+public class GasStation {
 
   private long id;
   private String code;
