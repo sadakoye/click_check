@@ -57,6 +57,7 @@ public class JwtUserServiceImpl  implements UserDetailsService {
                 user.setMenus(menuMapper.getUserMenus(user.getCode()));
                 // token
                 String token = jwtUtils.generateToken(username);
+                ///旧token生成
                 //String token = Base64.getEncoder().encodeToString((user.getUsername() + "_" + System.currentTimeMillis()).getBytes(StandardCharsets.UTF_8));
                 user.setToken(token);
                 // 将用户信息保存在缓存中

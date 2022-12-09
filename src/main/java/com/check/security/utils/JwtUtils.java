@@ -33,6 +33,7 @@ public class JwtUtils {
     public String generateToken(String name){
         Map<String,Object> map = new HashMap<>(1);
         map.put("username",name);
+        ///密码
         //map.put("password",user.getPassword());
 
         return Jwts.builder()

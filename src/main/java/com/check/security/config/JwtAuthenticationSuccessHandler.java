@@ -30,9 +30,10 @@ public class JwtAuthenticationSuccessHandler implements AuthenticationSuccessHan
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
-        //String name = authentication.getName();
-        //生成token
-        //String token = jwtUtils.generateToken(name);
+        ///旧生成token
+        // String name = authentication.getName();
+        // 生成token
+        // String token = jwtUtils.generateToken(name);
 
         //将生成的authentication放入容器中，生成安全的上下文
         SecurityContextHolder.getContext().setAuthentication(authentication);

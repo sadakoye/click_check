@@ -15,21 +15,21 @@ import java.util.Date;
 @TableName(value = "T_GAS_STATION")
 public class GasStation {
 
-  private long id;
-  private String code;
-  private String districtCode;
-  private String districtName;
-  private String managementNature;
-  private String managementState;
-  private String brand;
-  private String name;
-  private String address;
-  private String contactsName;
-  private String contactsPhone;
-  private String contactsLandlineTelephone;
-  private String remark;
-  private Date createTime;
-  private Date updateTime;
-  private String isDelete;
+    private long id;
+    private String code;
+    private String districtCode;
+    private String districtName;
+    private String managementNature;
+    private String managementState;
+    private String brand;
+    private String name;
+    private String address;
+    private String contactsName;
+    private String contactsPhone;
+    private String contactsLandlineTelephone;
+    private String remark;
+    private Date createTime;
+    private Date updateTime;
+    private String isDelete;
 
 }

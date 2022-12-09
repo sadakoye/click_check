@@ -14,18 +14,18 @@ import java.util.Date;
 @TableName(value = "T_GAS_STATION_VOTE")
 public class GasStationVote {
 
-  private long id;
-  private String districtCode;
-  private String districtName;
-  private String voterName;
-  private String voterPhone;
-  private String voterIdCard;
-  private String voterIp;
-  private Date voteTime;
-  private String gasStationName;
-  private String gasStationCode;
-  private Date createTime;
-  private Date updateTime;
-  private String isDelete;
+    private long id;
+    private String districtCode;
+    private String districtName;
+    private String voterName;
+    private String voterPhone;
+    private String voterIdCard;
+    private String voterIp;
+    private Date voteTime;
+    private String gasStationName;
+    private String gasStationCode;
+    private Date createTime;
+    private Date updateTime;
+    private String isDelete;
 
 }
