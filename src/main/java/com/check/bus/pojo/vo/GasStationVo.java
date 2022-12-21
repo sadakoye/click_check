@@ -20,7 +20,7 @@ import java.util.Date;
 public class GasStationVo extends BaseVo {
 
     @ApiModelProperty("ID")
-    private long id;
+    private Long id;
     @ApiModelProperty("加油站code")
     private String code;
     @ApiModelProperty("区code")

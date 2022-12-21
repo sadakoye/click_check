@@ -18,7 +18,7 @@ public class GasStationUpdateDto {
 
     @NotNull
     @ApiModelProperty("ID")
-    private long id;
+    private Long id;
     @ApiModelProperty("加油站code")
     private String code;
     @ApiModelProperty("区code")

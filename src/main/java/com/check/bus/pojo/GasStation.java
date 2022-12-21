@@ -15,7 +15,7 @@ import java.util.Date;
 @TableName(value = "T_GAS_STATION")
 public class GasStation {
 
-    private long id;
+    private Long id;
     private String code;
     private String districtCode;
     private String districtName;
