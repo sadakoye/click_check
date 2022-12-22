@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
@@ -35,8 +34,7 @@ public class GasStationExamineAddDto {
     private String examineState;
     @ApiModelProperty("检查结果")
     private String examineResult;
-    @JsonFormat(pattern="yyyy-MM-dd")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat( pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @ApiModelProperty("检查时间")
     private Date examineTime;
     @ApiModelProperty("备注")

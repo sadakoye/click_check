@@ -1,0 +1,54 @@
+package com.check.bus.service;
+
+import com.baomidou.mybatisplus.extension.service.IService;
+import com.check.bus.pojo.GasStationVote;
+import com.check.bus.pojo.dto.GasStationVoteAddDto;
+import com.check.bus.pojo.dto.GasStationVoteDto;
+import com.check.bus.pojo.dto.GasStationVoteUpdateDto;
+import com.check.bus.pojo.vo.GasStationVoteVo;
+import com.check.common.pojo.bean.Result;
+import com.github.pagehelper.PageInfo;
+
+import java.util.List;
+
+/**
+ * @author zzc
+ */
+public interface GasStationVoteService extends IService<GasStationVote> {
+
+    /**
+     * 列表查询
+     *
+     * @param dto dto
+     * @return Result
+     * @author zzc
+     */
+    Result<PageInfo<GasStationVoteVo>> list(GasStationVoteDto dto);
+
+    /**
+     * 新增
+     *
+     * @param dto dto
+     * @return Result
+     * @author zzc
+     */
+    Result<Object> add(GasStationVoteAddDto dto);
+
+    /**
+     * 修改
+     *
+     * @param dto dto
+     * @return Result
+     * @author zzc
+     */
+    Result<Object> update(GasStationVoteUpdateDto dto);
+
+    /**
+     * 删除
+     *
+     * @param ids ids
+     * @return Result
+     * @author zzc
+     */
+    Result<Object> delete(List<Long> ids);
+}
