@@ -53,5 +53,7 @@ public class UserVo extends BaseVo {
   @JsonFormat( pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
   @ApiModelProperty("修改时间")
   private Date updateTime;
+  @ApiModelProperty("身份证号码")
+  private String idCard;
 
 }

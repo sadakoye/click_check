@@ -51,4 +51,16 @@ public interface UserService extends IService<SysUser> {
      * @author zzc
      */
     Result<Object> delete(List<Long> ids);
+
+    /**
+     * 获取单点用户信息
+     *
+     * @param hidName 用户名
+     * @param hidUserId 用户id
+     * @param hidUserType 用户类型（1-企业；2-个人）
+     * @param cardId 身份证号码
+     * @return Result
+     * @author zzc
+     */
+    Result<Object> info(String hidName, String hidUserId, String hidUserType, String cardId);
 }

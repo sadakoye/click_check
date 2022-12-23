@@ -43,5 +43,7 @@ public class UserAddDto {
     private String code;
     @ApiModelProperty("casId")
     private String casId;
+    @ApiModelProperty("身份证号码")
+    private String idCard;
 
 }

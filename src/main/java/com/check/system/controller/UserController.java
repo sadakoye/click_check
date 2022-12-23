@@ -13,6 +13,8 @@ import io.swagger.annotations.ApiParam;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -79,5 +81,21 @@ public class UserController {
     @PostMapping("/delete")
     public Result<Object> delete(@RequestBody @NotNull @ApiParam("id集合") List<Long> ids) {
         return service.delete(ids);
+    }
+
+    /**
+     * 获取单点用户信息
+     *
+     * @param hidName 用户名
+     * @param hidUserId 用户id
+     * @param hidUserType 用户类型（1-企业；2-个人）
+     * @param cardid 身份证号码
+     * @return Result
+     * @author zzc
+     */
+    @ApiOperation(value = "获取单点用户信息")
+    @RequestMapping(value = "/info")
+    public Result<Object> info(String hidName, String hidUserId, String hidUserType, String cardid) {
+        return service.info(hidName, hidUserId, hidUserType, cardid);
     }
 }

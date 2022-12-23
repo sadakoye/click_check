@@ -35,6 +35,8 @@ public class UserDto extends BaseDto {
     private Long enabled;
     @ApiModelProperty("code")
     private String code;
+    @ApiModelProperty("身份证号码")
+    private String idCard;
     @ApiModelProperty(hidden = true)
     private Date createTime;
     @ApiModelProperty(hidden = true)

@@ -29,5 +29,6 @@ public class SysUser {
   private Date updateTime;
   private String code;
   private String casId;
+  private String idCard;
 
 }

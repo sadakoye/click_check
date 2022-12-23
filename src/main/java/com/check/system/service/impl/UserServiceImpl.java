@@ -19,8 +19,11 @@ import com.check.system.service.UserService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.BeanUtils;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -28,6 +31,9 @@ import java.util.List;
  */
 @Service
 public class UserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements UserService {
+
+    @Resource
+    SysUserMapper userMapper;
 
     /**
      * 列表查询
@@ -99,6 +105,44 @@ public class UserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impleme
         SysUser bean = new SysUser();
         bean.setEnabled(0L);
         update(bean, updateWrapper);
+        return Result.success();
+    }
+
+    /**
+     * 获取单点用户信息
+     *
+     * @param hidName 用户名
+     * @param hidUserId 用户id
+     * @param hidUserType 用户类型（1-企业；2-个人）
+     * @param cardId 身份证号码
+     * @return Result
+     * @author zzc
+     */
+    @Override
+    public Result<Object> info(String hidName, String hidUserId, String hidUserType, String cardId) {
+        LambdaQueryWrapper<SysUser> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SysUser::getUsername, hidName);
+        List<SysUser> list = list(queryWrapper);
+        if (list.size() > 0){
+            return Result.error("已有此用户");
+        }
+        String maxCode = userMapper.getMaxCode();
+        int i = Integer.parseInt(maxCode);
+        i = i + 1;
+
+        SysUser user = new SysUser();
+        user.setUsername(hidName);
+        user.setCasId(hidUserId);
+        user.setIdCard(cardId);
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        user.setPassword(passwordEncoder.encode("123456"));
+        user.setNickName(hidName);
+        user.setGender("1");
+        user.setEnabled(1L);
+        user.setCreateBy("SYSTEM");
+        user.setUpdateBy("SYSTEM");
+        user.setCode(Integer.toString(i));
+
         return Result.success();
     }
 }
