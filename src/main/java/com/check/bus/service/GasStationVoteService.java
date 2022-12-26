@@ -3,8 +3,10 @@ package com.check.bus.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.check.bus.pojo.GasStationVote;
 import com.check.bus.pojo.dto.GasStationVoteAddDto;
+import com.check.bus.pojo.dto.GasStationVoteCountDto;
 import com.check.bus.pojo.dto.GasStationVoteDto;
 import com.check.bus.pojo.dto.GasStationVoteUpdateDto;
+import com.check.bus.pojo.vo.GasStationVoteCountVo;
 import com.check.bus.pojo.vo.GasStationVoteVo;
 import com.check.common.pojo.bean.Result;
 import com.github.pagehelper.PageInfo;
@@ -51,4 +53,13 @@ public interface GasStationVoteService extends IService<GasStationVote> {
      * @author zzc
      */
     Result<Object> delete(List<Long> ids);
+
+    /**
+     * 投票统计
+     *
+     * @param dto dto
+     * @return Result
+     * @author zzc
+     */
+    Result<PageInfo<GasStationVoteCountVo>> voteCount(GasStationVoteCountDto dto);
 }

@@ -1,7 +1,7 @@
-package com.check.bus.pojo.dto;
+package com.check.bus.pojo.vo;
 
 
-import com.check.common.pojo.dto.BaseDto;
+import com.check.common.pojo.vo.BaseVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -10,14 +10,14 @@ import lombok.EqualsAndHashCode;
 import java.util.Date;
 
 /**
- * 加油站查询类
+ * 加油站输出类
  *
  * @author zzc
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@Api("加油站查询类")
-public class GasStationDto extends BaseDto {
+@Api("加油站输出类")
+public class GasStationVoteCountVo extends BaseVo {
 
     @ApiModelProperty("ID")
     private Long id;
@@ -37,9 +37,19 @@ public class GasStationDto extends BaseDto {
     private String name;
     @ApiModelProperty("加油站地址")
     private String address;
-    @ApiModelProperty(hidden = true)
+    @ApiModelProperty("联系人名称")
+    private String contactsName;
+    @ApiModelProperty("联系人电话")
+    private String contactsPhone;
+    @ApiModelProperty("联系人固定电话")
+    private String contactsLandlineTelephone;
+    @ApiModelProperty("备注")
+    private String remark;
+    @ApiModelProperty("创建时间")
     private Date createTime;
-    @ApiModelProperty(hidden = true)
+    @ApiModelProperty("更新时间")
     private Date updateTime;
+    @ApiModelProperty("投票数")
+    private Long count;
 
 }

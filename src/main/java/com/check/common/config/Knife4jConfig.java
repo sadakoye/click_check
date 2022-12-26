@@ -24,8 +24,8 @@ import java.util.List;
 @EnableSwagger2WebMvc
 public class Knife4jConfig {
 
-    @Bean
-    public Docket docket(Environment environment) {
+    @Bean(value = "systemApi")
+    public Docket systemApi(Environment environment) {
         // 添加接口请求头参数配置 没有的话 可以忽略
         ParameterBuilder tokenPar = new ParameterBuilder();
         List<Parameter> pars = new ArrayList<>();
@@ -44,6 +44,31 @@ public class Knife4jConfig {
                 .select()
                 //指定扫描的包路径
                 .apis(RequestHandlerSelectors.basePackage("com.check.system.controller"))
+                .paths(PathSelectors.any())
+                .build()
+                .globalOperationParameters(pars);
+    }
+
+    @Bean(value = "busApi")
+    public Docket busApi(Environment environment) {
+        // 添加接口请求头参数配置 没有的话 可以忽略
+        ParameterBuilder tokenPar = new ParameterBuilder();
+        List<Parameter> pars = new ArrayList<>();
+        tokenPar.name("Authorization")
+                .description("token")
+                .defaultValue("")
+                .modelRef(new ModelRef("string"))
+                .parameterType("header").required(false).build();
+        pars.add(tokenPar.build());
+        return new Docket(DocumentationType.SWAGGER_2)
+                .apiInfo(apiInfo())
+                //是否启动swagger 默认启动
+                .enable(true)
+                //所在分组
+                .groupName("bus")
+                .select()
+                //指定扫描的包路径
+                .apis(RequestHandlerSelectors.basePackage("com.check.bus.controller"))
                 .paths(PathSelectors.any())
                 .build()
                 .globalOperationParameters(pars);

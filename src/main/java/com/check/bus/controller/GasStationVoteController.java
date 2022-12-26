@@ -1,8 +1,10 @@
 package com.check.bus.controller;
 
 import com.check.bus.pojo.dto.GasStationVoteAddDto;
+import com.check.bus.pojo.dto.GasStationVoteCountDto;
 import com.check.bus.pojo.dto.GasStationVoteDto;
 import com.check.bus.pojo.dto.GasStationVoteUpdateDto;
+import com.check.bus.pojo.vo.GasStationVoteCountVo;
 import com.check.bus.pojo.vo.GasStationVoteVo;
 import com.check.bus.service.GasStationVoteService;
 import com.check.common.pojo.bean.Result;
@@ -80,4 +82,18 @@ public class GasStationVoteController {
     public Result<Object> delete(@RequestBody @NotNull @ApiParam("id集合") List<Long> ids) {
         return service.delete(ids);
     }
+
+    /**
+     * 投票统计
+     *
+     * @param dto dto
+     * @return Result
+     * @author zzc
+     */
+    @ApiOperation(value = "投票统计")
+    @PostMapping("/voteCount")
+    public Result<PageInfo<GasStationVoteCountVo>> voteCount(@RequestBody GasStationVoteCountDto dto) {
+        return service.voteCount(dto);
+    }
+
 }

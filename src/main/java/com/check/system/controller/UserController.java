@@ -94,7 +94,7 @@ public class UserController {
      * @author zzc
      */
     @ApiOperation(value = "获取单点用户信息")
-    @RequestMapping(value = "/info")
+    @PostMapping(value = "/info")
     public Result<Object> info(String hidName, String hidUserId, String hidUserType, String cardid) {
         return service.info(hidName, hidUserId, hidUserType, cardid);
     }
