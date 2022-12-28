@@ -1,10 +1,9 @@
 package com.check.security.config;
 
-import com.check.common.exception.CommonException;
 import com.check.common.constant.ConstantString;
+import com.check.common.exception.CommonException;
 import com.check.common.util.RedisUtils;
 import com.check.security.utils.JwtUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;

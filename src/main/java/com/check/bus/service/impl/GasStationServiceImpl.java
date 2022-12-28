@@ -10,20 +10,34 @@ import com.check.bus.pojo.dto.GasStationDto;
 import com.check.bus.pojo.dto.GasStationUpdateDto;
 import com.check.bus.pojo.vo.GasStationVo;
 import com.check.bus.service.GasStationService;
+import com.check.common.constant.ConstantString;
 import com.check.common.pojo.bean.Result;
 import com.check.common.util.DataUtils;
+import com.check.common.util.RedisUtils;
+import com.check.security.config.JwtProperties;
+import com.check.security.pojo.bean.User;
+import com.check.security.utils.JwtUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author zzc
  */
 @Service
 public class GasStationServiceImpl extends ServiceImpl<GasStationMapper, GasStation> implements GasStationService {
+
+    @Resource
+    private JwtUtils jwtUtils;
+
+    @Resource
+    private JwtProperties jwtProperties;
 
     /**
      * 列表查询
@@ -92,5 +106,32 @@ public class GasStationServiceImpl extends ServiceImpl<GasStationMapper, GasStat
         bean.setIsDelete("1");
         update(bean, updateWrapper);
         return Result.success();
+    }
+
+    /**
+     * 保存选中状态
+     *
+     * @param ids ids
+     * @return Result
+     * @author zzc
+     */
+    @Override
+    public Result<Object> pick(List<Long> ids) {
+        if (ids.size() > 0) {
+            User user = jwtUtils.getUser();
+            String userName = user.getUsername();
+            List<Long> idList;
+            if (RedisUtils.contain(ConstantString.REDIS_PICK + userName)) {
+                Object value = RedisUtils.getValue(ConstantString.REDIS_PICK + userName);
+                idList = DataUtils.castList(value, Long.class);
+                idList.addAll(ids);
+            }else {
+                idList = new LinkedList<>(ids);
+            }
+            RedisUtils.saveValue(ConstantString.REDIS_PICK + userName, idList, jwtProperties.getTokenValidityInSeconds(), TimeUnit.MINUTES);
+            return Result.success();
+        }else {
+            return Result.error("传入的id为空");
+        }
     }
 }

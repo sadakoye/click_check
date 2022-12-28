@@ -1,6 +1,9 @@
 package com.check.security.config;
 
 import com.alibaba.fastjson.JSON;
+import com.check.common.util.LogUtils;
+import com.check.common.util.RequestUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -17,6 +20,7 @@ import java.util.Map;
  * @author zzc
  */
 @Configuration
+@Slf4j
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
@@ -25,6 +29,8 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
         ret.put("message", "无效token");
         ret.put("data", null);
         ret.put("date", new Date().toString());
+        log.error(LogUtils.getErrorLog(RequestUtils.getIp(request), RequestUtils.getUrl(request),
+                "401", "无效token"));
         response.setContentType("text/json;charset=utf-8");
         response.getWriter().write(JSON.toJSONString(ret));
     }

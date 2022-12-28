@@ -51,4 +51,13 @@ public interface GasStationService extends IService<GasStation> {
      * @author zzc
      */
     Result<Object> delete(List<Long> ids);
+
+    /**
+     * 保存选中状态
+     *
+     * @param ids ids
+     * @return Result
+     * @author zzc
+     */
+    Result<Object> pick(List<Long> ids);
 }

@@ -1,9 +1,11 @@
 package com.check.security.config;
 
 import com.alibaba.fastjson.JSON;
+import com.check.common.util.LogUtils;
+import com.check.common.util.RequestUtils;
 import com.check.security.pojo.bean.User;
 import com.check.security.utils.JwtUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,8 +24,8 @@ import java.util.Map;
  * @author zzc
  */
 @Configuration
+@Slf4j
 public class JwtAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
-
 
     @Resource
     private JwtUtils jwtUtils;
@@ -47,6 +49,8 @@ public class JwtAuthenticationSuccessHandler implements AuthenticationSuccessHan
         ret.put("message", "登录成功");
         ret.put("user", user);
         ret.put("date", new Date().toString());
+        log.info(LogUtils.getInfoLog(RequestUtils.getIp(httpServletRequest), RequestUtils.getUrl(httpServletRequest),
+                "200", "登录成功", user.getUsername()));
         httpServletResponse.setContentType("text/json;charset=utf-8");
         httpServletResponse.getWriter().write(JSON.toJSONString(ret));
     }

@@ -111,10 +111,10 @@ public class UserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impleme
     /**
      * 获取单点用户信息
      *
-     * @param hidName 用户名
-     * @param hidUserId 用户id
+     * @param hidName     用户名
+     * @param hidUserId   用户id
      * @param hidUserType 用户类型（1-企业；2-个人）
-     * @param cardId 身份证号码
+     * @param cardId      身份证号码
      * @return Result
      * @author zzc
      */
@@ -123,7 +123,7 @@ public class UserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impleme
         LambdaQueryWrapper<SysUser> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(SysUser::getUsername, hidName);
         List<SysUser> list = list(queryWrapper);
-        if (list.size() > 0){
+        if (list.size() > 0) {
             return Result.error("已有此用户");
         }
         String maxCode = userMapper.getMaxCode();

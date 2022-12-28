@@ -80,4 +80,17 @@ public class GasStationController {
     public Result<Object> delete(@RequestBody @NotNull @ApiParam("id集合") List<Long> ids) {
         return service.delete(ids);
     }
+
+    /**
+     * 保存选中状态
+     *
+     * @param ids ids
+     * @return Result
+     * @author zzc
+     */
+    @ApiOperation(value = "保存选中状态")
+    @PostMapping("/pick")
+    public Result<Object> pick(@RequestBody @NotNull @ApiParam("id集合") List<Long> ids) {
+        return service.pick(ids);
+    }
 }

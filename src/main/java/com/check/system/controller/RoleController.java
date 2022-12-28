@@ -24,7 +24,7 @@ import java.util.List;
 @CrossOrigin
 @RequestMapping("/role")
 @RestController
-@Api(tags = "菜单")
+@Api(tags = "角色")
 public class RoleController {
 
     @Resource
