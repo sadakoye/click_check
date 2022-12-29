@@ -70,7 +70,15 @@ public class JwtUtils {
     public User getUser(){
            SecurityContext context = SecurityContextHolder.getContext();
            Authentication authentication = context.getAuthentication();
-        return (User) authentication.getPrincipal();
+        User user = new User();
+        try {
+            if (authentication.getPrincipal() instanceof User) {
+                user = (User) authentication.getPrincipal();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return user;
     }
 
 }

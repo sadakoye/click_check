@@ -57,7 +57,7 @@ public class WebLogAspect {
      */
     private void appendUserLog(StringBuilder logBuffer) {
         User user = jwtUtils.getUser();
-        if (user != null){
+        if (user.getUsername() != null){
             logBuffer.append("+  USER: ").append(user.getUsername()).append(LINE_SEPARATOR);
         }else {
             logBuffer.append("+  USER: NOT").append(LINE_SEPARATOR);

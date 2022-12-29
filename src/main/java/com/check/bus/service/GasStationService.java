@@ -60,4 +60,21 @@ public interface GasStationService extends IService<GasStation> {
      * @author zzc
      */
     Result<Object> pick(List<Long> ids);
+
+    /**
+     * 删除选中状态
+     *
+     * @param ids ids
+     * @return Result
+     * @author zzc
+     */
+    Result<Object> pickOff(List<Long> ids);
+
+    /**
+     * 获取选中状态
+     *
+     * @return Result<List<Long>>
+     * @author zzc
+     */
+    Result<List<Long>> getPick();
 }

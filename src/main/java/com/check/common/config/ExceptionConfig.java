@@ -29,18 +29,18 @@ public class ExceptionConfig {
     private final static String LINE_SEPARATOR = System.getProperty("line.separator");
 
 
-    /**
-     * 捕捉自定义异常
-     *
-     * @param e 异常
-     * @return Result
-     * @author zzc
-     */
-    @ExceptionHandler(HttpMessageNotReadableException.class)
-    public Result<Object> handleException(HttpMessageNotReadableException e) {
-        log.error("系统异常：未接收到请求时传入的参数" + LINE_SEPARATOR + e.getMessage());
-        return Result.error("未接收到请求时传入的参数");
-    }
+//    /**
+//     * 捕捉自定义异常
+//     *
+//     * @param e 异常
+//     * @return Result
+//     * @author zzc
+//     */
+//    @ExceptionHandler(HttpMessageNotReadableException.class)
+//    public Result<Object> handleException(HttpMessageNotReadableException e) {
+//        log.error("系统异常：未接收到请求时传入的参数" + LINE_SEPARATOR + e.getMessage());
+//        return Result.error("未接收到请求时传入的参数");
+//    }
 
     /**
      * 参数校验，参数为实体类

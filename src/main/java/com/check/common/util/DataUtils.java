@@ -187,7 +187,7 @@ public class DataUtils {
         if (likeMap != null && likeMap.size() > 0) {
             for (String s : likeMap.keySet()) {
                 Object object = likeMap.get(s);
-                queryWrapper.like(s, "%" + object + "%");
+                queryWrapper.like(s, object);
             }
         }
 
@@ -202,7 +202,7 @@ public class DataUtils {
             String key = set.iterator().next();
             String value = keywordMap.get(key);
             if (StringUtils.isNotBlank(value)) {
-                queryWrapper.like(key, "%" + value + "%");
+                queryWrapper.like(key, value);
             }
             if (i < keywordMap.keySet().size()) {
                 queryWrapper.or();

@@ -128,10 +128,50 @@ public class GasStationServiceImpl extends ServiceImpl<GasStationMapper, GasStat
             }else {
                 idList = new LinkedList<>(ids);
             }
-            RedisUtils.saveValue(ConstantString.REDIS_PICK + userName, idList, jwtProperties.getTokenValidityInSeconds(), TimeUnit.MINUTES);
+            RedisUtils.saveValue(ConstantString.REDIS_PICK + userName, idList,
+                    jwtProperties.getTokenValidityInSeconds(), TimeUnit.MINUTES);
             return Result.success();
         }else {
             return Result.error("传入的id为空");
         }
+    }
+
+    /**
+     * 删除选中状态
+     *
+     * @param ids ids
+     * @return Result
+     * @author zzc
+     */
+    @Override
+    public Result<Object> pickOff(List<Long> ids) {
+        User user = jwtUtils.getUser();
+        String userName = user.getUsername();
+        if (RedisUtils.contain(ConstantString.REDIS_PICK + userName)) {
+            Object value = RedisUtils.getValue(ConstantString.REDIS_PICK + userName);
+            List<Long> idList = DataUtils.castList(value, Long.class);
+            idList.removeAll(ids);
+            RedisUtils.saveValue(ConstantString.REDIS_PICK + userName, idList,
+                    jwtProperties.getTokenValidityInSeconds(), TimeUnit.MINUTES);
+        }
+        return Result.success();
+    }
+
+    /**
+     * 获取选中状态
+     *
+     * @return Result<List<Long>>
+     * @author zzc
+     */
+    @Override
+    public Result<List<Long>> getPick() {
+        User user = jwtUtils.getUser();
+        String userName = user.getUsername();
+        List<Long> idList = new LinkedList<>();
+        if (RedisUtils.contain(ConstantString.REDIS_PICK + userName)) {
+            Object value = RedisUtils.getValue(ConstantString.REDIS_PICK + userName);
+            idList = DataUtils.castList(value, Long.class);
+        }
+        return Result.success(idList);
     }
 }

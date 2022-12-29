@@ -93,4 +93,29 @@ public class GasStationController {
     public Result<Object> pick(@RequestBody @NotNull @ApiParam("id集合") List<Long> ids) {
         return service.pick(ids);
     }
+
+    /**
+     * 删除选中状态
+     *
+     * @param ids ids
+     * @return Result
+     * @author zzc
+     */
+    @ApiOperation(value = "删除选中状态")
+    @PostMapping("/pickOff")
+    public Result<Object> pickOff(@RequestBody @NotNull @ApiParam("id集合") List<Long> ids) {
+        return service.pickOff(ids);
+    }
+
+    /**
+     * 获取选中状态
+     *
+     * @return Result<List<Long>>
+     * @author zzc
+     */
+    @ApiOperation(value = "获取选中状态")
+    @PostMapping("/getPick")
+    public Result<List<Long>> getPick() {
+        return service.getPick();
+    }
 }
