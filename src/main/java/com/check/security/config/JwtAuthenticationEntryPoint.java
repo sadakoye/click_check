@@ -26,7 +26,7 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
         Map<String, Object> ret = new HashMap<>(4);
         ret.put("code", 401);
-        ret.put("message", "无效token");
+        ret.put("message", "token无效或过期");
         ret.put("data", null);
         ret.put("date", new Date().toString());
         log.error(LogUtils.getErrorLog(RequestUtils.getIp(request), RequestUtils.getUrl(request),

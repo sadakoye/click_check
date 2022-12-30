@@ -1,6 +1,8 @@
 package com.check.bus.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.check.bus.mapper.GasStationMapper;
@@ -11,6 +13,7 @@ import com.check.bus.pojo.dto.GasStationUpdateDto;
 import com.check.bus.pojo.vo.GasStationVo;
 import com.check.bus.service.GasStationService;
 import com.check.common.constant.ConstantString;
+import com.check.common.exception.CommonException;
 import com.check.common.pojo.bean.Result;
 import com.check.common.util.DataUtils;
 import com.check.common.util.RedisUtils;
@@ -70,6 +73,12 @@ public class GasStationServiceImpl extends ServiceImpl<GasStationMapper, GasStat
      */
     @Override
     public Result<Object> add(GasStationAddDto dto) {
+        LambdaQueryWrapper<GasStation> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(GasStation::getCode, dto.getCode());
+        List<GasStation> list = list(queryWrapper);
+        if (list.size() > 0){
+            throw new CommonException(10001, "code重复");
+        }
         GasStation bean = new GasStation();
         BeanUtils.copyProperties(dto, bean);
         save(bean);
@@ -85,6 +94,20 @@ public class GasStationServiceImpl extends ServiceImpl<GasStationMapper, GasStat
      */
     @Override
     public Result<Object> update(GasStationUpdateDto dto) {
+        LambdaQueryWrapper<GasStation> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(GasStation::getCode, dto.getCode());
+        List<GasStation> list = list(queryWrapper);
+        if (list.size() > 0){
+            int error = 1;
+            for (GasStation gasStation : list) {
+                if (gasStation.getId().equals(dto.getId())){
+                    error = 0;
+                }
+            }
+            if (error == 1) {
+                throw new CommonException(10001, "code重复");
+            }
+        }
         GasStation bean = new GasStation();
         BeanUtils.copyProperties(dto, bean);
         updateById(bean);
@@ -100,11 +123,14 @@ public class GasStationServiceImpl extends ServiceImpl<GasStationMapper, GasStat
      */
     @Override
     public Result<Object> delete(List<Long> ids) {
-        UpdateWrapper<GasStation> updateWrapper = new UpdateWrapper<>();
-        updateWrapper.in("ID", ids);
-        GasStation bean = new GasStation();
-        bean.setIsDelete("1");
-        update(bean, updateWrapper);
+        LambdaQueryWrapper<GasStation> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.in(GasStation::getId, ids);
+        List<GasStation> list = list(queryWrapper);
+        for (GasStation gasStation : list) {
+            gasStation.setCode("delete-" + gasStation.getId() + "-" + gasStation.getCode());
+            gasStation.setIsDelete("1");
+            updateById(gasStation);
+        }
         return Result.success();
     }
 
