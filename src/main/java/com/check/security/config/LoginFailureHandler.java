@@ -1,6 +1,7 @@
 package com.check.security.config;
 
 import com.alibaba.fastjson.JSON;
+import com.check.common.pojo.bean.Result;
 import com.check.common.util.LogUtils;
 import com.check.common.util.RequestUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -24,14 +25,9 @@ import java.util.Map;
 public class LoginFailureHandler implements AuthenticationFailureHandler {
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-        Map<String,Object> ret = new HashMap<>(4);
-        ret.put("code",403);
-        ret.put("message","用户名或密码错误");
-        ret.put("data",null);
-        ret.put("date", new Date().toString());
         log.error(LogUtils.getErrorLog(RequestUtils.getIp(request), RequestUtils.getUrl(request),
                 "403", "用户名或密码错误"));
         response.setContentType("text/json;charset=utf-8");
-        response.getWriter().write(JSON.toJSONString(ret));
+        response.getWriter().write(JSON.toJSONString(Result.error(403, "用户名或密码错误")));
     }
 }

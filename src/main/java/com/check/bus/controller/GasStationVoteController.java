@@ -96,4 +96,17 @@ public class GasStationVoteController {
         return service.voteCount(dto);
     }
 
+    /**
+     * 投票
+     *
+     * @param codeList 加油站code集合
+     * @return Result
+     * @author zzc
+     */
+    @ApiOperation(value = "投票")
+    @PostMapping("/vote")
+    public Result<Object> vote(@RequestBody @NotNull @ApiParam("加油站code集合") List<String> codeList) {
+        return service.vote(codeList);
+    }
+
 }

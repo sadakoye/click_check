@@ -77,4 +77,13 @@ public interface GasStationService extends IService<GasStation> {
      * @author zzc
      */
     Result<List<Long>> getPick();
+
+    /**
+     * 更新选中状态
+     *
+     * @param ids ids
+     * @return Result
+     * @author zzc
+     */
+    Result<Object> updatePick(List<Long> ids);
 }

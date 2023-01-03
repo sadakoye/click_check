@@ -2,8 +2,6 @@ package com.check.bus.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.check.bus.mapper.GasStationMapper;
 import com.check.bus.pojo.GasStation;
@@ -56,7 +54,6 @@ public class GasStationServiceImpl extends ServiceImpl<GasStationMapper, GasStat
         BeanUtils.copyProperties(dto, bean);
         QueryWrapper<GasStation> queryWrapper = DataUtils.query(bean, dto, vo);
         PageHelper.startPage(dto.getPageNum(), dto.getPageSize());
-
         List<GasStation> list = list(queryWrapper);
 
         PageInfo<GasStationVo> page = DataUtils.getPageInfo(list, vo.getClass());
@@ -199,5 +196,22 @@ public class GasStationServiceImpl extends ServiceImpl<GasStationMapper, GasStat
             idList = DataUtils.castList(value, Long.class);
         }
         return Result.success(idList);
+    }
+
+    /**
+     * 更新选中状态
+     *
+     * @param ids ids
+     * @return Result
+     * @author zzc
+     */
+    @Override
+    public Result<Object> updatePick(List<Long> ids) {
+        User user = jwtUtils.getUser();
+        String userName = user.getUsername();
+        List<Long> idList = new LinkedList<>(ids);
+        RedisUtils.saveValue(ConstantString.REDIS_PICK + userName, idList,
+                jwtProperties.getTokenValidityInSeconds(), TimeUnit.MINUTES);
+        return Result.success();
     }
 }

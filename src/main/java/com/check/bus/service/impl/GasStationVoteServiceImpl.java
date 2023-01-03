@@ -123,4 +123,16 @@ public class GasStationVoteServiceImpl extends ServiceImpl<GasStationVoteMapper,
 
         return Result.success(page);
     }
+
+    /**
+     * 投票
+     *
+     * @param codeList 加油站code集合
+     * @return Result
+     * @author zzc
+     */
+    @Override
+    public Result<Object> vote(List<String> codeList) {
+        return null;
+    }
 }

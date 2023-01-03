@@ -13,7 +13,7 @@ import java.util.Date;
 public class SysMenu {
   @TableId(type = IdType.AUTO)
   private Long id;
-  private Long pid;
+  private Long pCode;
   private Long subCount;
   private Long type;
   private String title;

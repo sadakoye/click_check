@@ -6,7 +6,9 @@ import com.check.common.pojo.bean.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -29,18 +31,18 @@ public class ExceptionConfig {
     private final static String LINE_SEPARATOR = System.getProperty("line.separator");
 
 
-//    /**
-//     * 捕捉自定义异常
-//     *
-//     * @param e 异常
-//     * @return Result
-//     * @author zzc
-//     */
-//    @ExceptionHandler(HttpMessageNotReadableException.class)
-//    public Result<Object> handleException(HttpMessageNotReadableException e) {
-//        log.error("系统异常：未接收到请求时传入的参数" + LINE_SEPARATOR + e.getMessage());
-//        return Result.error("未接收到请求时传入的参数");
-//    }
+    /**
+     * 捕捉自定义异常
+     *
+     * @param e 异常
+     * @return Result
+     * @author zzc
+     */
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public Result<Object> handleException(HttpMessageNotReadableException e) {
+        log.error("系统异常：未接收到请求时传入的参数" + LINE_SEPARATOR + e.getMessage());
+        return Result.error("未接收到请求时传入的参数");
+    }
 
     /**
      * 参数校验，参数为实体类
@@ -102,6 +104,47 @@ public class ExceptionConfig {
     public Result<Object> handleException(CommonException e) {
         log.error("系统异常：" + e.getMsg());
         return Result.error(e.getMsg());
+    }
+
+    /**
+     * 捕捉请求方法不匹配异常
+     *
+     * @param e 异常
+     * @return Result
+     * @author zzc
+     */
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    public Result<Object> handleException(HttpRequestMethodNotSupportedException e) {
+        log.error("请求方法不匹配：" + e.getMessage());
+        return Result.error(405, "请求方法不匹配：" + e.getMessage());
+    }
+
+    /**
+     * 捕捉不允许访问异常
+     *
+     * @param e 异常
+     * @return Result
+     * @author zzc
+     */
+    @ExceptionHandler(AccessDeniedException.class)
+    public Result<Object> handleException(AccessDeniedException e) {
+        log.error("权限不足：" + e.getMessage());
+        return Result.error(402, "权限不足：" + e.getMessage());
+    }
+
+    /**
+     * 捕捉剩余异常
+     *
+     * @param e 异常
+     * @return Result
+     * @author zzc
+     */
+    @ExceptionHandler(NullPointerException.class)
+    public Result<Object> handleException(NullPointerException e) {
+        StringWriter sw = new StringWriter();
+        e.printStackTrace(new PrintWriter(sw, true));
+        log.error("系统异常：" + LINE_SEPARATOR + sw);
+        return Result.error("系统异常");
     }
 
     /**

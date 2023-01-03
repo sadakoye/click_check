@@ -62,4 +62,13 @@ public interface GasStationVoteService extends IService<GasStationVote> {
      * @author zzc
      */
     Result<PageInfo<GasStationVoteCountVo>> voteCount(GasStationVoteCountDto dto);
+
+    /**
+     * 投票
+     *
+     * @param codeList 加油站code集合
+     * @return Result
+     * @author zzc
+     */
+    Result<Object> vote(List<String> codeList);
 }

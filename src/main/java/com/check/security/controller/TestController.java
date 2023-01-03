@@ -45,8 +45,8 @@ public class TestController {
      * @return Result
      * @author zzc
      */
-    @GetMapping("/getUser")
-    @PreAuthorize("hasAnyAuthority('MENU_admin')")
+    @PostMapping("/getUser")
+    @PreAuthorize("hasAnyAuthority('Menu') OR hasAnyAuthority('Admin')")
     public Result<Object> delete() {
         return Result.success(jwtUtils.getUser());
     }

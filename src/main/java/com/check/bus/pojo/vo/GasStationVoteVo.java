@@ -1,6 +1,7 @@
 package com.check.bus.pojo.vo;
 
 import com.check.common.pojo.vo.BaseVo;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -32,14 +33,17 @@ public class GasStationVoteVo extends BaseVo {
     private String voterIdCard;
     @ApiModelProperty("投票ip")
     private String voterIp;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", locale = "zh", timezone = "GMT+8")
     @ApiModelProperty("投票时间")
     private Date voteTime;
     @ApiModelProperty("加油站名称")
     private String gasStationName;
     @ApiModelProperty("加油站code")
     private String gasStationCode;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", locale = "zh", timezone = "GMT+8")
     @ApiModelProperty("创建时间")
     private Date createTime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", locale = "zh", timezone = "GMT+8")
     @ApiModelProperty("修改时间")
     private Date updateTime;
 
