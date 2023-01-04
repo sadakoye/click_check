@@ -11,6 +11,7 @@ import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -37,6 +38,7 @@ public class RoleController {
      * @return Result
      * @author zzc
      */
+    @PreAuthorize("hasAnyAuthority('Role:list') OR hasAnyAuthority('Admin')")
     @ApiOperation(value = "列表查询")
     @PostMapping("/list")
     public Result<PageInfo<RoleVo>> list(@RequestBody RoleDto dto) {
@@ -50,6 +52,7 @@ public class RoleController {
      * @return Result
      * @author zzc
      */
+    @PreAuthorize("hasAnyAuthority('Role:add') OR hasAnyAuthority('Admin')")
     @ApiOperation(value = "新增")
     @PostMapping("/add")
     public Result<Object> add(@RequestBody @Valid RoleAddDto dto) {
@@ -63,6 +66,7 @@ public class RoleController {
      * @return Result
      * @author zzc
      */
+    @PreAuthorize("hasAnyAuthority('Role:update') OR hasAnyAuthority('Admin')")
     @ApiOperation(value = "修改")
     @PostMapping("/update")
     public Result<Object> update(@RequestBody @Valid RoleUpdateDto dto) {
@@ -76,6 +80,7 @@ public class RoleController {
      * @return Result
      * @author zzc
      */
+    @PreAuthorize("hasAnyAuthority('Role:delete') OR hasAnyAuthority('Admin')")
     @ApiOperation(value = "删除")
     @PostMapping("/delete")
     public Result<Object> delete(@RequestBody @NotNull @ApiParam("id集合") List<Long> ids) {
@@ -89,6 +94,7 @@ public class RoleController {
      * @return Result
      * @author zzc
      */
+    @PreAuthorize("hasAnyAuthority('Role:listByUserCode') OR hasAnyAuthority('Admin')")
     @ApiOperation(value = "根据用户查询角色")
     @PostMapping("/listByUserCode")
     public Result<List<RoleVo>> listByUserCode(@RequestBody @ApiParam("用户code") String userCode) {
@@ -102,6 +108,7 @@ public class RoleController {
      * @return Result
      * @author zzc
      */
+    @PreAuthorize("hasAnyAuthority('Role:addUserRole') OR hasAnyAuthority('Admin')")
     @ApiOperation(value = "用户新增角色")
     @PostMapping("/addUserRole")
     public Result<Object> addUserRole(@RequestBody @Valid List<UsersRolesDto> dtoList) {
@@ -115,6 +122,7 @@ public class RoleController {
      * @return Result
      * @author zzc
      */
+    @PreAuthorize("hasAnyAuthority('Role:deleteUserRole') OR hasAnyAuthority('Admin')")
     @ApiOperation(value = "用户删除角色")
     @PostMapping("/deleteUserRole")
     public Result<Object> deleteUserRole(@RequestBody @Valid List<UsersRolesDto> dtoList) {

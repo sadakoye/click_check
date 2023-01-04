@@ -1,5 +1,6 @@
 package com.check.common.pojo.bean;
 
+import com.check.common.util.RequestUtils;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -65,20 +66,11 @@ public class Result<T> implements Serializable  {
     }
 
     public static <T> Result<T> error(Integer code, String msg, T data){
-        HttpServletResponse request = getRequest();
+        HttpServletResponse request = RequestUtils.getResponse();
         if (request != null) {
             request.setStatus(code);
         }
         return new Result<>(code, msg, data, new Date().toString());
-    }
-
-    private static HttpServletResponse getRequest() {
-        ServletRequestAttributes servletRequestAttributes =
-                (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
-        if (servletRequestAttributes != null){
-            return servletRequestAttributes.getResponse();
-        }
-        return null;
     }
 
 }

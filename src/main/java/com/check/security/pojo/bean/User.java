@@ -54,6 +54,11 @@ public class User implements UserDetails, Serializable {
     private String code;
 
     /**
+     * 身份证号码
+     */
+    private String idCard;
+
+    /**
      * 包含的角色
      */
     private List<RoleVo> roles;

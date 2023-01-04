@@ -1,9 +1,12 @@
 package com.check.bus.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.check.bus.mapper.GasStationMapper;
 import com.check.bus.mapper.GasStationVoteMapper;
+import com.check.bus.pojo.GasStation;
 import com.check.bus.pojo.GasStationVote;
 import com.check.bus.pojo.dto.GasStationVoteAddDto;
 import com.check.bus.pojo.dto.GasStationVoteCountDto;
@@ -12,15 +15,22 @@ import com.check.bus.pojo.dto.GasStationVoteUpdateDto;
 import com.check.bus.pojo.vo.GasStationVoteCountVo;
 import com.check.bus.pojo.vo.GasStationVoteVo;
 import com.check.bus.service.GasStationVoteService;
+import com.check.common.constant.ConstantInteger;
+import com.check.common.exception.CommonException;
 import com.check.common.pojo.bean.Result;
 import com.check.common.util.DataUtils;
+import com.check.common.util.RequestUtils;
+import com.check.security.pojo.bean.User;
+import com.check.security.utils.JwtUtils;
+import com.check.system.mapper.SysUserMapper;
+import com.check.system.pojo.SysUser;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author zzc
@@ -30,6 +40,15 @@ public class GasStationVoteServiceImpl extends ServiceImpl<GasStationVoteMapper,
 
     @Resource
     GasStationVoteMapper gasStationVoteMapper;
+
+    @Resource
+    GasStationMapper gasStationMapper;
+
+    @Resource
+    SysUserMapper sysUserMapper;
+
+    @Resource
+    JwtUtils jwtUtils;
 
     /**
      * 列表查询
@@ -133,6 +152,87 @@ public class GasStationVoteServiceImpl extends ServiceImpl<GasStationVoteMapper,
      */
     @Override
     public Result<Object> vote(List<String> codeList) {
-        return null;
+        if (codeList.size() > ConstantInteger.THREE) {
+            throw new CommonException(10002, "投票数不能超过3");
+        }
+
+        User user = jwtUtils.getUser();
+        SysUser sysUser = sysUserMapper.selectById(user.getId());
+
+        Date date = new Date();
+        Date oldDate = new Date(System.currentTimeMillis() - 7 * 24 * 60 * 60 * 1000);
+
+        List<GasStationVote> oldGasStationVoteList = getGasStationVotes(sysUser.getIdCard(), oldDate);
+
+        oldGasStationVoteList.forEach(gasStationVote -> {
+            List<String> deleteList = new LinkedList<>();
+            codeList.forEach(s -> {
+                if (gasStationVote.getGasStationCode().equals(s)){
+                    deleteList.add(s);
+                }
+                codeList.removeAll(deleteList);
+            });
+        });
+
+        if (oldGasStationVoteList.size() + codeList.size() > ConstantInteger.THREE){
+            throw new CommonException(10003, "七天内投票数不能超过3，七天内已投" + oldGasStationVoteList.size() + "票。");
+        }
+
+        LambdaQueryWrapper<GasStation> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.in(GasStation::getCode, codeList);
+        List<GasStation> gasStationList = gasStationMapper.selectList(queryWrapper);
+        Map<String, GasStation> gasMap = new LinkedHashMap<>();
+        gasStationList.forEach(gasStation -> {
+            gasMap.put(gasStation.getCode(), gasStation);
+        });
+        List<GasStationVote> gasStationVoteList = new LinkedList<>();
+        codeList.forEach(s -> {
+            GasStation gasStation = gasMap.get(s);
+            if (gasStation != null) {
+                GasStationVote gasStationVote = GasStationVote.builder()
+                        .districtCode(gasStation.getDistrictCode())
+                        .gasStationName(gasStation.getContactsName())
+                        .voterName(sysUser.getNickName()).voterPhone(sysUser.getPhone())
+                        .voterIp(RequestUtils.getIp()).voteTime(date).gasStationCode(s)
+                        .gasStationName(gasStation.getName())
+                        .build();
+                gasStationVoteList.add(gasStationVote);
+            }
+        });
+        saveBatch(gasStationVoteList);
+        return Result.success();
+    }
+
+    /**
+     * 获取七天内已投票过的加油站code
+     *
+     * @return Result<List<String>>
+     * @author zzc
+     */
+    @Override
+    public Result<List<String>> getVote() {
+        User user = jwtUtils.getUser();
+        Date oldDate = new Date(System.currentTimeMillis() - 7 * 24 * 60 * 60 * 1000);
+        List<GasStationVote> gasStationVoteList = getGasStationVotes(user.getIdCard(), oldDate);
+        List<String> codeList = new LinkedList<>();
+        gasStationVoteList.forEach(gasStationVote -> {
+            codeList.add(gasStationVote.getGasStationCode());
+        });
+        return Result.success(codeList);
+    }
+
+    /**
+     * 根据时间与身份证号码查询投票列表
+     *
+     * @param idCard 身份证号码
+     * @param date 时间，查询此时间之后
+     * @return List<GasStationVote>
+     * @author zzc
+     */
+    private List<GasStationVote> getGasStationVotes(String idCard, Date date) {
+        LambdaQueryWrapper<GasStationVote> voteQueryWrapper = new LambdaQueryWrapper<>();
+        voteQueryWrapper.ge(GasStationVote::getVoteTime, date);
+        voteQueryWrapper.eq(GasStationVote::getVoterIdCard, idCard);
+        return gasStationVoteMapper.selectList(voteQueryWrapper);
     }
 }

@@ -40,8 +40,8 @@ public class ExceptionConfig {
      */
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public Result<Object> handleException(HttpMessageNotReadableException e) {
-        log.error("系统异常：未接收到请求时传入的参数" + LINE_SEPARATOR + e.getMessage());
-        return Result.error("未接收到请求时传入的参数");
+        log.error("系统异常：传入的参数解析出错" + LINE_SEPARATOR + e.getMessage());
+        return Result.error("传入的参数解析出错");
     }
 
     /**

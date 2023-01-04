@@ -12,6 +12,7 @@ import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -38,6 +39,7 @@ public class GasStationVoteController {
      * @return Result
      * @author zzc
      */
+    @PreAuthorize("hasAnyAuthority('GasStationVote:list') OR hasAnyAuthority('Admin')")
     @ApiOperation(value = "列表查询")
     @PostMapping("/list")
     public Result<PageInfo<GasStationVoteVo>> list(@RequestBody GasStationVoteDto dto) {
@@ -51,6 +53,7 @@ public class GasStationVoteController {
      * @return Result
      * @author zzc
      */
+    @PreAuthorize("hasAnyAuthority('GasStationVote:add') OR hasAnyAuthority('Admin')")
     @ApiOperation(value = "新增")
     @PostMapping("/add")
     public Result<Object> add(@RequestBody @Valid GasStationVoteAddDto dto) {
@@ -64,6 +67,7 @@ public class GasStationVoteController {
      * @return Result
      * @author zzc
      */
+    @PreAuthorize("hasAnyAuthority('GasStationVote:update') OR hasAnyAuthority('Admin')")
     @ApiOperation(value = "修改")
     @PostMapping("/update")
     public Result<Object> update(@RequestBody @Valid GasStationVoteUpdateDto dto) {
@@ -77,6 +81,7 @@ public class GasStationVoteController {
      * @return Result
      * @author zzc
      */
+    @PreAuthorize("hasAnyAuthority('GasStationVote:delete') OR hasAnyAuthority('Admin')")
     @ApiOperation(value = "删除")
     @PostMapping("/delete")
     public Result<Object> delete(@RequestBody @NotNull @ApiParam("id集合") List<Long> ids) {
@@ -90,6 +95,7 @@ public class GasStationVoteController {
      * @return Result
      * @author zzc
      */
+    @PreAuthorize("hasAnyAuthority('GasStationVote:voteCount') OR hasAnyAuthority('Admin')")
     @ApiOperation(value = "投票统计")
     @PostMapping("/voteCount")
     public Result<PageInfo<GasStationVoteCountVo>> voteCount(@RequestBody GasStationVoteCountDto dto) {
@@ -103,10 +109,24 @@ public class GasStationVoteController {
      * @return Result
      * @author zzc
      */
+    @PreAuthorize("hasAnyAuthority('GasStationVote:vote') OR hasAnyAuthority('Admin')")
     @ApiOperation(value = "投票")
     @PostMapping("/vote")
     public Result<Object> vote(@RequestBody @NotNull @ApiParam("加油站code集合") List<String> codeList) {
         return service.vote(codeList);
+    }
+
+    /**
+     * 获取七天内已投票过的加油站code
+     *
+     * @return Result<List<String>>
+     * @author zzc
+     */
+    @PreAuthorize("hasAnyAuthority('GasStationVote:getVote') OR hasAnyAuthority('Admin')")
+    @ApiOperation(value = "获取七天内已投票过的加油站code")
+    @PostMapping("/getVote")
+    public Result<List<String>> getVote() {
+        return service.getVote();
     }
 
 }

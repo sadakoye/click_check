@@ -42,6 +42,7 @@ public class JwtAuthenticationSuccessHandler implements AuthenticationSuccessHan
         user.setPassword(null);
         user.setId(null);
         user.setCode(null);
+        user.setIdCard(null);
         log.info(LogUtils.getInfoLog(RequestUtils.getIp(httpServletRequest), RequestUtils.getUrl(httpServletRequest),
                 "200", "登录成功", user.getUsername()));
         httpServletResponse.setContentType("text/json;charset=utf-8");

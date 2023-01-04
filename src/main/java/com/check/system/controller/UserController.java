@@ -2,19 +2,18 @@ package com.check.system.controller;
 
 import com.check.common.pojo.bean.Result;
 import com.check.system.pojo.dto.UserAddDto;
-import com.check.system.pojo.dto.UserUpdateDto;
 import com.check.system.pojo.dto.UserDto;
+import com.check.system.pojo.dto.UserUpdateDto;
 import com.check.system.pojo.vo.UserVo;
 import com.check.system.service.UserService;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -38,6 +37,7 @@ public class UserController {
      * @return Result
      * @author zzc
      */
+    @PreAuthorize("hasAnyAuthority('User:list') OR hasAnyAuthority('Admin')")
     @ApiOperation(value = "列表查询")
     @PostMapping("/list")
     public Result<PageInfo<UserVo>> list(@RequestBody UserDto dto) {
@@ -51,6 +51,7 @@ public class UserController {
      * @return Result
      * @author zzc
      */
+    @PreAuthorize("hasAnyAuthority('User:add') OR hasAnyAuthority('Admin')")
     @ApiOperation(value = "新增")
     @PostMapping("/add")
     public Result<Object> add(@RequestBody @Valid UserAddDto dto) {
@@ -64,6 +65,7 @@ public class UserController {
      * @return Result
      * @author zzc
      */
+    @PreAuthorize("hasAnyAuthority('User:update') OR hasAnyAuthority('Admin')")
     @ApiOperation(value = "修改")
     @PostMapping("/update")
     public Result<Object> update(@RequestBody @Valid UserUpdateDto dto) {
@@ -77,6 +79,7 @@ public class UserController {
      * @return Result
      * @author zzc
      */
+    @PreAuthorize("hasAnyAuthority('User:delete') OR hasAnyAuthority('Admin')")
     @ApiOperation(value = "删除")
     @PostMapping("/delete")
     public Result<Object> delete(@RequestBody @NotNull @ApiParam("id集合") List<Long> ids) {
@@ -93,6 +96,7 @@ public class UserController {
      * @return Result
      * @author zzc
      */
+    @PreAuthorize("hasAnyAuthority('User:info') OR hasAnyAuthority('Admin')")
     @ApiOperation(value = "获取单点用户信息")
     @PostMapping(value = "/info")
     public Result<Object> info(String hidName, String hidUserId, String hidUserType, String cardid) {

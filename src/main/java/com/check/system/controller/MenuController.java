@@ -11,6 +11,7 @@ import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -37,6 +38,7 @@ public class MenuController {
      * @return Result
      * @author zzc
      */
+    @PreAuthorize("hasAnyAuthority('Menu:list') OR hasAnyAuthority('Admin')")
     @ApiOperation(value = "列表查询")
     @PostMapping("/list")
     public Result<PageInfo<MenuVo>> list(@RequestBody MenuDto dto) {
@@ -50,6 +52,7 @@ public class MenuController {
      * @return Result
      * @author zzc
      */
+    @PreAuthorize("hasAnyAuthority('Menu:add') OR hasAnyAuthority('Admin')")
     @ApiOperation(value = "新增")
     @PostMapping("/add")
     public Result<Object> add(@RequestBody @Valid MenuAddDto dto) {
@@ -63,6 +66,7 @@ public class MenuController {
      * @return Result
      * @author zzc
      */
+    @PreAuthorize("hasAnyAuthority('Menu:update') OR hasAnyAuthority('Admin')")
     @ApiOperation(value = "修改")
     @PostMapping("/update")
     public Result<Object> update(@RequestBody @Valid MenuUpdateDto dto) {
@@ -76,6 +80,7 @@ public class MenuController {
      * @return Result
      * @author zzc
      */
+    @PreAuthorize("hasAnyAuthority('Menu:delete') OR hasAnyAuthority('Admin')")
     @ApiOperation(value = "删除")
     @PostMapping("/delete")
     public Result<Object> delete(@RequestBody @NotNull @ApiParam("id集合") List<Long> ids) {
@@ -89,6 +94,7 @@ public class MenuController {
      * @return Result
      * @author zzc
      */
+    @PreAuthorize("hasAnyAuthority('Menu:addRoleMenu') OR hasAnyAuthority('Admin')")
     @ApiOperation(value = "角色新增菜单")
     @PostMapping("/addRoleMenu")
     public Result<Object> addRoleMenu(@RequestBody @Valid List<RolesMenusDto> dtoList) {
@@ -102,6 +108,7 @@ public class MenuController {
      * @return Result
      * @author zzc
      */
+    @PreAuthorize("hasAnyAuthority('Menu:deleteRoleMenu') OR hasAnyAuthority('Admin')")
     @ApiOperation(value = "角色删除菜单")
     @PostMapping("/deleteRoleMenu")
     public Result<Object> deleteRoleMenu(@RequestBody @Valid List<RolesMenusDto> dtoList) {
