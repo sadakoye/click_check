@@ -86,4 +86,13 @@ public interface GasStationService extends IService<GasStation> {
      * @author zzc
      */
     Result<Object> updatePick(List<Long> ids);
+
+    /**
+     * 批量新增
+     *
+     * @param dtoList dtoList
+     * @return Result
+     * @author zzc
+     */
+    Result<Object> addAll(List<GasStationAddDto> dtoList);
 }

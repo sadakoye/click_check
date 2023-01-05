@@ -26,7 +26,9 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 /**
  * @author zzc
@@ -39,6 +41,9 @@ public class GasStationServiceImpl extends ServiceImpl<GasStationMapper, GasStat
 
     @Resource
     private JwtProperties jwtProperties;
+
+    @Resource
+    private GasStationMapper gasStationMapper;
 
     /**
      * 列表查询
@@ -73,7 +78,7 @@ public class GasStationServiceImpl extends ServiceImpl<GasStationMapper, GasStat
         LambdaQueryWrapper<GasStation> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(GasStation::getCode, dto.getCode());
         List<GasStation> list = list(queryWrapper);
-        if (list.size() > 0){
+        if (list.size() > 0) {
             throw new CommonException(10001, "code重复");
         }
         GasStation bean = new GasStation();
@@ -94,10 +99,10 @@ public class GasStationServiceImpl extends ServiceImpl<GasStationMapper, GasStat
         LambdaQueryWrapper<GasStation> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(GasStation::getCode, dto.getCode());
         List<GasStation> list = list(queryWrapper);
-        if (list.size() > 0){
+        if (list.size() > 0) {
             int error = 1;
             for (GasStation gasStation : list) {
-                if (gasStation.getId().equals(dto.getId())){
+                if (gasStation.getId().equals(dto.getId())) {
                     error = 0;
                 }
             }
@@ -148,13 +153,13 @@ public class GasStationServiceImpl extends ServiceImpl<GasStationMapper, GasStat
                 Object value = RedisUtils.getValue(ConstantString.REDIS_PICK + userName);
                 idList = DataUtils.castList(value, Long.class);
                 idList.addAll(ids);
-            }else {
+            } else {
                 idList = new LinkedList<>(ids);
             }
             RedisUtils.saveValue(ConstantString.REDIS_PICK + userName, idList,
                     jwtProperties.getTokenValidityInSeconds(), TimeUnit.MINUTES);
             return Result.success();
-        }else {
+        } else {
             return Result.error("传入的id为空");
         }
     }
@@ -183,7 +188,7 @@ public class GasStationServiceImpl extends ServiceImpl<GasStationMapper, GasStat
     /**
      * 获取选中状态
      *
-     * @return Result<List<Long>>
+     * @return Result<List < Long>>
      * @author zzc
      */
     @Override
@@ -212,6 +217,27 @@ public class GasStationServiceImpl extends ServiceImpl<GasStationMapper, GasStat
         List<Long> idList = new LinkedList<>(ids);
         RedisUtils.saveValue(ConstantString.REDIS_PICK + userName, idList,
                 jwtProperties.getTokenValidityInSeconds(), TimeUnit.MINUTES);
+        return Result.success();
+    }
+
+    /**
+     * 批量新增
+     *
+     * @param dtoList dtoList
+     * @return Result
+     * @author zzc
+     */
+    @Override
+    public Result<Object> addAll(List<GasStationAddDto> dtoList) {
+        Set<String> codeSet = gasStationMapper.getCodeSet();
+        List<GasStation> gasStationList = dtoList.stream()
+                .filter(gasStationAddDto -> !codeSet.contains(gasStationAddDto.getCode()))
+                .map(gasStationAddDto -> {
+                    GasStation gasStation = new GasStation();
+                    BeanUtils.copyProperties(gasStationAddDto, gasStation);
+                    return gasStation;
+                }).collect(Collectors.toList());
+        gasStationList.forEach(this::save);
         return Result.success();
     }
 }

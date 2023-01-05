@@ -199,7 +199,7 @@ public class GasStationVoteServiceImpl extends ServiceImpl<GasStationVoteMapper,
                 gasStationVoteList.add(gasStationVote);
             }
         });
-        saveBatch(gasStationVoteList);
+        gasStationVoteList.forEach(this::save);
         return Result.success();
     }
 

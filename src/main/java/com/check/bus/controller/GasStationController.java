@@ -140,4 +140,19 @@ public class GasStationController {
     public Result<Object> updatePick(@RequestBody @NotNull @ApiParam("id集合") List<Long> ids) {
         return service.updatePick(ids);
     }
+
+    /**
+     * 批量新增
+     *
+     * @param dtoList dtoList
+     * @return Result
+     * @author zzc
+     */
+    @PreAuthorize("hasAnyAuthority('GasStation:addAll') OR hasAnyAuthority('Admin')")
+    @ApiOperation(value = "批量新增")
+    @PostMapping("/addAll")
+    public Result<Object> addAll(@RequestBody @Valid List<GasStationAddDto> dtoList) {
+        return service.addAll(dtoList);
+    }
+
 }
