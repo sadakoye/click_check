@@ -17,28 +17,28 @@ import javax.validation.constraints.NotBlank;
 public class GasStationAddDto {
 
     @NotBlank
-    @ApiModelProperty("加油站code")
+    @ApiModelProperty(value = "加油站code", required = true)
     private String code;
     @NotBlank
-    @ApiModelProperty("区code")
+    @ApiModelProperty(value = "区code", required = true)
     private String districtCode;
     @NotBlank
-    @ApiModelProperty("区name")
+    @ApiModelProperty(value = "区name", required = true)
     private String districtName;
     @NotBlank
-    @ApiModelProperty("经营性质")
+    @ApiModelProperty(value = "经营性质", required = true)
     private String managementNature;
     @NotBlank
-    @ApiModelProperty("经营状态")
+    @ApiModelProperty(value = "经营状态", required = true)
     private String managementState;
     @NotBlank
-    @ApiModelProperty("加油站品牌")
+    @ApiModelProperty(value = "加油站品牌", required = true)
     private String brand;
     @NotBlank
-    @ApiModelProperty("加油站名称")
+    @ApiModelProperty(value = "加油站名称", required = true)
     private String name;
     @NotBlank
-    @ApiModelProperty("加油站地址")
+    @ApiModelProperty(value = "加油站地址", required = true)
     private String address;
     @ApiModelProperty("联系人名称")
     private String contactsName;

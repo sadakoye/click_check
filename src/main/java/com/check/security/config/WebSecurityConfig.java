@@ -72,6 +72,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/login/**").permitAll()
                 .antMatchers("/doc.html").permitAll()
                 .antMatchers("/doc.html/**").permitAll()
+                .antMatchers("/favicon.ico").permitAll()
                 //所有请求都需要拦截
                 .anyRequest()
                 .authenticated();

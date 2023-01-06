@@ -93,4 +93,23 @@ public class GasStationExamineServiceImpl extends ServiceImpl<GasStationExamineM
         update(bean, updateWrapper);
         return Result.success();
     }
+
+    /**
+     * 批量新增
+     *
+     * @param dtoList dtoList
+     * @return Result
+     * @author zzc
+     */
+    @Override
+    public Result<Object> addAll(List<GasStationExamineAddDto> dtoList) {
+        dtoList.parallelStream()
+                .map(gasStationExamineAddDto -> {
+                    GasStationExamine gasStationExamine = new GasStationExamine();
+                    BeanUtils.copyProperties(gasStationExamineAddDto, gasStationExamine);
+                    return gasStationExamine;
+                })
+                .forEach(this::save);
+        return Result.success();
+    }
 }

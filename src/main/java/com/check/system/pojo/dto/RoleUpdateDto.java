@@ -5,6 +5,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -15,15 +16,18 @@ import javax.validation.constraints.NotNull;
 public class RoleUpdateDto {
 
     @NotNull
-    @ApiModelProperty("ID")
+    @ApiModelProperty(value = "ID", required = true)
     private Long id;
-    @ApiModelProperty("角色名称")
+    @NotBlank
+    @ApiModelProperty(value = "角色名称", required = true)
     private String name;
-    @ApiModelProperty("角色级别")
+    @NotNull
+    @ApiModelProperty(value = "角色级别", required = true)
     private Long level;
     @ApiModelProperty("描述")
     private String description;
-    @ApiModelProperty("CODE")
+    @NotBlank
+    @ApiModelProperty(value = "CODE", required = true)
     private String code;
     @ApiModelProperty("casId")
     private String casId;

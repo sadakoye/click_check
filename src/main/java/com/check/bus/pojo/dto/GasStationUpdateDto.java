@@ -5,6 +5,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -17,23 +18,31 @@ import javax.validation.constraints.NotNull;
 public class GasStationUpdateDto {
 
     @NotNull
-    @ApiModelProperty("ID")
+    @ApiModelProperty(value = "ID", required = true)
     private Long id;
-    @ApiModelProperty("加油站code")
+    @NotBlank
+    @ApiModelProperty(value = "加油站code", required = true)
     private String code;
-    @ApiModelProperty("区code")
+    @NotBlank
+    @ApiModelProperty(value = "区code", required = true)
     private String districtCode;
-    @ApiModelProperty("区name")
+    @NotBlank
+    @ApiModelProperty(value = "区name", required = true)
     private String districtName;
-    @ApiModelProperty("经营性质")
+    @NotBlank
+    @ApiModelProperty(value = "经营性质", required = true)
     private String managementNature;
-    @ApiModelProperty("经营状态")
+    @NotBlank
+    @ApiModelProperty(value = "经营状态", required = true)
     private String managementState;
-    @ApiModelProperty("加油站品牌")
+    @NotBlank
+    @ApiModelProperty(value = "加油站品牌", required = true)
     private String brand;
-    @ApiModelProperty("加油站名称")
+    @NotBlank
+    @ApiModelProperty(value = "加油站名称", required = true)
     private String name;
-    @ApiModelProperty("加油站地址")
+    @NotBlank
+    @ApiModelProperty(value = "加油站地址", required = true)
     private String address;
     @ApiModelProperty("联系人名称")
     private String contactsName;

@@ -19,16 +19,16 @@ import java.util.Date;
 public class GasStationExamineAddDto {
 
     @NotBlank
-    @ApiModelProperty("区code")
+    @ApiModelProperty(value = "区code", required = true)
     private String districtCode;
     @NotBlank
-    @ApiModelProperty("区name")
+    @ApiModelProperty(value = "区name", required = true)
     private String districtName;
     @NotBlank
-    @ApiModelProperty("加油站名称")
+    @ApiModelProperty(value = "加油站名称", required = true)
     private String gasStationName;
     @NotBlank
-    @ApiModelProperty("加油站code")
+    @ApiModelProperty(value = "加油站code", required = true)
     private String gasStationCode;
     @ApiModelProperty("检查状况")
     private String examineState;

@@ -51,4 +51,13 @@ public interface GasStationExamineService extends IService<GasStationExamine> {
      * @author zzc
      */
     Result<Object> delete(List<Long> ids);
+
+    /**
+     * 批量新增
+     *
+     * @param dtoList dtoList
+     * @return Result
+     * @author zzc
+     */
+    Result<Object> addAll(List<GasStationExamineAddDto> dtoList);
 }

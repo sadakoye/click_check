@@ -4,6 +4,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -14,15 +15,18 @@ import javax.validation.constraints.NotNull;
 public class MenuUpdateDto{
 
   @NotNull
-  @ApiModelProperty("ID")
+  @ApiModelProperty(value = "ID", required = true)
   private Long id;
-  @ApiModelProperty("上级菜单ID")
+  @NotNull
+  @ApiModelProperty(value = "上级菜单ID", required = true)
   private Long pid;
   @ApiModelProperty("子菜单数目")
   private Long subCount;
-  @ApiModelProperty("菜单类型")
+  @NotNull
+  @ApiModelProperty(value = "菜单类型", required = true)
   private Long type;
-  @ApiModelProperty("菜单标题")
+  @NotBlank
+  @ApiModelProperty(value = "菜单标题", required = true)
   private String title;
   @ApiModelProperty("组件名称")
   private String name;
@@ -40,7 +44,8 @@ public class MenuUpdateDto{
   private String hidden;
   @ApiModelProperty("权限")
   private String permission;
-  @ApiModelProperty("CODE")
+  @NotBlank
+  @ApiModelProperty(value = "CODE", required = true)
   private String code;
   @ApiModelProperty("casId")
   private String casId;

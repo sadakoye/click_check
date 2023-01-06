@@ -15,13 +15,13 @@ import javax.validation.constraints.NotNull;
 public class MenuAddDto {
 
   @NotNull
-  @ApiModelProperty("上级菜单ID")
+  @ApiModelProperty(value = "上级菜单ID", required = true)
   private Long pid;
   @NotNull
-  @ApiModelProperty("菜单类型")
+  @ApiModelProperty(value = "菜单类型", required = true)
   private Long type;
   @NotBlank
-  @ApiModelProperty("菜单标题")
+  @ApiModelProperty(value = "菜单标题", required = true)
   private String title;
   @ApiModelProperty("组件名称")
   private String name;
@@ -42,7 +42,7 @@ public class MenuAddDto {
   @ApiModelProperty("权限")
   private String permission;
   @NotBlank
-  @ApiModelProperty("CODE")
+  @ApiModelProperty(value = "CODE", required = true)
   private String code;
   @ApiModelProperty("casId")
   private String casId;

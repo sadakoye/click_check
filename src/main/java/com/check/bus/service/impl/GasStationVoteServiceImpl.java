@@ -83,6 +83,10 @@ public class GasStationVoteServiceImpl extends ServiceImpl<GasStationVoteMapper,
     public Result<Object> add(GasStationVoteAddDto dto) {
         GasStationVote bean = new GasStationVote();
         BeanUtils.copyProperties(dto, bean);
+        String ip = RequestUtils.getIp();
+        if (ip != null) {
+            bean.setVoterIp(ip);
+        }
         save(bean);
         return Result.success();
     }
@@ -161,20 +165,19 @@ public class GasStationVoteServiceImpl extends ServiceImpl<GasStationVoteMapper,
 
         Date date = new Date();
         Date oldDate = new Date(System.currentTimeMillis() - 7 * 24 * 60 * 60 * 1000);
-
         List<GasStationVote> oldGasStationVoteList = getGasStationVotes(sysUser.getIdCard(), oldDate);
 
         oldGasStationVoteList.forEach(gasStationVote -> {
             List<String> deleteList = new LinkedList<>();
             codeList.forEach(s -> {
-                if (gasStationVote.getGasStationCode().equals(s)){
+                if (gasStationVote.getGasStationCode().equals(s)) {
                     deleteList.add(s);
                 }
                 codeList.removeAll(deleteList);
             });
         });
 
-        if (oldGasStationVoteList.size() + codeList.size() > ConstantInteger.THREE){
+        if (oldGasStationVoteList.size() + codeList.size() > ConstantInteger.THREE) {
             throw new CommonException(10003, "七天内投票数不能超过3，七天内已投" + oldGasStationVoteList.size() + "票。");
         }
 
@@ -185,28 +188,27 @@ public class GasStationVoteServiceImpl extends ServiceImpl<GasStationVoteMapper,
         gasStationList.forEach(gasStation -> {
             gasMap.put(gasStation.getCode(), gasStation);
         });
-        List<GasStationVote> gasStationVoteList = new LinkedList<>();
-        codeList.forEach(s -> {
-            GasStation gasStation = gasMap.get(s);
-            if (gasStation != null) {
-                GasStationVote gasStationVote = GasStationVote.builder()
-                        .districtCode(gasStation.getDistrictCode())
-                        .gasStationName(gasStation.getContactsName())
-                        .voterName(sysUser.getNickName()).voterPhone(sysUser.getPhone())
-                        .voterIp(RequestUtils.getIp()).voteTime(date).gasStationCode(s)
-                        .gasStationName(gasStation.getName())
-                        .build();
-                gasStationVoteList.add(gasStationVote);
-            }
-        });
-        gasStationVoteList.forEach(this::save);
+
+        codeList.parallelStream()
+                .filter(gasMap::containsKey)
+                .map(s -> {
+                    GasStation gasStation = gasMap.get(s);
+                    return GasStationVote.builder()
+                            .districtCode(gasStation.getDistrictCode())
+                            .gasStationName(gasStation.getContactsName())
+                            .voterName(sysUser.getNickName()).voterPhone(sysUser.getPhone())
+                            .voterIp(RequestUtils.getIp()).voteTime(date).gasStationCode(s)
+                            .gasStationName(gasStation.getName())
+                            .build();
+                })
+                .forEach(this::save);
         return Result.success();
     }
 
     /**
      * 获取七天内已投票过的加油站code
      *
-     * @return Result<List<String>>
+     * @return Result<List < String>>
      * @author zzc
      */
     @Override
@@ -225,14 +227,14 @@ public class GasStationVoteServiceImpl extends ServiceImpl<GasStationVoteMapper,
      * 根据时间与身份证号码查询投票列表
      *
      * @param idCard 身份证号码
-     * @param date 时间，查询此时间之后
+     * @param date   时间，查询此时间之后
      * @return List<GasStationVote>
      * @author zzc
      */
     private List<GasStationVote> getGasStationVotes(String idCard, Date date) {
         LambdaQueryWrapper<GasStationVote> voteQueryWrapper = new LambdaQueryWrapper<>();
-        voteQueryWrapper.ge(GasStationVote::getVoteTime, date);
-        voteQueryWrapper.eq(GasStationVote::getVoterIdCard, idCard);
+        voteQueryWrapper.ge(GasStationVote::getVoteTime, date)
+                .eq(GasStationVote::getVoterIdCard, idCard);
         return gasStationVoteMapper.selectList(voteQueryWrapper);
     }
 }

@@ -4,6 +4,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -14,17 +15,22 @@ import javax.validation.constraints.NotNull;
 public class UserUpdateDto {
 
     @NotNull
-    @ApiModelProperty("ID")
+    @ApiModelProperty(value = "ID", required = true)
     private Long id;
-    @ApiModelProperty("部门code")
+    @NotNull
+    @ApiModelProperty(value = "部门code", required = true)
     private Long deptCode;
-    @ApiModelProperty("用户名")
+    @NotBlank
+    @ApiModelProperty(value = "用户名", required = true)
     private String username;
-    @ApiModelProperty("昵称")
+    @NotBlank
+    @ApiModelProperty(value = "昵称", required = true)
     private String nickName;
-    @ApiModelProperty("性别")
+    @NotBlank
+    @ApiModelProperty(value = "性别", required = true)
     private String gender;
-    @ApiModelProperty("手机号码")
+    @NotBlank
+    @ApiModelProperty(value = "手机号码", required = true)
     private String phone;
     @ApiModelProperty("邮箱")
     private String email;
@@ -32,9 +38,11 @@ public class UserUpdateDto {
     private String avatarName;
     @ApiModelProperty("头像真实路径")
     private String avatarPath;
-    @ApiModelProperty("状态：1启用、0禁用")
+    @NotBlank
+    @ApiModelProperty(value = "状态：1启用、0禁用", required = true)
     private Long enabled;
-    @ApiModelProperty("code")
+    @NotBlank
+    @ApiModelProperty(value = "code", required = true)
     private String code;
     @ApiModelProperty("casId")
     private String casId;

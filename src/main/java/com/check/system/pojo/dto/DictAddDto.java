@@ -15,12 +15,12 @@ import javax.validation.constraints.NotBlank;
 public class DictAddDto {
 
     @NotBlank
-    @ApiModelProperty("字典键")
+    @ApiModelProperty(value = "字典键", required = true)
     private String dictKey;
     @NotBlank
-    @ApiModelProperty("字典值")
+    @ApiModelProperty(value = "字典值", required = true)
     private String dictValue;
     @NotBlank
-    @ApiModelProperty("字典所属组")
+    @ApiModelProperty(value = "字典所属组", required = true)
     private String dictGroup;
 }

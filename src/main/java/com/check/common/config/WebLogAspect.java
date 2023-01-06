@@ -2,6 +2,7 @@ package com.check.common.config;
 
 import com.alibaba.druid.util.StringUtils;
 import com.alibaba.fastjson.JSONObject;
+import com.check.common.util.RequestUtils;
 import com.check.security.pojo.bean.User;
 
 import com.check.security.utils.JwtUtils;
@@ -79,13 +80,7 @@ public class WebLogAspect {
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
         if (requestAttributes != null) {
             HttpServletRequest request = ((ServletRequestAttributes) requestAttributes).getRequest();
-            String ip = request.getHeader("X-Real-Ip");
-            if (StringUtils.isEmpty(ip) || !ip.contains(DOT)) {
-                ip = request.getHeader("X-Forwarded-For");
-                if (StringUtils.isEmpty(ip) || !ip.contains(DOT)) {
-                    ip = request.getRemoteAddr();
-                }
-            }
+            String ip = RequestUtils.getIp(request, DOT);
             String url = request.getRequestURL().toString();
             String params = Arrays.toString(joinPoint.getArgs());
             logBuffer.append("+  IP: ").append(ip).append(LINE_SEPARATOR)

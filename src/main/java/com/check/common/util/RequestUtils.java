@@ -17,17 +17,21 @@ public class RequestUtils {
     public static String getIp() {
         HttpServletRequest request = getRequest();
         if (request != null) {
-            return getIp();
+            return getIp(request);
         }else {
             return null;
         }
     }
 
     public static String getIp(HttpServletRequest request) {
+        return getIp(request, DOT);
+    }
+
+    public static String getIp(HttpServletRequest request, String dot) {
         String ip = request.getHeader("X-Real-Ip");
-        if (StringUtils.isEmpty(ip) || !ip.contains(DOT)) {
+        if (StringUtils.isEmpty(ip) || !ip.contains(dot)) {
             ip = request.getHeader("X-Forwarded-For");
-            if (StringUtils.isEmpty(ip) || !ip.contains(DOT)) {
+            if (StringUtils.isEmpty(ip) || !ip.contains(dot)) {
                 ip = request.getRemoteAddr();
             }
         }

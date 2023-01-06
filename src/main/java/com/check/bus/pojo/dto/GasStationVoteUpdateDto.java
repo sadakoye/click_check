@@ -5,6 +5,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
@@ -18,26 +19,34 @@ import java.util.Date;
 public class GasStationVoteUpdateDto {
 
     @NotNull
-    @ApiModelProperty("ID")
+    @ApiModelProperty(value = "ID", required = true)
     private Long id;
-    @ApiModelProperty("区code")
+    @NotBlank
+    @ApiModelProperty(value = "区code", required = true)
     private String districtCode;
-    @ApiModelProperty("区name")
+    @NotBlank
+    @ApiModelProperty(value = "区name", required = true)
     private String districtName;
-    @ApiModelProperty("投票人姓名")
+    @NotBlank
+    @ApiModelProperty(value = "投票人姓名", required = true)
     private String voterName;
-    @ApiModelProperty("投票人手机号码")
+    @NotBlank
+    @ApiModelProperty(value = "投票人手机号码", required = true)
     private String voterPhone;
-    @ApiModelProperty("投票人身份证号码")
+    @NotBlank
+    @ApiModelProperty(value = "投票人身份证号码", required = true)
     private String voterIdCard;
     @ApiModelProperty("投票ip")
     private String voterIp;
+    @NotNull
     @JsonFormat( pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    @ApiModelProperty("投票时间")
+    @ApiModelProperty(value = "投票时间", required = true)
     private Date voteTime;
-    @ApiModelProperty("加油站名称")
+    @NotBlank
+    @ApiModelProperty(value = "加油站名称", required = true)
     private String gasStationName;
-    @ApiModelProperty("加油站code")
+    @NotBlank
+    @ApiModelProperty(value = "加油站code", required = true)
     private String gasStationCode;
 
 }

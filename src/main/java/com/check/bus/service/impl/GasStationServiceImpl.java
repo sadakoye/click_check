@@ -28,7 +28,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 
 /**
  * @author zzc
@@ -230,14 +229,14 @@ public class GasStationServiceImpl extends ServiceImpl<GasStationMapper, GasStat
     @Override
     public Result<Object> addAll(List<GasStationAddDto> dtoList) {
         Set<String> codeSet = gasStationMapper.getCodeSet();
-        List<GasStation> gasStationList = dtoList.stream()
+        dtoList.parallelStream()
                 .filter(gasStationAddDto -> !codeSet.contains(gasStationAddDto.getCode()))
                 .map(gasStationAddDto -> {
                     GasStation gasStation = new GasStation();
                     BeanUtils.copyProperties(gasStationAddDto, gasStation);
                     return gasStation;
-                }).collect(Collectors.toList());
-        gasStationList.forEach(this::save);
+                })
+                .forEach(this::save);
         return Result.success();
     }
 }

@@ -16,15 +16,15 @@ import javax.validation.constraints.NotNull;
 public class RoleAddDto {
 
     @NotBlank
-    @ApiModelProperty("角色名称")
+    @ApiModelProperty(value = "角色名称", required = true)
     private String name;
     @NotNull
-    @ApiModelProperty("角色级别")
+    @ApiModelProperty(value = "角色级别", required = true)
     private Long level;
     @ApiModelProperty("描述")
     private String description;
     @NotBlank
-    @ApiModelProperty("CODE")
+    @ApiModelProperty(value = "CODE", required = true)
     private String code;
     @ApiModelProperty("casId")
     private String casId;

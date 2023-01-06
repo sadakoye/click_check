@@ -15,19 +15,19 @@ import javax.validation.constraints.NotNull;
 public class UserAddDto {
 
     @NotNull
-    @ApiModelProperty("部门code")
+    @ApiModelProperty(value = "部门code", required = true)
     private Long deptCode;
     @NotBlank
-    @ApiModelProperty("用户名")
+    @ApiModelProperty(value = "用户名", required = true)
     private String username;
     @NotBlank
-    @ApiModelProperty("昵称")
+    @ApiModelProperty(value = "昵称", required = true)
     private String nickName;
     @NotBlank
-    @ApiModelProperty("性别")
+    @ApiModelProperty(value = "性别", required = true)
     private String gender;
     @NotBlank
-    @ApiModelProperty("手机号码")
+    @ApiModelProperty(value = "手机号码", required = true)
     private String phone;
     @ApiModelProperty("邮箱")
     private String email;
@@ -36,10 +36,10 @@ public class UserAddDto {
     @ApiModelProperty("头像真实路径")
     private String avatarPath;
     @NotBlank
-    @ApiModelProperty("状态：1启用、0禁用")
+    @ApiModelProperty(value = "状态：1启用、0禁用", required = true)
     private Long enabled;
     @NotBlank
-    @ApiModelProperty("code")
+    @ApiModelProperty(value = "code", required = true)
     private String code;
     @ApiModelProperty("casId")
     private String casId;

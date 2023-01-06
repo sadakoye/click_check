@@ -7,6 +7,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
@@ -20,15 +21,19 @@ import java.util.Date;
 public class GasStationExamineUpdateDto {
 
     @NotNull
-    @ApiModelProperty("ID")
+    @ApiModelProperty(value = "ID", required = true)
     private Long id;
-    @ApiModelProperty("区code")
+    @NotBlank
+    @ApiModelProperty(value = "区code", required = true)
     private String districtCode;
-    @ApiModelProperty("区name")
+    @NotBlank
+    @ApiModelProperty(value = "区name", required = true)
     private String districtName;
-    @ApiModelProperty("加油站名称")
+    @NotBlank
+    @ApiModelProperty(value = "加油站名称", required = true)
     private String gasStationName;
-    @ApiModelProperty("加油站code")
+    @NotBlank
+    @ApiModelProperty(value = "加油站code", required = true)
     private String gasStationCode;
     @ApiModelProperty("检查状况")
     private String examineState;

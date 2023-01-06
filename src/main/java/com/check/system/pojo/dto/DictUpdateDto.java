@@ -5,6 +5,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -15,11 +16,15 @@ import javax.validation.constraints.NotNull;
 public class DictUpdateDto {
 
   @NotNull
+  @ApiModelProperty(value = "ID", required = true)
   private Long id;
-  @ApiModelProperty("字典键")
+  @NotBlank
+  @ApiModelProperty(value = "字典键", required = true)
   private String dictKey;
-  @ApiModelProperty("字典值")
+  @NotBlank
+  @ApiModelProperty(value = "字典值", required = true)
   private String dictValue;
-  @ApiModelProperty("字典所属组")
+  @NotBlank
+  @ApiModelProperty(value = "字典所属组", required = true)
   private String dictGroup;
 }
