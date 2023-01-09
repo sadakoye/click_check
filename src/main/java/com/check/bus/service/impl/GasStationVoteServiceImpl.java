@@ -15,6 +15,7 @@ import com.check.bus.pojo.dto.GasStationVoteUpdateDto;
 import com.check.bus.pojo.vo.GasStationVoteCountVo;
 import com.check.bus.pojo.vo.GasStationVoteVo;
 import com.check.bus.service.GasStationVoteService;
+import com.check.common.constant.ConstantException;
 import com.check.common.constant.ConstantInteger;
 import com.check.common.exception.CommonException;
 import com.check.common.pojo.bean.Result;
@@ -157,7 +158,7 @@ public class GasStationVoteServiceImpl extends ServiceImpl<GasStationVoteMapper,
     @Override
     public Result<Object> vote(List<String> codeList) {
         if (codeList.size() > ConstantInteger.THREE) {
-            throw new CommonException(10002, "投票数不能超过3");
+            throw ConstantException.GAS_STATION_VOTE_COUNT_GT_THREE;
         }
 
         User user = jwtUtils.getUser();
@@ -178,7 +179,7 @@ public class GasStationVoteServiceImpl extends ServiceImpl<GasStationVoteMapper,
         });
 
         if (oldGasStationVoteList.size() + codeList.size() > ConstantInteger.THREE) {
-            throw new CommonException(10003, "七天内投票数不能超过3，七天内已投" + oldGasStationVoteList.size() + "票。");
+            throw ConstantException.GAS_STATION_VOTE_COUNT_GT_THREE;
         }
 
         LambdaQueryWrapper<GasStation> queryWrapper = new LambdaQueryWrapper<>();

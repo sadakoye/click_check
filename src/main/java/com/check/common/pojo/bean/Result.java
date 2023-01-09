@@ -68,7 +68,11 @@ public class Result<T> implements Serializable  {
     public static <T> Result<T> error(Integer code, String msg, T data){
         HttpServletResponse request = RequestUtils.getResponse();
         if (request != null) {
-            request.setStatus(code);
+            if (code <= ERROR_CODE) {
+                request.setStatus(code);
+            }else {
+                request.setStatus(ERROR_CODE);
+            }
         }
         return new Result<>(code, msg, data, new Date().toString());
     }

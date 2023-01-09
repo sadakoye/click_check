@@ -1,10 +1,13 @@
 package com.check.system.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.check.common.constant.ConstantException;
 import com.check.common.constant.ConstantString;
+import com.check.common.exception.CommonException;
 import com.check.common.pojo.bean.Result;
 import com.check.common.util.DataUtils;
 
@@ -18,12 +21,15 @@ import com.check.system.pojo.vo.UserVo;
 import com.check.system.service.UserService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.io.UnsupportedEncodingException;
+import java.util.Base64;
 import java.util.List;
 
 /**
@@ -115,23 +121,27 @@ public class UserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impleme
      * @param hidUserId   用户id
      * @param hidUserType 用户类型（1-企业；2-个人）
      * @param cardId      身份证号码
+     * @param hidInfo     用户信息（base64 加密）
      * @return Result
      * @author zzc
      */
     @Override
-    public Result<Object> info(String hidName, String hidUserId, String hidUserType, String cardId) {
+    public Result<Object> info(String hidName, String hidUserId, String hidUserType, String cardId, String hidInfo) {
+        if (StringUtils.isBlank(hidName)){
+            throw ConstantException.SYSTEM_USER_HID_NAME_NULL;
+        }
         LambdaQueryWrapper<SysUser> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(SysUser::getUsername, hidName);
+        queryWrapper.eq(SysUser::getUsername, cardId);
         List<SysUser> list = list(queryWrapper);
         if (list.size() > 0) {
-            return Result.error("已有此用户");
+            throw ConstantException.SYSTEM_USER_RE;
         }
         String maxCode = userMapper.getMaxCode();
         int i = Integer.parseInt(maxCode);
         i = i + 1;
 
         SysUser user = new SysUser();
-        user.setUsername(hidName);
+        user.setUsername(cardId);
         user.setCasId(hidUserId);
         user.setIdCard(cardId);
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -142,6 +152,32 @@ public class UserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impleme
         user.setCreateBy("SYSTEM");
         user.setUpdateBy("SYSTEM");
         user.setCode(Integer.toString(i));
+
+        if (StringUtils.isNotBlank(hidInfo)){
+            String jsonStr = "";
+            try {
+                jsonStr = new String(Base64.getDecoder().decode(hidInfo), "GBK");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+            if (StringUtils.isNotBlank(jsonStr)){
+                JSONObject object = JSONObject.parseObject(jsonStr);
+                if (object != null){
+                    String name = object.getString(ConstantString.CAPS_S_NAME);
+                    String mobile = object.getString(ConstantString.CAPS_S_MOBILE);
+                    String phone = object.getString(ConstantString.CAPS_S_PHONE);
+                    user.setNickName(name);
+                    if (StringUtils.isNotBlank(phone)){
+                        user.setPhone(phone);
+                    }
+                    if (StringUtils.isNotBlank(mobile)){
+                        user.setPhone(mobile);
+                    }
+                }
+            }
+        }
+
+        save(user);
 
         return Result.success();
     }

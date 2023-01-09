@@ -1,5 +1,6 @@
 package com.check.security.controller;
 
+import com.check.common.constant.ConstantException;
 import com.check.common.constant.ConstantString;
 import com.check.common.pojo.bean.Result;
 import com.check.common.util.RedisUtils;
@@ -60,6 +61,7 @@ public class LoginController {
     @ApiOperation(value = "登录")
     @GetMapping("/login")
     public Map<String, Object> login(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) {
+///       get登录
 //        try {
 //            jwtAuthenticationTokenFilter.doFilterInternal(request, response, filterChain);
 //        } catch (Exception e) {
@@ -88,7 +90,7 @@ public class LoginController {
         if (RedisUtils.deleteValue(ConstantString.REDIS_USER + user.getUsername())) {
             return Result.success();
         }
-        return Result.error("未登录或已登出");
+        throw ConstantException.SYSTEM_LOGIN_OUT_ERROR;
     }
 
 }

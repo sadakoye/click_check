@@ -10,6 +10,7 @@ import com.check.bus.pojo.dto.GasStationDto;
 import com.check.bus.pojo.dto.GasStationUpdateDto;
 import com.check.bus.pojo.vo.GasStationVo;
 import com.check.bus.service.GasStationService;
+import com.check.common.constant.ConstantException;
 import com.check.common.constant.ConstantString;
 import com.check.common.exception.CommonException;
 import com.check.common.pojo.bean.Result;
@@ -78,7 +79,7 @@ public class GasStationServiceImpl extends ServiceImpl<GasStationMapper, GasStat
         queryWrapper.eq(GasStation::getCode, dto.getCode());
         List<GasStation> list = list(queryWrapper);
         if (list.size() > 0) {
-            throw new CommonException(10001, "code重复");
+            throw ConstantException.GAS_STATION_RE_CODE;
         }
         GasStation bean = new GasStation();
         BeanUtils.copyProperties(dto, bean);
@@ -103,10 +104,11 @@ public class GasStationServiceImpl extends ServiceImpl<GasStationMapper, GasStat
             for (GasStation gasStation : list) {
                 if (gasStation.getId().equals(dto.getId())) {
                     error = 0;
+                    break;
                 }
             }
             if (error == 1) {
-                throw new CommonException(10001, "code重复");
+                throw ConstantException.GAS_STATION_RE_CODE;
             }
         }
         GasStation bean = new GasStation();
@@ -159,7 +161,7 @@ public class GasStationServiceImpl extends ServiceImpl<GasStationMapper, GasStat
                     jwtProperties.getTokenValidityInSeconds(), TimeUnit.MINUTES);
             return Result.success();
         } else {
-            return Result.error("传入的id为空");
+            throw ConstantException.GAS_STATION_ID_NULL;
         }
     }
 

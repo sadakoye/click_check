@@ -15,4 +15,8 @@ public interface ConstantString {
     String REDIS_USER = "user:";
     String REDIS_PICK = "pick:";
 
+    String CAPS_S_NAME = "SNAME";
+    String CAPS_S_MOBILE = "SMOBILE";
+    String CAPS_S_PHONE = "SPHONE";
+
 }

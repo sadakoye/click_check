@@ -103,7 +103,7 @@ public class ExceptionConfig {
     @ExceptionHandler(CommonException.class)
     public Result<Object> handleException(CommonException e) {
         log.error("系统异常：" + e.getMsg());
-        return Result.error(e.getMsg());
+        return Result.error(e.getCode(), e.getMsg());
     }
 
     /**

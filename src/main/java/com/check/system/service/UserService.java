@@ -59,8 +59,9 @@ public interface UserService extends IService<SysUser> {
      * @param hidUserId   用户id
      * @param hidUserType 用户类型（1-企业；2-个人）
      * @param cardId      身份证号码
+     * @param hidInfo     用户信息（base64 加密）
      * @return Result
      * @author zzc
      */
-    Result<Object> info(String hidName, String hidUserId, String hidUserType, String cardId);
+    Result<Object> info(String hidName, String hidUserId, String hidUserType, String cardId, String hidInfo);
 }

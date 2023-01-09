@@ -1,5 +1,6 @@
 package com.check.security.config;
 
+import com.check.common.constant.ConstantException;
 import com.check.common.constant.ConstantString;
 import com.check.common.exception.CommonException;
 import com.check.common.util.RedisUtils;
@@ -47,7 +48,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
                 if (RedisUtils.contain(ConstantString.REDIS_USER + name)) {
                     RedisUtils.expire(ConstantString.REDIS_USER + name, jwtProperties.getTokenValidityInSeconds(), TimeUnit.MINUTES);
                 } else {
-                    throw new CommonException(401, "token无效或过期");
+                    throw ConstantException.SYSTEM_TOKEN_INVALID;
                 }
 
                 UserDetails userDetails = jwtUserService.loadUserByUsername(name);
