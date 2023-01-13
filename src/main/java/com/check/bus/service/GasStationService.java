@@ -5,6 +5,7 @@ import com.check.bus.pojo.GasStation;
 import com.check.bus.pojo.dto.GasStationAddDto;
 import com.check.bus.pojo.dto.GasStationDto;
 import com.check.bus.pojo.dto.GasStationUpdateDto;
+import com.check.bus.pojo.vo.GasStationStatisticsVo;
 import com.check.bus.pojo.vo.GasStationVo;
 import com.check.common.pojo.bean.Result;
 import com.github.pagehelper.PageInfo;
@@ -95,4 +96,13 @@ public interface GasStationService extends IService<GasStation> {
      * @author zzc
      */
     Result<Object> addAll(List<GasStationAddDto> dtoList);
+
+    /**
+     * 加油站统计
+     *
+     * @param code 区code
+     * @return Result
+     * @author zzc
+     */
+    Result<List<GasStationStatisticsVo>> statistics(String code);
 }

@@ -3,6 +3,7 @@ package com.check.bus.controller;
 import com.check.bus.pojo.dto.GasStationAddDto;
 import com.check.bus.pojo.dto.GasStationDto;
 import com.check.bus.pojo.dto.GasStationUpdateDto;
+import com.check.bus.pojo.vo.GasStationStatisticsVo;
 import com.check.bus.pojo.vo.GasStationVo;
 import com.check.bus.service.GasStationService;
 import com.check.common.pojo.bean.Result;
@@ -155,4 +156,18 @@ public class GasStationController {
         return service.addAll(dtoList);
     }
 
+
+    /**
+     * 加油站品牌数量统计
+     *
+     * @param code 区code
+     * @return Result
+     * @author zzc
+     */
+    @PreAuthorize("hasAnyAuthority('GasStation:statistics') OR hasAnyAuthority('Admin')")
+    @ApiOperation(value = "加油站品牌数量统计")
+    @PostMapping("/statistics")
+    public Result<List<GasStationStatisticsVo>> statistics(@RequestBody @ApiParam("地区code, 传00查全部") String code) {
+        return service.statistics(code);
+    }
 }

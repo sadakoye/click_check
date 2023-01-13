@@ -9,7 +9,7 @@ public interface ConstantString {
 
 
     String IS_DELETE = "isDelete";
-    String ZERO = "0";
+    String ZERO_ZERO = "00";
     String ONE = "1";
 
     String REDIS_USER = "user:";

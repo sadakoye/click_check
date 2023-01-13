@@ -8,6 +8,7 @@ import com.check.bus.pojo.GasStation;
 import com.check.bus.pojo.dto.GasStationAddDto;
 import com.check.bus.pojo.dto.GasStationDto;
 import com.check.bus.pojo.dto.GasStationUpdateDto;
+import com.check.bus.pojo.vo.GasStationStatisticsVo;
 import com.check.bus.pojo.vo.GasStationVo;
 import com.check.bus.service.GasStationService;
 import com.check.common.constant.ConstantException;
@@ -21,6 +22,7 @@ import com.check.security.pojo.bean.User;
 import com.check.security.utils.JwtUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -240,5 +242,21 @@ public class GasStationServiceImpl extends ServiceImpl<GasStationMapper, GasStat
                 })
                 .forEach(this::save);
         return Result.success();
+    }
+
+    /**
+     * 加油站统计
+     *
+     * @param code 区code
+     * @return Result
+     * @author zzc
+     */
+    @Override
+    public Result<List<GasStationStatisticsVo>> statistics(String code) {
+        if (ConstantString.ZERO_ZERO.equals(code)){
+            code = null;
+        }
+        List<GasStationStatisticsVo> gasStationStatisticsVoList = gasStationMapper.statistics(code);
+        return Result.success(gasStationStatisticsVoList);
     }
 }

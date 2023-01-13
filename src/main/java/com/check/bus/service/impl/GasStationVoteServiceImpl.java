@@ -163,7 +163,6 @@ public class GasStationVoteServiceImpl extends ServiceImpl<GasStationVoteMapper,
 
         User user = jwtUtils.getUser();
         SysUser sysUser = sysUserMapper.selectById(user.getId());
-
         Date date = new Date();
         Date oldDate = new Date(System.currentTimeMillis() - 7 * 24 * 60 * 60 * 1000);
         List<GasStationVote> oldGasStationVoteList = getGasStationVotes(sysUser.getIdCard(), oldDate);
