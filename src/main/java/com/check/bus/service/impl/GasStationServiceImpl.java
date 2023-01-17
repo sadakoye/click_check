@@ -13,7 +13,6 @@ import com.check.bus.pojo.vo.GasStationVo;
 import com.check.bus.service.GasStationService;
 import com.check.common.constant.ConstantException;
 import com.check.common.constant.ConstantString;
-import com.check.common.exception.CommonException;
 import com.check.common.pojo.bean.Result;
 import com.check.common.util.DataUtils;
 import com.check.common.util.RedisUtils;
@@ -22,7 +21,6 @@ import com.check.security.pojo.bean.User;
 import com.check.security.utils.JwtUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -62,7 +60,6 @@ public class GasStationServiceImpl extends ServiceImpl<GasStationMapper, GasStat
         QueryWrapper<GasStation> queryWrapper = DataUtils.query(bean, dto, vo);
         PageHelper.startPage(dto.getPageNum(), dto.getPageSize());
         List<GasStation> list = list(queryWrapper);
-
         PageInfo<GasStationVo> page = DataUtils.getPageInfo(list, vo.getClass());
 
         return Result.success(page);

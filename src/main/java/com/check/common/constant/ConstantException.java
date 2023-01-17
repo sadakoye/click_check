@@ -20,6 +20,7 @@ public interface ConstantException {
     CommonException SYSTEM_LOGIN_OUT_ERROR = new CommonException(10000, "未登录或已登出");
     CommonException SYSTEM_USER_HID_NAME_NULL = new CommonException(10001, "hidName不能为空");
     CommonException SYSTEM_USER_RE = new CommonException(10002, "已有此用户");
+    CommonException SYSTEM_USER_NULL = new CommonException(10003, "查询不到用户");
 
     /**
      * GasStation 加油站模块

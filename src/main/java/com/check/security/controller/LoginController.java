@@ -1,16 +1,10 @@
 package com.check.security.controller;
 
-import com.check.common.constant.ConstantException;
-import com.check.common.constant.ConstantString;
 import com.check.common.pojo.bean.Result;
-import com.check.common.util.RedisUtils;
-import com.check.security.config.JwtAuthenticationTokenFilter;
-import com.check.security.config.JwtUserServiceImpl;
 import com.check.security.pojo.bean.User;
-import com.check.security.utils.JwtUtils;
+import com.check.security.service.LoginService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,13 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author zzc
@@ -35,10 +24,7 @@ import java.util.Map;
 public class LoginController {
 
     @Resource
-    JwtUtils jwtUtils;
-
-    @Resource
-    JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
+    LoginService service;
 
     /**
      * 登录
@@ -55,26 +41,16 @@ public class LoginController {
     /**
      * 登录
      *
-     * @return Result
+     * @param request     request
+     * @param response    response
+     * @param filterChain filterChain
+     * @return Result<User>
      * @author zzc
      */
     @ApiOperation(value = "登录")
     @GetMapping("/login")
-    public Map<String, Object> login(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) {
-///       get登录
-//        try {
-//            jwtAuthenticationTokenFilter.doFilterInternal(request, response, filterChain);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        User user = jwtUtils.getUser();
-//        Map<String, Object> ret = new HashMap<>(4);
-//        ret.put("code", 200);
-//        ret.put("message", "登录成功");
-//        ret.put("user", user);
-//        ret.put("date", new Date().toString());
-//        return ret;
-        return null;
+    public Result<User> login(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) {
+        return service.login(request, response, filterChain);
     }
 
     /**
@@ -86,11 +62,23 @@ public class LoginController {
     @ApiOperation(value = "登出")
     @PostMapping("/logout")
     public Result<Object> logout() {
-        User user = jwtUtils.getUser();
-        if (RedisUtils.deleteValue(ConstantString.REDIS_USER + user.getUsername())) {
-            return Result.success();
-        }
-        throw ConstantException.SYSTEM_LOGIN_OUT_ERROR;
+        return service.logout();
+    }
+
+    /**
+     * 门户cas登录
+     *
+     * @param ticket   票据
+     * @param request  request
+     * @param response response
+     * @return String
+     * @author zzc
+     */
+    @RequestMapping("/cas/login")
+    public String casLogin(String ticket,
+                           HttpServletRequest request,
+                           HttpServletResponse response) {
+        return service.casLogin(ticket, request, response);
     }
 
 }

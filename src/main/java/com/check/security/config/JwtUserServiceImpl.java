@@ -1,13 +1,14 @@
 package com.check.security.config;
 
+import com.check.common.constant.ConstantException;
 import com.check.common.constant.ConstantString;
 import com.check.common.util.RedisUtils;
+import com.check.security.pojo.bean.User;
+import com.check.security.utils.EmptyUtil;
 import com.check.security.utils.JwtUtils;
 import com.check.system.mapper.SysMenuMapper;
 import com.check.system.mapper.SysRoleMapper;
 import com.check.system.mapper.SysUserMapper;
-import com.check.security.pojo.bean.User;
-import com.check.security.utils.EmptyUtil;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -62,6 +63,8 @@ public class JwtUserServiceImpl  implements UserDetailsService {
                 user.setToken(token);
                 // 将用户信息保存在缓存中
                 RedisUtils.saveValue(ConstantString.REDIS_USER + username, user, jwtProperties.getTokenValidityInSeconds(), TimeUnit.MINUTES);
+            }else {
+                throw ConstantException.SYSTEM_USER_NULL;
             }
         }
         return user;
