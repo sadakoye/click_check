@@ -66,7 +66,7 @@ public class LoginController {
     }
 
     /**
-     * 门户cas登录
+     * CAS-门户登录
      *
      * @param ticket   票据
      * @param request  request
@@ -74,11 +74,25 @@ public class LoginController {
      * @return String
      * @author zzc
      */
+    @ApiOperation(value = "CAS-门户登录")
     @RequestMapping("/cas/login")
     public String casLogin(String ticket,
                            HttpServletRequest request,
                            HttpServletResponse response) {
         return service.casLogin(ticket, request, response);
+    }
+
+    /**
+     * CAS-从门户系统同步用户
+     *
+     * @param request request
+     * @return String
+     * @author zzc
+     */
+    @ApiOperation(value = "CAS-从门户系统同步用户")
+    @RequestMapping("/casAutoUser")
+    public Result<Object> casAutoUser(HttpServletRequest request) {
+        return service.casAutoUser(request);
     }
 
 }

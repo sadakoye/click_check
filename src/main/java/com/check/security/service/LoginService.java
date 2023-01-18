@@ -32,7 +32,7 @@ public interface LoginService {
     Result<Object> logout();
 
     /**
-     * 门户cas登录
+     * CAS-门户登录
      *
      * @param ticket   票据
      * @param request  request
@@ -41,5 +41,14 @@ public interface LoginService {
      * @author zzc
      */
     String casLogin(String ticket, HttpServletRequest request, HttpServletResponse response);
+
+    /**
+     * CAS-从门户系统同步用户
+     *
+     * @param request request
+     * @return String
+     * @author zzc
+     */
+    Result<Object> casAutoUser(HttpServletRequest request);
 }
 

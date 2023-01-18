@@ -2,7 +2,6 @@ package com.check.common.config.properties;
 
 
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -18,7 +17,11 @@ public class CasConfig {
 
     String service;
     String casUrl;
+    String url;
     String loginSuccess;
     String loginError;
     String loginIp;
+    String appId;
+    String appKey;
+    String urlHead;
 }

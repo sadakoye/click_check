@@ -1,9 +1,15 @@
 package com.check.security.service.impl;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.check.common.config.properties.CasConfig;
 import com.check.common.constant.ConstantException;
 import com.check.common.constant.ConstantString;
 import com.check.common.pojo.bean.Result;
+import com.check.common.util.GzcssTokenUtils;
 import com.check.common.util.HttpClientUtils;
 import com.check.common.util.RedisUtils;
 import com.check.security.config.JwtUserServiceImpl;
@@ -11,6 +17,7 @@ import com.check.security.pojo.bean.User;
 import com.check.security.service.LoginService;
 import com.check.security.utils.JwtUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
@@ -23,6 +30,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.net.URLEncoder;
+import java.util.*;
 
 /**
  * @author zzc
@@ -70,7 +78,7 @@ public class LoginServiceImpl implements LoginService {
     }
 
     /**
-     * 门户cas登录
+     * CAS-门户登录
      *
      * @param ticket   票据
      * @param request  request
@@ -135,6 +143,106 @@ public class LoginServiceImpl implements LoginService {
             String infoMsg = sw.toString();
             log.error("cas登录失败：" + infoMsg);
             return "redirect:" + loginError + "?description=" + e.getMessage();
+        }
+    }
+
+    /**
+     * CAS-从门户系统同步用户
+     *
+     * @param request request
+     * @return String
+     * @author zzc
+     */
+    @Override
+    public Result<Object> casAutoUser(HttpServletRequest request) {
+        JSONArray casDataList = getCasDataList("/api/portal/users/all", getParamByRequest(request));
+        if (casDataList != null) {
+            //执行业务处理
+            initUser(casDataList);
+        }
+        return Result.success();
+    }
+
+    public Map<String, String> getParamByRequest(HttpServletRequest request) {
+        Map<String, String[]> parameterMap = request.getParameterMap();
+        Map<String, String> params = new LinkedHashMap<>();
+        for (String key : parameterMap.keySet()) {
+            if (ConstantString.LOGIN_NAME.equals(key)
+                    || ConstantString.SOURCE.equals(key)
+                    || ConstantString.TIMESTAMP.equals(key)
+                    || ConstantString.TOKEN.equals(key)
+                    || ConstantString.SIGN.equals(key)
+                    || ConstantString.ENCRYPTION_DATA.equals(key)) {
+                continue;
+            }
+            String[] values = parameterMap.get(key);
+            if (null != values && values.length >= 1 && null != values[0]) {
+                params.put(key, values[0]);
+            }
+        }
+        return params;
+    }
+
+    public JSONArray getCasDataList(String path, Map<String, String> params) {
+        StringBuilder sb = new StringBuilder(casConfig.getUrl() + casConfig.getUrlHead() + path);
+        int index = 0;
+        //设置参数
+        if (params != null) {
+            for (Map.Entry<String, String> entry : params.entrySet()) {
+                if (index == 0) {
+                    sb.append("?");
+                } else {
+                    sb.append("&");
+                }
+                index++;
+                String key = entry.getKey();
+                String value = entry.getValue();
+                sb.append(key).append("=").append(value);
+            }
+        }
+        Map<String, String> heads = createHead();
+        JSONObject object = HttpClientUtils.httpGet(sb.toString(), heads);
+        if (object != null) {
+            if (ConstantString.TRUE.equals(object.getString(ConstantString.SUCCESS))) {
+                JSONArray result = object.getJSONArray("result");
+                log.info("请求获取成功：" + sb);
+                return result;
+            } else {
+                return null;
+            }
+        }
+        return null;
+    }
+
+    public Map<String, String> createHead() {
+        HashMap<String, String> heads = new HashMap<>(4);
+        Long timestamp = System.currentTimeMillis();
+        String nonce = UUID.randomUUID().toString();
+        Map<String, Object> payload = new LinkedHashMap<>();
+        //系统id
+        payload.put("appId", casConfig.getAppId());
+        //签注时间
+        payload.put("timestamp", timestamp);
+        //随机数
+        payload.put("nonce", nonce);
+        payload.put("secret", casConfig.getAppKey());
+        String signature = GzcssTokenUtils.sM3Encode(JSON.toJSONString(payload));
+        heads.put("appid", casConfig.getAppId());
+        heads.put("timestamp", timestamp.toString());
+        heads.put("nonce", nonce);
+        heads.put("signature", signature);
+        log.info("发送请求头payload" + payload);
+        log.info("发送请求头heads" + heads);
+        return heads;
+    }
+
+    public void initUser(JSONArray userList) {
+
+        log.info("从门户查询到用户数据" + userList.size() + "条");
+
+        for (Object o : userList) {
+            JSONObject map = (JSONObject) o;
+
         }
     }
 }
