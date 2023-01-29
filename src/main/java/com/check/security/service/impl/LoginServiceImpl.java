@@ -3,8 +3,6 @@ package com.check.security.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.check.common.config.properties.CasConfig;
 import com.check.common.constant.ConstantException;
 import com.check.common.constant.ConstantString;
@@ -16,11 +14,14 @@ import com.check.security.config.JwtUserServiceImpl;
 import com.check.security.pojo.bean.User;
 import com.check.security.service.LoginService;
 import com.check.security.utils.JwtUtils;
+import com.check.system.mapper.SysUserMapper;
+import com.check.system.pojo.SysUser;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -31,6 +32,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.net.URLEncoder;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author zzc
@@ -47,6 +49,9 @@ public class LoginServiceImpl implements LoginService {
 
     @Resource
     CasConfig casConfig;
+
+    @Resource
+    SysUserMapper userMapper;
 
     /**
      * 登录
@@ -240,9 +245,34 @@ public class LoginServiceImpl implements LoginService {
 
         log.info("从门户查询到用户数据" + userList.size() + "条");
 
-        for (Object o : userList) {
-            JSONObject map = (JSONObject) o;
+        AtomicInteger success = new AtomicInteger();
+        AtomicInteger error = new AtomicInteger();
 
-        }
+        userList.forEach(o -> {
+            JSONObject json = (JSONObject) o;
+            if (json != null && ConstantString.ONE.equals(json.getString("status")) &&
+                    ConstantString.ZERO.equals(json.getString("delFlag"))) {
+                SysUser user = new SysUser();
+                PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+                user.setPassword(passwordEncoder.encode("123456"));
+                user.setUsername(json.getString("userName"));
+                user.setCasId(json.getString("id"));
+                user.setNickName(json.getString("realName"));
+                user.setCreateBy("CAS");
+                user.setUpdateBy("CAS");
+                user.setIdCard(json.getString("idCard"));
+                user.setPhone(json.getString("phone"));
+                user.setEmail(json.getString("email"));
+                user.setGender(json.getString("gender"));
+                user.setAvatarPath(json.getString("avatar"));
+                try {
+                    userMapper.insert(user);
+                    success.getAndIncrement();
+                } catch (Exception e) {
+                    error.getAndIncrement();
+                }
+            }
+        });
+        log.info("同步用户成功" + success + "条， 失败" + error + "条");
     }
 }

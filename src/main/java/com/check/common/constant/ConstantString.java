@@ -10,6 +10,7 @@ public interface ConstantString {
 
     String IS_DELETE = "isDelete";
     String ZERO_ZERO = "00";
+    String ZERO = "0";
     String ONE = "1";
     String TRUE = "true";
     String SUCCESS = "success";
