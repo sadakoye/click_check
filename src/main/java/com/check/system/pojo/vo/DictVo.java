@@ -18,20 +18,20 @@ import java.util.Date;
 @Api("字典输出类")
 public class DictVo extends BaseVo {
 
-  @ApiModelProperty("ID")
-  private Long id;
-  @ApiModelProperty("字典键")
-  private String dictKey;
-  @ApiModelProperty("字典值")
-  private String dictValue;
-  @ApiModelProperty("字典所属组")
-  private String dictGroup;
-  @JsonFormat( pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-  @ApiModelProperty("创建时间")
-  private Date createTime;
-  @JsonFormat( pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-  @ApiModelProperty("修改时间")
-  private Date updateTime;
+    @ApiModelProperty("ID")
+    private Long id;
+    @ApiModelProperty("字典键")
+    private String dictKey;
+    @ApiModelProperty("字典值")
+    private String dictValue;
+    @ApiModelProperty("字典所属组")
+    private String dictGroup;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @ApiModelProperty("创建时间")
+    private Date createTime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @ApiModelProperty("修改时间")
+    private Date updateTime;
 
 
 }

@@ -5,6 +5,7 @@ import com.check.bus.pojo.GasStation;
 import com.check.bus.pojo.dto.GasStationAddDto;
 import com.check.bus.pojo.dto.GasStationDto;
 import com.check.bus.pojo.dto.GasStationUpdateDto;
+import com.check.bus.pojo.vo.GasStationExamineStatisticsVo;
 import com.check.bus.pojo.vo.GasStationStatisticsVo;
 import com.check.bus.pojo.vo.GasStationVo;
 import com.check.common.pojo.bean.Result;
@@ -74,7 +75,7 @@ public interface GasStationService extends IService<GasStation> {
     /**
      * 获取选中状态
      *
-     * @return Result<List<Long>>
+     * @return Result<List < Long>>
      * @author zzc
      */
     Result<List<Long>> getPick();
@@ -105,4 +106,13 @@ public interface GasStationService extends IService<GasStation> {
      * @author zzc
      */
     Result<List<GasStationStatisticsVo>> statistics(String code);
+
+    /**
+     * 加油站检查状态统计
+     *
+     * @param code 区code
+     * @return Result
+     * @author zzc
+     */
+    Result<List<GasStationExamineStatisticsVo>> examineStatistics(String code);
 }

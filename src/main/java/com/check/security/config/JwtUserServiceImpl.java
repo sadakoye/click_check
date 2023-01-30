@@ -24,7 +24,7 @@ import java.util.concurrent.TimeUnit;
  * @author zzc
  */
 @Component
-public class JwtUserServiceImpl  implements UserDetailsService {
+public class JwtUserServiceImpl implements UserDetailsService {
 
     @Resource
     private SysUserMapper userMapper;
@@ -63,7 +63,7 @@ public class JwtUserServiceImpl  implements UserDetailsService {
                 user.setToken(token);
                 // 将用户信息保存在缓存中
                 RedisUtils.saveValue(ConstantString.REDIS_USER + username, user, jwtProperties.getTokenValidityInSeconds(), TimeUnit.MINUTES);
-            }else {
+            } else {
                 throw ConstantException.SYSTEM_USER_NULL;
             }
         }
@@ -71,7 +71,7 @@ public class JwtUserServiceImpl  implements UserDetailsService {
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 

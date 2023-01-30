@@ -1,7 +1,6 @@
 package com.check.security.config;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -73,6 +72,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/doc.html").permitAll()
                 .antMatchers("/doc.html/**").permitAll()
                 .antMatchers("/favicon.ico").permitAll()
+                //加油站查询不用登录
+                .antMatchers("/gasStation/list").permitAll()
                 //所有请求都需要拦截
                 .anyRequest()
                 .authenticated();

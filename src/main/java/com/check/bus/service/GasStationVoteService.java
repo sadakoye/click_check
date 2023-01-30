@@ -75,7 +75,7 @@ public interface GasStationVoteService extends IService<GasStationVote> {
     /**
      * 获取七天内已投票过的加油站code
      *
-     * @return Result<List<String>>
+     * @return Result<List < String>>
      * @author zzc
      */
     Result<List<String>> getVote();

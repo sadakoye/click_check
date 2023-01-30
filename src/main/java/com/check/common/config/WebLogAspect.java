@@ -4,7 +4,6 @@ import com.alibaba.druid.util.StringUtils;
 import com.alibaba.fastjson.JSONObject;
 import com.check.common.util.RequestUtils;
 import com.check.security.pojo.bean.User;
-
 import com.check.security.utils.JwtUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -58,9 +57,9 @@ public class WebLogAspect {
      */
     private void appendUserLog(StringBuilder logBuffer) {
         User user = jwtUtils.getUser();
-        if (user.getUsername() != null){
+        if (user.getUsername() != null) {
             logBuffer.append("+  USER: ").append(user.getUsername()).append(LINE_SEPARATOR);
-        }else {
+        } else {
             logBuffer.append("+  USER: NOT").append(LINE_SEPARATOR);
         }
     }

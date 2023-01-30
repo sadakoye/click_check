@@ -164,7 +164,7 @@ public class RoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impleme
      */
     @Override
     public Result<Object> deleteUserRole(List<UsersRolesDto> dtoList) {
-        if (dtoList != null && dtoList.size() > 0){
+        if (dtoList != null && dtoList.size() > 0) {
             dtoList.forEach(usersRolesDto -> {
                 try {
                     LambdaQueryWrapper<SysUsersRoles> queryWrapper = new LambdaQueryWrapper<>();

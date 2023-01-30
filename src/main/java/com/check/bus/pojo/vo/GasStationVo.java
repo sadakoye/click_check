@@ -52,5 +52,9 @@ public class GasStationVo extends BaseVo {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", locale = "zh", timezone = "GMT+8")
     @ApiModelProperty("更新时间")
     private Date updateTime;
+    @ApiModelProperty("X")
+    private Double x;
+    @ApiModelProperty("Y")
+    private Double y;
 
 }

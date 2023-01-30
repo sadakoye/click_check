@@ -2,7 +2,6 @@ package com.check.security.config;
 
 import com.check.common.constant.ConstantException;
 import com.check.common.constant.ConstantString;
-import com.check.common.exception.CommonException;
 import com.check.common.util.RedisUtils;
 import com.check.security.utils.JwtUtils;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

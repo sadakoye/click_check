@@ -7,10 +7,8 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.check.common.constant.ConstantException;
 import com.check.common.constant.ConstantString;
-import com.check.common.exception.CommonException;
 import com.check.common.pojo.bean.Result;
 import com.check.common.util.DataUtils;
-
 import com.check.common.util.RedisUtils;
 import com.check.system.mapper.SysUserMapper;
 import com.check.system.pojo.SysUser;
@@ -127,7 +125,7 @@ public class UserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impleme
      */
     @Override
     public Result<Object> info(String hidName, String hidUserId, String hidUserType, String cardId, String hidInfo) {
-        if (StringUtils.isBlank(hidName)){
+        if (StringUtils.isBlank(hidName)) {
             throw ConstantException.SYSTEM_USER_HID_NAME_NULL;
         }
         LambdaQueryWrapper<SysUser> queryWrapper = new LambdaQueryWrapper<>();
@@ -153,24 +151,24 @@ public class UserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impleme
         user.setUpdateBy("SYSTEM");
         user.setCode(Integer.toString(i));
 
-        if (StringUtils.isNotBlank(hidInfo)){
+        if (StringUtils.isNotBlank(hidInfo)) {
             String jsonStr = "";
             try {
                 jsonStr = new String(Base64.getDecoder().decode(hidInfo), "GBK");
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
-            if (StringUtils.isNotBlank(jsonStr)){
+            if (StringUtils.isNotBlank(jsonStr)) {
                 JSONObject object = JSONObject.parseObject(jsonStr);
-                if (object != null){
+                if (object != null) {
                     String name = object.getString(ConstantString.CAPS_S_NAME);
                     String mobile = object.getString(ConstantString.CAPS_S_MOBILE);
                     String phone = object.getString(ConstantString.CAPS_S_PHONE);
                     user.setNickName(name);
-                    if (StringUtils.isNotBlank(phone)){
+                    if (StringUtils.isNotBlank(phone)) {
                         user.setPhone(phone);
                     }
-                    if (StringUtils.isNotBlank(mobile)){
+                    if (StringUtils.isNotBlank(mobile)) {
                         user.setPhone(mobile);
                     }
                 }

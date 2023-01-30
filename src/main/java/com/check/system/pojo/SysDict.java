@@ -12,13 +12,13 @@ import java.util.Date;
  */
 @Data
 public class SysDict {
-  @TableId(type = IdType.AUTO)
-  private Long id;
-  private String dictKey;
-  private String dictValue;
-  private String dictGroup;
-  private Date createTime;
-  private Date updateTime;
-  private String isDelete;
+    @TableId(type = IdType.AUTO)
+    private Long id;
+    private String dictKey;
+    private String dictValue;
+    private String dictGroup;
+    private Date createTime;
+    private Date updateTime;
+    private String isDelete;
 
 }

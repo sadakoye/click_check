@@ -17,7 +17,6 @@ import com.check.bus.pojo.vo.GasStationVoteVo;
 import com.check.bus.service.GasStationVoteService;
 import com.check.common.constant.ConstantException;
 import com.check.common.constant.ConstantInteger;
-import com.check.common.exception.CommonException;
 import com.check.common.pojo.bean.Result;
 import com.check.common.util.DataUtils;
 import com.check.common.util.RequestUtils;

@@ -27,12 +27,13 @@ public class JwtUtils {
 
     /**
      * 生成token
+     *
      * @param name 用户名称
      * @return String
      */
-    public String generateToken(String name){
-        Map<String,Object> map = new HashMap<>(1);
-        map.put("username",name);
+    public String generateToken(String name) {
+        Map<String, Object> map = new HashMap<>(1);
+        map.put("username", name);
         ///密码
         //map.put("password",user.getPassword());
 
@@ -50,9 +51,10 @@ public class JwtUtils {
 
     /**
      * 解析token
+     *
      * @param token token
      */
-    public String analysisToken(String token){
+    public String analysisToken(String token) {
         if (StringUtils.isNotBlank(token)) {
             Claims body = Jwts.parser()
                     .setSigningKey(jwtProperties.getBase64Secret().getBytes(StandardCharsets.UTF_8))
@@ -67,9 +69,9 @@ public class JwtUtils {
     /**
      * 获取user
      */
-    public User getUser(){
-           SecurityContext context = SecurityContextHolder.getContext();
-           Authentication authentication = context.getAuthentication();
+    public User getUser() {
+        SecurityContext context = SecurityContextHolder.getContext();
+        Authentication authentication = context.getAuthentication();
         User user = new User();
         try {
             if (authentication.getPrincipal() instanceof User) {

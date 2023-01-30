@@ -8,6 +8,7 @@ import com.check.bus.pojo.GasStation;
 import com.check.bus.pojo.dto.GasStationAddDto;
 import com.check.bus.pojo.dto.GasStationDto;
 import com.check.bus.pojo.dto.GasStationUpdateDto;
+import com.check.bus.pojo.vo.GasStationExamineStatisticsVo;
 import com.check.bus.pojo.vo.GasStationStatisticsVo;
 import com.check.bus.pojo.vo.GasStationVo;
 import com.check.bus.service.GasStationService;
@@ -25,6 +26,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -250,10 +252,38 @@ public class GasStationServiceImpl extends ServiceImpl<GasStationMapper, GasStat
      */
     @Override
     public Result<List<GasStationStatisticsVo>> statistics(String code) {
-        if (ConstantString.ZERO_ZERO.equals(code)){
+        if (ConstantString.ZERO_ZERO.equals(code)) {
             code = null;
         }
         List<GasStationStatisticsVo> gasStationStatisticsVoList = gasStationMapper.statistics(code);
         return Result.success(gasStationStatisticsVoList);
+    }
+
+    /**
+     * 加油站检查状态统计
+     *
+     * @param code 区code
+     * @return Result
+     * @author zzc
+     */
+    @Override
+    public Result<List<GasStationExamineStatisticsVo>> examineStatistics(String code) {
+        if (ConstantString.ZERO_ZERO.equals(code)) {
+            code = null;
+        }
+        Integer notInt = gasStationMapper.examineStatistics(code);
+        List<GasStationExamineStatisticsVo> list = new ArrayList<>(2);
+        GasStationExamineStatisticsVo not = GasStationExamineStatisticsVo.builder()
+                .examine("0").count(notInt)
+                .build();
+        list.add(not);
+        LambdaQueryWrapper<GasStation> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(GasStation::getIsDelete, "0");
+        Integer integer = gasStationMapper.selectCount(queryWrapper);
+        GasStationExamineStatisticsVo is = GasStationExamineStatisticsVo.builder()
+                .examine("1").count(integer - notInt)
+                .build();
+        list.add(is);
+        return Result.success(list);
     }
 }

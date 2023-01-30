@@ -15,16 +15,16 @@ import javax.validation.constraints.NotNull;
 @Api("字典修改类")
 public class DictUpdateDto {
 
-  @NotNull
-  @ApiModelProperty(value = "ID", required = true)
-  private Long id;
-  @NotBlank
-  @ApiModelProperty(value = "字典键", required = true)
-  private String dictKey;
-  @NotBlank
-  @ApiModelProperty(value = "字典值", required = true)
-  private String dictValue;
-  @NotBlank
-  @ApiModelProperty(value = "字典所属组", required = true)
-  private String dictGroup;
+    @NotNull
+    @ApiModelProperty(value = "ID", required = true)
+    private Long id;
+    @NotBlank
+    @ApiModelProperty(value = "字典键", required = true)
+    private String dictKey;
+    @NotBlank
+    @ApiModelProperty(value = "字典值", required = true)
+    private String dictValue;
+    @NotBlank
+    @ApiModelProperty(value = "字典所属组", required = true)
+    private String dictGroup;
 }

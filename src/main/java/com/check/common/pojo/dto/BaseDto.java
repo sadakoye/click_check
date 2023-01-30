@@ -23,10 +23,10 @@ public class BaseDto {
     @ApiModelProperty("如果keyword不为空，所有时间外的查询条件值替换为keyword，并为or连接")
     private String keyword;
     @ApiModelProperty("开始时间")
-    @JsonFormat( pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date baseStartTime;
     @ApiModelProperty("结束时间")
-    @JsonFormat( pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date baseEndTime;
     @ApiModelProperty("时间字段名")
     private String baseTime;

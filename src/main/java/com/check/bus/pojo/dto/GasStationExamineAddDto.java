@@ -34,7 +34,7 @@ public class GasStationExamineAddDto {
     private String examineState;
     @ApiModelProperty("检查结果")
     private String examineResult;
-    @JsonFormat( pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @ApiModelProperty("检查时间")
     private Date examineTime;
     @ApiModelProperty("备注")

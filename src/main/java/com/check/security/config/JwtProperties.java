@@ -12,12 +12,18 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "jwt")
 public class JwtProperties {
 
-    /** Request Headers ： Authorization */
+    /**
+     * Request Headers ： Authorization
+     */
     private String header;
 
-    /** Base64对该令牌进行编码 */
+    /**
+     * Base64对该令牌进行编码
+     */
     private String base64Secret;
 
-    /** 令牌过期时间 此处单位/毫秒 */
+    /**
+     * 令牌过期时间 此处单位/毫秒
+     */
     private Integer tokenValidityInSeconds;
 }

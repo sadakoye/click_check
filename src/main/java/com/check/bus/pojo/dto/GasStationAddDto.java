@@ -48,5 +48,9 @@ public class GasStationAddDto {
     private String contactsLandlineTelephone;
     @ApiModelProperty("备注")
     private String remark;
+    @ApiModelProperty("X")
+    private Double x;
+    @ApiModelProperty("Y")
+    private Double y;
 
 }

@@ -1,7 +1,6 @@
 package com.check.system.pojo.dto;
 
 import com.check.common.pojo.dto.BaseDto;
-import com.check.common.pojo.vo.BaseVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

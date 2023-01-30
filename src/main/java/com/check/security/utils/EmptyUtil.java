@@ -12,9 +12,9 @@ public class EmptyUtil {
 
     public static boolean isNotEmpty(List<?> list) {
         AtomicBoolean b = new AtomicBoolean(false);
-        if (list != null){
+        if (list != null) {
             list.forEach(item -> {
-                if (item != null){
+                if (item != null) {
                     b.set(true);
                 }
             });
@@ -24,13 +24,13 @@ public class EmptyUtil {
 
     public static boolean isNotEmpty(Object o) {
         AtomicBoolean b = new AtomicBoolean(false);
-        if (o != null){
-            if (o instanceof String){
+        if (o != null) {
+            if (o instanceof String) {
                 String s = (String) o;
-                if (StringUtils.isNotBlank(s)){
+                if (StringUtils.isNotBlank(s)) {
                     b.set(true);
                 }
-            }else {
+            } else {
                 b.set(true);
             }
         }

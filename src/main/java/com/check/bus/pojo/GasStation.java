@@ -33,5 +33,7 @@ public class GasStation {
     private Date createTime;
     private Date updateTime;
     private String isDelete;
+    private Double x;
+    private Double y;
 
 }

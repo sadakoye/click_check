@@ -49,7 +49,7 @@ public class DataUtils {
         int isTime = 0;
         int isOrder = 0;
         for (String s : fieldName) {
-            if (ConstantString.IS_DELETE.equals(s)){
+            if (ConstantString.IS_DELETE.equals(s)) {
                 String underline = toUnderline(s);
                 eqMap.put(underline, 0);
                 continue;
@@ -57,16 +57,16 @@ public class DataUtils {
             if (s.equals(dto.getBaseTime())) {
                 isTime = 1;
             }
-            if (s.equals(dto.getDesc())){
+            if (s.equals(dto.getDesc())) {
                 isOrder = 1;
             }
-            if (s.equals(dto.getAsc())){
+            if (s.equals(dto.getAsc())) {
                 isOrder = 1;
             }
             Object o = getFieldValueByName(s, bean);
             if (o != null) {
                 String underline = toUnderline(s);
-                if (o instanceof Date){
+                if (o instanceof Date) {
                     continue;
                 }
                 if (keyword == null) {
@@ -95,7 +95,7 @@ public class DataUtils {
             String underline = toUnderline(s);
             select.append(underline).append(",");
         }
-        if (select.length() > 0){
+        if (select.length() > 0) {
             select.deleteCharAt(select.length() - 1);
             queryWrapper.select(select.toString());
         }
@@ -210,13 +210,10 @@ public class DataUtils {
         return queryWrapper;
     }
 
-    public static <T> List<T> castList(Object obj, Class<T> clazz)
-    {
+    public static <T> List<T> castList(Object obj, Class<T> clazz) {
         List<T> result = new ArrayList<T>();
-        if(obj instanceof List<?>)
-        {
-            for (Object o : (List<?>) obj)
-            {
+        if (obj instanceof List<?>) {
+            for (Object o : (List<?>) obj) {
                 result.add(clazz.cast(o));
             }
             return result;

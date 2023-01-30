@@ -39,7 +39,7 @@ public class GasStationVoteUpdateDto {
     @ApiModelProperty("投票ip")
     private String voterIp;
     @NotNull
-    @JsonFormat( pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @ApiModelProperty(value = "投票时间", required = true)
     private Date voteTime;
     @NotBlank

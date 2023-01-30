@@ -3,7 +3,6 @@ package com.check.system.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
-
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.check.common.pojo.bean.Result;
 import com.check.common.util.DataUtils;
@@ -115,7 +114,7 @@ public class MenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impleme
      */
     @Override
     public Result<Object> addRoleMenu(List<RolesMenusDto> dtoList) {
-        if (dtoList != null && dtoList.size() > 0){
+        if (dtoList != null && dtoList.size() > 0) {
             dtoList.forEach(rolesMenusDto -> {
                 try {
                     SysRolesMenus rolesMenus = new SysRolesMenus();
@@ -139,7 +138,7 @@ public class MenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impleme
      */
     @Override
     public Result<Object> deleteRoleMenu(List<RolesMenusDto> dtoList) {
-        if (dtoList != null && dtoList.size() > 0){
+        if (dtoList != null && dtoList.size() > 0) {
             dtoList.forEach(rolesMenusDto -> {
                 try {
                     LambdaQueryWrapper<SysRolesMenus> queryWrapper = new LambdaQueryWrapper<>();

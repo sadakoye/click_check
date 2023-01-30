@@ -119,7 +119,7 @@ public class GasStationVoteController {
     /**
      * 获取七天内已投票过的加油站code
      *
-     * @return Result<List<String>>
+     * @return Result<List < String>>
      * @author zzc
      */
     @PreAuthorize("hasAnyAuthority('GasStationVote:getVote') OR hasAnyAuthority('Admin')")

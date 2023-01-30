@@ -2,12 +2,10 @@ package com.check.bus.pojo.dto;
 
 
 import com.check.common.pojo.dto.BaseDto;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 

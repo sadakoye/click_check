@@ -12,9 +12,9 @@ import javax.validation.constraints.NotNull;
 @Api("用户角色关联类")
 public class UsersRolesDto {
 
-  @NotNull
-  private long userCode;
-  @NotNull
-  private long roleCode;
+    @NotNull
+    private long userCode;
+    @NotNull
+    private long roleCode;
 
 }

@@ -31,7 +31,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.net.URLEncoder;
-import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -269,6 +272,7 @@ public class LoginServiceImpl implements LoginService {
                     userMapper.insert(user);
                     success.getAndIncrement();
                 } catch (Exception e) {
+                    log.error("CAS同步用户出错：" + e.getMessage());
                     error.getAndIncrement();
                 }
             }

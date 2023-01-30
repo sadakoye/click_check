@@ -3,6 +3,7 @@ package com.check.bus.controller;
 import com.check.bus.pojo.dto.GasStationAddDto;
 import com.check.bus.pojo.dto.GasStationDto;
 import com.check.bus.pojo.dto.GasStationUpdateDto;
+import com.check.bus.pojo.vo.GasStationExamineStatisticsVo;
 import com.check.bus.pojo.vo.GasStationStatisticsVo;
 import com.check.bus.pojo.vo.GasStationVo;
 import com.check.bus.service.GasStationService;
@@ -38,7 +39,7 @@ public class GasStationController {
      * @return Result
      * @author zzc
      */
-    @PreAuthorize("hasAnyAuthority('GasStation:list') OR hasAnyAuthority('Admin')")
+    //@PreAuthorize("hasAnyAuthority('GasStation:list') OR hasAnyAuthority('Admin')")
     @ApiOperation(value = "列表查询")
     @PostMapping("/list")
     public Result<PageInfo<GasStationVo>> list(@RequestBody GasStationDto dto) {
@@ -118,7 +119,7 @@ public class GasStationController {
     /**
      * 获取选中状态
      *
-     * @return Result<List<Long>>
+     * @return Result<List < Long>>
      * @author zzc
      */
     @PreAuthorize("hasAnyAuthority('GasStation:getPick') OR hasAnyAuthority('Admin')")
@@ -169,5 +170,19 @@ public class GasStationController {
     @PostMapping("/statistics")
     public Result<List<GasStationStatisticsVo>> statistics(@RequestBody @ApiParam("地区code, 传00查全部") String code) {
         return service.statistics(code);
+    }
+
+    /**
+     * 加油站检查状态统计
+     *
+     * @param code 区code
+     * @return Result
+     * @author zzc
+     */
+    @PreAuthorize("hasAnyAuthority('GasStation:statistics') OR hasAnyAuthority('Admin')")
+    @ApiOperation(value = "加油站检查状态统计")
+    @PostMapping("/examineStatistics")
+    public Result<List<GasStationExamineStatisticsVo>> examineStatistics(@RequestBody @ApiParam("地区code, 传00查全部") String code) {
+        return service.examineStatistics(code);
     }
 }

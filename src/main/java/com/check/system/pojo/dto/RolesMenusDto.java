@@ -12,9 +12,9 @@ import javax.validation.constraints.NotNull;
 @Api("菜单角色关联类")
 public class RolesMenusDto {
 
-  @NotNull
-  private long menuCode;
-  @NotNull
-  private long roleCode;
+    @NotNull
+    private long menuCode;
+    @NotNull
+    private long roleCode;
 
 }

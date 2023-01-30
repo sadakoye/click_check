@@ -39,4 +39,17 @@ public interface GasStationMapper extends BaseMapper<GasStation> {
             "GROUP BY BRAND " +
             "</script> ")
     List<GasStationStatisticsVo> statistics(@Param("code") String code);
+
+    /**
+     * 加油站统计
+     *
+     * @param code 区code
+     * @return Integer
+     * @author zzc
+     */
+    @Select("<script> " +
+            "SELECT COUNT(*) FROM t_gas_station g LEFT JOIN t_gas_station_examine ge ON g.CODE = ge.GAS_STATION_CODE WHERE ge.ID IS NULL AND g.IS_DELETE = '0' " +
+            "<if test='code != null'> AND g.DISTRICT_CODE = #{code} </if>" +
+            "</script> ")
+    Integer examineStatistics(String code);
 }

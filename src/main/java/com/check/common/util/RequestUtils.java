@@ -18,7 +18,7 @@ public class RequestUtils {
         HttpServletRequest request = getRequest();
         if (request != null) {
             return getIp(request);
-        }else {
+        } else {
             return null;
         }
     }
@@ -45,7 +45,7 @@ public class RequestUtils {
     public static HttpServletResponse getResponse() {
         ServletRequestAttributes servletRequestAttributes =
                 (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        if (servletRequestAttributes != null){
+        if (servletRequestAttributes != null) {
             return servletRequestAttributes.getResponse();
         }
         return null;
@@ -54,7 +54,7 @@ public class RequestUtils {
     public static HttpServletRequest getRequest() {
         ServletRequestAttributes servletRequestAttributes =
                 (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        if (servletRequestAttributes != null){
+        if (servletRequestAttributes != null) {
             return servletRequestAttributes.getRequest();
         }
         return null;

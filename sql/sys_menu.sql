@@ -11,7 +11,7 @@
  Target Server Version : 80019
  File Encoding         : 65001
 
- Date: 07/11/2022 15:41:18
+ Date: 30/01/2023 16:11:22
 */
 
 SET NAMES utf8mb4;
@@ -22,8 +22,9 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_menu`;
 CREATE TABLE `sys_menu`  (
-  `menu_id` bigint NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `pid` bigint NULL DEFAULT NULL COMMENT '上级菜单ID',
+  `id` int NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `code` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'code',
+  `p_code` int NULL DEFAULT NULL COMMENT '上级菜单CODE',
   `sub_count` int NULL DEFAULT 0 COMMENT '子菜单数目',
   `type` int NULL DEFAULT NULL COMMENT '菜单类型',
   `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '菜单标题',
@@ -38,14 +39,15 @@ CREATE TABLE `sys_menu`  (
   `permission` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '权限',
   `create_by` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建者',
   `update_by` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '更新者',
-  `create_time` datetime NULL DEFAULT NULL COMMENT '创建日期',
-  `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
-  `code` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'code',
-  PRIMARY KEY (`menu_id`) USING BTREE,
+  `create_time` datetime NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建日期',
+  `update_time` datetime NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `cas_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'casId',
+  `IS_DELETE` int NOT NULL DEFAULT 0 COMMENT '是否删除',
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE INDEX `menu_code`(`code` ASC) USING BTREE,
   UNIQUE INDEX `uniq_title`(`title` ASC) USING BTREE,
   UNIQUE INDEX `uniq_name`(`name` ASC) USING BTREE,
-  INDEX `inx_pid`(`pid` ASC) USING BTREE,
-  UNIQUE INDEX `menu_code`(`code` ASC) USING BTREE
+  INDEX `inx_pid`(`p_code` ASC) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 155 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统菜单' ROW_FORMAT = DYNAMIC;
 
 SET FOREIGN_KEY_CHECKS = 1;
