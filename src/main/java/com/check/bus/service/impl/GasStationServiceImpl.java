@@ -22,6 +22,7 @@ import com.check.security.pojo.bean.User;
 import com.check.security.utils.JwtUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -61,6 +62,9 @@ public class GasStationServiceImpl extends ServiceImpl<GasStationMapper, GasStat
         BeanUtils.copyProperties(dto, bean);
         QueryWrapper<GasStation> queryWrapper = DataUtils.query(bean, dto, vo);
         PageHelper.startPage(dto.getPageNum(), dto.getPageSize());
+        if (StringUtils.isNotBlank(dto.getDistrictCode())){
+            queryWrapper.and(i -> i.eq("DISTRICT_CODE", dto.getDistrictCode()));
+        }
         List<GasStation> list = list(queryWrapper);
         PageInfo<GasStationVo> page = DataUtils.getPageInfo(list, vo.getClass());
 

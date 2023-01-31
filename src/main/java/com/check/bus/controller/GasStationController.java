@@ -39,7 +39,6 @@ public class GasStationController {
      * @return Result
      * @author zzc
      */
-    //@PreAuthorize("hasAnyAuthority('GasStation:list') OR hasAnyAuthority('Admin')")
     @ApiOperation(value = "列表查询")
     @PostMapping("/list")
     public Result<PageInfo<GasStationVo>> list(@RequestBody GasStationDto dto) {
