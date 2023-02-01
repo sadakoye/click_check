@@ -14,6 +14,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -89,18 +90,19 @@ public class UserController {
     /**
      * 获取单点用户信息
      *
+     * @param response    HttpServletResponse
      * @param hidName     用户名
      * @param hidUserId   用户id
      * @param hidUserType 用户类型（1-企业；2-个人）
      * @param cardid      身份证号码
      * @param hidInfo     用户信息（base64 加密）
-     * @return Result
+     * @return String
      * @author zzc
      */
     @PreAuthorize("hasAnyAuthority('User:info') OR hasAnyAuthority('Admin')")
     @ApiOperation(value = "获取单点用户信息")
-    @PostMapping(value = "/info")
-    public Result<Object> info(String hidName, String hidUserId, String hidUserType, String cardid, String hidInfo) {
-        return service.info(hidName, hidUserId, hidUserType, cardid, hidInfo);
+    @RequestMapping(value = "/info")
+    public Result<Object> info(HttpServletResponse response, String hidName, String hidUserId, String hidUserType, String cardid, String hidInfo) {
+        return service.info(response, hidName, hidUserId, hidUserType, cardid, hidInfo);
     }
 }

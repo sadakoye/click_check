@@ -24,4 +24,5 @@ public class CasConfig {
     String appId;
     String appKey;
     String urlHead;
+    String homePage;
 }

@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * 测试
@@ -61,6 +63,22 @@ public class TestController {
     @PreAuthorize("hasAnyAuthority('add')")
     public Result<String> add() {
         return Result.success("操作成功");
+    }
+
+    /**
+     * 跳转测试
+     *
+     * @return String
+     * @author zzc
+     */
+    @GetMapping("/redirect")
+    public String redirect(HttpServletResponse response) {
+        try {
+            response.sendRedirect("https://www.baidu.com");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "redirect:www.baidu.com";
     }
 
 }

@@ -12,7 +12,7 @@ spring:
       validationQuery: SELECT 1
       testWhileIdle: true
   redis:
-    database: 5
+    database: 8
     host: 172.31.129.103
     port: 6379
 # 生成token的相关配置
@@ -37,6 +37,23 @@ pagehelper:
   params: count=countSql
 logging:
   config: classpath:logback-boot.xml
+# 自定义配置
+config:
+  cas:
+    #CAS服务标识
+    service: http://10.201.62.2:6889/cas/login?service=http%3A%2F%2F10.194.144.132%3A8082%2FyjxtServer%2Fcas%2Flogin
+    #请求验证地址
+    url: http://127.0.0.1:8002/yjxtServer
+    casUrl: http://127.0.0.1:8002/yjxtServer
+    #验证通过跳转页面（跳转到首页或者中转页面）
+    loginIp: 127.0.0.1
+    loginSuccess: http://${cas.loginIp}:5500/yjxt_web/pages/main.html
+    #验证失败跳转页面(回到门户登录页面)
+    loginError: http://${cas.loginIp}:5500/yjxt_web/pages/login.html
+    appId: demo
+    appKey: 123456789
+    urlHead: /sjj-tacs
+    homePage: www.baidu.com
 
 
 

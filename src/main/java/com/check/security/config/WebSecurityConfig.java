@@ -74,6 +74,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/favicon.ico").permitAll()
                 //加油站查询不用登录
                 .antMatchers("/gasStation/list").permitAll()
+                //测试
+                .antMatchers("/test/redirect").permitAll()
                 //所有请求都需要拦截
                 .anyRequest()
                 .authenticated();

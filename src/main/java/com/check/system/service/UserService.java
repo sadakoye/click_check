@@ -9,6 +9,7 @@ import com.check.system.pojo.dto.UserUpdateDto;
 import com.check.system.pojo.vo.UserVo;
 import com.github.pagehelper.PageInfo;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -55,13 +56,14 @@ public interface UserService extends IService<SysUser> {
     /**
      * 获取单点用户信息
      *
+     * @param response    HttpServletResponse
      * @param hidName     用户名
      * @param hidUserId   用户id
      * @param hidUserType 用户类型（1-企业；2-个人）
      * @param cardId      身份证号码
      * @param hidInfo     用户信息（base64 加密）
-     * @return Result
+     * @return String
      * @author zzc
      */
-    Result<Object> info(String hidName, String hidUserId, String hidUserType, String cardId, String hidInfo);
+    Result<Object> info(HttpServletResponse response, String hidName, String hidUserId, String hidUserType, String cardId, String hidInfo);
 }
