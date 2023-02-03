@@ -51,5 +51,5 @@ public interface GasStationMapper extends BaseMapper<GasStation> {
             "SELECT COUNT(*) FROM t_gas_station g LEFT JOIN t_gas_station_examine ge ON g.CODE = ge.GAS_STATION_CODE WHERE ge.ID IS NULL AND g.IS_DELETE = '0' " +
             "<if test='code != null'> AND g.DISTRICT_CODE = #{code} </if>" +
             "</script> ")
-    Integer examineStatistics(String code);
+    Integer examineStatistics(@Param("code") String code);
 }

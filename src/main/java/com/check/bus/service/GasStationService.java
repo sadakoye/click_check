@@ -2,6 +2,7 @@ package com.check.bus.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.check.bus.pojo.GasStation;
+import com.check.bus.pojo.dto.DistrictDto;
 import com.check.bus.pojo.dto.GasStationAddDto;
 import com.check.bus.pojo.dto.GasStationDto;
 import com.check.bus.pojo.dto.GasStationUpdateDto;
@@ -101,18 +102,18 @@ public interface GasStationService extends IService<GasStation> {
     /**
      * 加油站统计
      *
-     * @param code 区code
+     * @param dto 区code
      * @return Result
      * @author zzc
      */
-    Result<List<GasStationStatisticsVo>> statistics(String code);
+    Result<List<GasStationStatisticsVo>> statistics(DistrictDto dto);
 
     /**
      * 加油站检查状态统计
      *
-     * @param code 区code
+     * @param dto 区code
      * @return Result
      * @author zzc
      */
-    Result<List<GasStationExamineStatisticsVo>> examineStatistics(String code);
+    Result<List<GasStationExamineStatisticsVo>> examineStatistics(DistrictDto dto);
 }

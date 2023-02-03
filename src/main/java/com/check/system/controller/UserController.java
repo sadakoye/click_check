@@ -99,7 +99,6 @@ public class UserController {
      * @return String
      * @author zzc
      */
-    @PreAuthorize("hasAnyAuthority('User:info') OR hasAnyAuthority('Admin')")
     @ApiOperation(value = "获取单点用户信息")
     @RequestMapping(value = "/info")
     public Result<Object> info(HttpServletResponse response, String hidName, String hidUserId, String hidUserType, String cardid, String hidInfo) {

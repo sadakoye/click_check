@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.check.bus.mapper.GasStationMapper;
 import com.check.bus.pojo.GasStation;
+import com.check.bus.pojo.dto.DistrictDto;
 import com.check.bus.pojo.dto.GasStationAddDto;
 import com.check.bus.pojo.dto.GasStationDto;
 import com.check.bus.pojo.dto.GasStationUpdateDto;
@@ -250,12 +251,13 @@ public class GasStationServiceImpl extends ServiceImpl<GasStationMapper, GasStat
     /**
      * 加油站统计
      *
-     * @param code 区code
+     * @param dto 区code
      * @return Result
      * @author zzc
      */
     @Override
-    public Result<List<GasStationStatisticsVo>> statistics(String code) {
+    public Result<List<GasStationStatisticsVo>> statistics(DistrictDto dto) {
+        String code = dto.getCode();
         if (ConstantString.ZERO_ZERO.equals(code)) {
             code = null;
         }
@@ -266,12 +268,13 @@ public class GasStationServiceImpl extends ServiceImpl<GasStationMapper, GasStat
     /**
      * 加油站检查状态统计
      *
-     * @param code 区code
+     * @param dto 区code
      * @return Result
      * @author zzc
      */
     @Override
-    public Result<List<GasStationExamineStatisticsVo>> examineStatistics(String code) {
+    public Result<List<GasStationExamineStatisticsVo>> examineStatistics(DistrictDto dto) {
+        String code = dto.getCode();
         if (ConstantString.ZERO_ZERO.equals(code)) {
             code = null;
         }
@@ -283,6 +286,7 @@ public class GasStationServiceImpl extends ServiceImpl<GasStationMapper, GasStat
         list.add(not);
         LambdaQueryWrapper<GasStation> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(GasStation::getIsDelete, "0");
+        queryWrapper.eq(GasStation::getDistrictCode, code);
         Integer integer = gasStationMapper.selectCount(queryWrapper);
         GasStationExamineStatisticsVo is = GasStationExamineStatisticsVo.builder()
                 .examine("1").count(integer - notInt)

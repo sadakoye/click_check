@@ -1,5 +1,6 @@
 package com.check.bus.controller;
 
+import com.check.bus.pojo.dto.DistrictDto;
 import com.check.bus.pojo.dto.GasStationAddDto;
 import com.check.bus.pojo.dto.GasStationDto;
 import com.check.bus.pojo.dto.GasStationUpdateDto;
@@ -160,28 +161,29 @@ public class GasStationController {
     /**
      * 加油站品牌数量统计
      *
-     * @param code 区code
+     * @param dto 区code
      * @return Result
      * @author zzc
      */
     @PreAuthorize("hasAnyAuthority('GasStation:statistics') OR hasAnyAuthority('Admin')")
     @ApiOperation(value = "加油站品牌数量统计")
-    @PostMapping("/statistics")
-    public Result<List<GasStationStatisticsVo>> statistics(@RequestBody @ApiParam("地区code, 传00查全部") String code) {
-        return service.statistics(code);
+    @PostMapping(value = "/statistics", produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public Result<List<GasStationStatisticsVo>> statistics(@RequestBody @Valid DistrictDto dto) {
+        return service.statistics(dto);
     }
 
     /**
      * 加油站检查状态统计
      *
-     * @param code 区code
+     * @param dto 区code
      * @return Result
      * @author zzc
      */
     @PreAuthorize("hasAnyAuthority('GasStation:statistics') OR hasAnyAuthority('Admin')")
     @ApiOperation(value = "加油站检查状态统计")
     @PostMapping("/examineStatistics")
-    public Result<List<GasStationExamineStatisticsVo>> examineStatistics(@RequestBody @ApiParam("地区code, 传00查全部") String code) {
-        return service.examineStatistics(code);
+    public Result<List<GasStationExamineStatisticsVo>> examineStatistics(@RequestBody @Valid DistrictDto dto) {
+        return service.examineStatistics(dto);
     }
 }
