@@ -141,6 +141,9 @@ public class UserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impleme
         if (StringUtils.isBlank(hidName)) {
             throw ConstantException.SYSTEM_USER_HID_NAME_NULL;
         }
+        if (StringUtils.isBlank(cardId)){
+            throw ConstantException.SYSTEM_USER_ID_CARD_NULL;
+        }
         LambdaQueryWrapper<SysUser> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(SysUser::getUsername, cardId);
         List<SysUser> list = list(queryWrapper);

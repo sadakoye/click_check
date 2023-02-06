@@ -21,6 +21,7 @@ public interface ConstantException {
     CommonException SYSTEM_USER_HID_NAME_NULL = new CommonException(10001, "hidName不能为空");
     CommonException SYSTEM_USER_RE = new CommonException(10002, "已有此用户");
     CommonException SYSTEM_USER_NULL = new CommonException(10003, "查询不到用户");
+    CommonException SYSTEM_USER_ID_CARD_NULL = new CommonException(10004, "参数异常");
 
     /**
      * GasStation 加油站模块
