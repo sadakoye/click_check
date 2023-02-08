@@ -11,17 +11,17 @@
  Target Server Version : 80019
  File Encoding         : 65001
 
- Date: 30/01/2023 16:11:52
+ Date: 08/02/2023 16:40:36
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
--- Table structure for sys_users_roles
+-- Table structure for t_sys_users_roles
 -- ----------------------------
-DROP TABLE IF EXISTS `sys_users_roles`;
-CREATE TABLE `sys_users_roles`  (
+DROP TABLE IF EXISTS `t_sys_users_roles`;
+CREATE TABLE `t_sys_users_roles`  (
   `user_code` bigint NOT NULL COMMENT '用户ID',
   `role_code` bigint NOT NULL COMMENT '角色ID',
   PRIMARY KEY (`user_code`, `role_code`) USING BTREE,

@@ -18,8 +18,8 @@ public class MenuDto extends BaseDto {
 
     @ApiModelProperty("ID")
     private Long id;
-    @ApiModelProperty("上级菜单ID")
-    private Long pid;
+    @ApiModelProperty("上级菜单CODE")
+    private Long pCode;
     @ApiModelProperty("菜单类型")
     private Long type;
     @ApiModelProperty("菜单标题")

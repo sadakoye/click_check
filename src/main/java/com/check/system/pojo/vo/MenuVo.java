@@ -19,8 +19,8 @@ public class MenuVo extends BaseVo {
 
     @ApiModelProperty("ID")
     private Long id;
-    @ApiModelProperty("上级菜单ID")
-    private Long pid;
+    @ApiModelProperty("上级菜单CODE")
+    private Long pCode;
     @ApiModelProperty("子菜单数目")
     private Long subCount;
     @ApiModelProperty("菜单类型")

@@ -22,7 +22,7 @@ public interface SysMenuMapper extends BaseMapper<SysMenu> {
      * @return List<MenuDto>
      * @author zzc
      */
-    @Select("SELECT * FROM SYS_MENU m LEFT JOIN sys_roles_menus rm ON m.code = rm.menu_code LEFT JOIN \n" +
-            "sys_users_roles ur ON rm.role_code = ur.role_code WHERE ur.user_code = #{code}")
+    @Select("SELECT * FROM T_SYS_MENU m LEFT JOIN T_sys_roles_menus rm ON m.code = rm.menu_code LEFT JOIN \n" +
+            "T_sys_users_roles ur ON rm.role_code = ur.role_code WHERE ur.user_code = #{code}")
     List<MenuVo> getUserMenus(String code);
 }

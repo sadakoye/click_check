@@ -11,17 +11,17 @@
  Target Server Version : 80019
  File Encoding         : 65001
 
- Date: 30/01/2023 16:11:31
+ Date: 08/02/2023 16:40:17
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
--- Table structure for sys_role
+-- Table structure for t_sys_role
 -- ----------------------------
-DROP TABLE IF EXISTS `sys_role`;
-CREATE TABLE `sys_role`  (
+DROP TABLE IF EXISTS `t_sys_role`;
+CREATE TABLE `t_sys_role`  (
   `id` int NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `code` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'code',
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '名称',
@@ -38,6 +38,6 @@ CREATE TABLE `sys_role`  (
   UNIQUE INDEX `uniq_name`(`name` ASC) USING BTREE,
   UNIQUE INDEX `role_code`(`code` ASC) USING BTREE,
   INDEX `role_name_index`(`name` ASC) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色表' ROW_FORMAT = DYNAMIC;
 
 SET FOREIGN_KEY_CHECKS = 1;

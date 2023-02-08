@@ -11,17 +11,17 @@
  Target Server Version : 80019
  File Encoding         : 65001
 
- Date: 30/01/2023 16:11:06
+ Date: 08/02/2023 16:39:54
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
--- Table structure for sys_dept
+-- Table structure for t_sys_dept
 -- ----------------------------
-DROP TABLE IF EXISTS `sys_dept`;
-CREATE TABLE `sys_dept`  (
+DROP TABLE IF EXISTS `t_sys_dept`;
+CREATE TABLE `t_sys_dept`  (
   `ID` int NOT NULL AUTO_INCREMENT COMMENT 'id',
   `CODE` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT 'CODE',
   `PID` int NULL DEFAULT NULL COMMENT '父id',
@@ -34,6 +34,6 @@ CREATE TABLE `sys_dept`  (
   `UPDATE_TIME` datetime NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `IS_DELETE` int NULL DEFAULT NULL COMMENT '是否删除',
   PRIMARY KEY (`ID`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 SET FOREIGN_KEY_CHECKS = 1;

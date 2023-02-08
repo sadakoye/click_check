@@ -18,8 +18,8 @@ public class MenuUpdateDto {
     @ApiModelProperty(value = "ID", required = true)
     private Long id;
     @NotNull
-    @ApiModelProperty(value = "上级菜单ID", required = true)
-    private Long pid;
+    @ApiModelProperty(value = "上级菜单CODE", required = true)
+    private Long pCode;
     @ApiModelProperty("子菜单数目")
     private Long subCount;
     @NotNull

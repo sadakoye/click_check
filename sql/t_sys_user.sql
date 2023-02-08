@@ -11,17 +11,17 @@
  Target Server Version : 80019
  File Encoding         : 65001
 
- Date: 30/01/2023 16:11:45
+ Date: 08/02/2023 16:40:28
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
--- Table structure for sys_user
+-- Table structure for t_sys_user
 -- ----------------------------
-DROP TABLE IF EXISTS `sys_user`;
-CREATE TABLE `sys_user`  (
+DROP TABLE IF EXISTS `t_sys_user`;
+CREATE TABLE `t_sys_user`  (
   `id` int NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `code` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'code',
   `dept_code` int NULL DEFAULT NULL COMMENT '部门code',

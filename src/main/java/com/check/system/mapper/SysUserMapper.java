@@ -20,7 +20,7 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
      * @return user
      * @author zzc
      */
-    @Select("SELECT * FROM SYS_USER WHERE USERNAME = #{username}")
+    @Select("SELECT * FROM T_SYS_USER WHERE USERNAME = #{username}")
     User getSecurityUser(String username);
 
     /**
@@ -29,6 +29,6 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
      * @return String
      * @author zzc
      */
-    @Select("SELECT MAX(code) FROM SYS_USER")
+    @Select("SELECT MAX(code) FROM T_SYS_USER")
     String getMaxCode();
 }

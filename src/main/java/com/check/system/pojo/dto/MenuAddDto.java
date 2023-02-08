@@ -15,8 +15,8 @@ import javax.validation.constraints.NotNull;
 public class MenuAddDto {
 
     @NotNull
-    @ApiModelProperty(value = "上级菜单ID", required = true)
-    private Long pid;
+    @ApiModelProperty(value = "上级菜单CODE", required = true)
+    private Long pCode;
     @NotNull
     @ApiModelProperty(value = "菜单类型", required = true)
     private Long type;

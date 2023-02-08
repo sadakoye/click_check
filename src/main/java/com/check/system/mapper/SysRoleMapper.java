@@ -22,6 +22,6 @@ public interface SysRoleMapper extends BaseMapper<SysRole> {
      * @return List<RoleDto>
      * @author zzc
      */
-    @Select("SELECT r.* FROM sys_role r LEFT JOIN sys_users_roles ur ON r.code = ur.role_code WHERE ur.user_code = #{code}")
+    @Select("SELECT r.* FROM T_sys_role r LEFT JOIN T_sys_users_roles ur ON r.code = ur.role_code WHERE ur.user_code = #{code}")
     List<RoleVo> getUserRoles(String code);
 }

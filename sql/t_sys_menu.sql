@@ -11,17 +11,17 @@
  Target Server Version : 80019
  File Encoding         : 65001
 
- Date: 30/01/2023 16:11:22
+ Date: 08/02/2023 16:40:10
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
--- Table structure for sys_menu
+-- Table structure for t_sys_menu
 -- ----------------------------
-DROP TABLE IF EXISTS `sys_menu`;
-CREATE TABLE `sys_menu`  (
+DROP TABLE IF EXISTS `t_sys_menu`;
+CREATE TABLE `t_sys_menu`  (
   `id` int NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `code` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'code',
   `p_code` int NULL DEFAULT NULL COMMENT '上级菜单CODE',
@@ -48,6 +48,6 @@ CREATE TABLE `sys_menu`  (
   UNIQUE INDEX `uniq_title`(`title` ASC) USING BTREE,
   UNIQUE INDEX `uniq_name`(`name` ASC) USING BTREE,
   INDEX `inx_pid`(`p_code` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 155 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统菜单' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 156 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统菜单' ROW_FORMAT = DYNAMIC;
 
 SET FOREIGN_KEY_CHECKS = 1;
