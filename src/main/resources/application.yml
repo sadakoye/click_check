@@ -53,7 +53,7 @@ config:
     appId: demo
     appKey: 123456789
     urlHead: /sjj-tacs
-    homePage: http://10.21.5.186:8090/logincontrols/login?ssqdbm=事项编码
+    homePage: http://172.31.127.122:5173/index
 
 
 
