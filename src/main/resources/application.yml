@@ -37,6 +37,8 @@ pagehelper:
   params: count=countSql
 logging:
   config: classpath:logback-boot.xml
+knife4j:
+  enable: true
 # 自定义配置
 config:
   cas:

@@ -1,5 +1,6 @@
 package com.check.common.config;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -22,6 +23,7 @@ import java.util.List;
  */
 @Configuration
 @EnableSwagger2WebMvc
+@ConditionalOnProperty(name = "knife4j.enable", havingValue = "true")
 public class Knife4jConfig {
 
     @Bean(value = "systemApi")
@@ -69,6 +71,31 @@ public class Knife4jConfig {
                 .select()
                 //指定扫描的包路径
                 .apis(RequestHandlerSelectors.basePackage("com.check.bus.controller"))
+                .paths(PathSelectors.any())
+                .build()
+                .globalOperationParameters(pars);
+    }
+
+    @Bean(value = "securityApi")
+    public Docket securityApi(Environment environment) {
+        // 添加接口请求头参数配置 没有的话 可以忽略
+        ParameterBuilder tokenPar = new ParameterBuilder();
+        List<Parameter> pars = new ArrayList<>();
+        tokenPar.name("Authorization")
+                .description("token")
+                .defaultValue("")
+                .modelRef(new ModelRef("string"))
+                .parameterType("header").required(false).build();
+        pars.add(tokenPar.build());
+        return new Docket(DocumentationType.SWAGGER_2)
+                .apiInfo(apiInfo())
+                //是否启动swagger 默认启动
+                .enable(true)
+                //所在分组
+                .groupName("security")
+                .select()
+                //指定扫描的包路径
+                .apis(RequestHandlerSelectors.basePackage("com.check.security.controller"))
                 .paths(PathSelectors.any())
                 .build()
                 .globalOperationParameters(pars);
