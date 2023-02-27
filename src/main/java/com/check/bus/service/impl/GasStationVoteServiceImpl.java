@@ -172,12 +172,12 @@ public class GasStationVoteServiceImpl extends ServiceImpl<GasStationVoteMapper,
                 if (gasStationVote.getGasStationCode().equals(s)) {
                     deleteList.add(s);
                 }
-                codeList.removeAll(deleteList);
             });
+            codeList.removeAll(deleteList);
         });
 
-        if (oldGasStationVoteList.size() + codeList.size() > ConstantInteger.THREE) {
-            throw ConstantException.GAS_STATION_VOTE_COUNT_GT_THREE;
+        if (oldGasStationVoteList.size() > ConstantInteger.ZERO) {
+            throw ConstantException.GAS_STATION_VOTE_GT_ZERO;
         }
 
         LambdaQueryWrapper<GasStation> queryWrapper = new LambdaQueryWrapper<>();
@@ -188,15 +188,18 @@ public class GasStationVoteServiceImpl extends ServiceImpl<GasStationVoteMapper,
             gasMap.put(gasStation.getCode(), gasStation);
         });
 
+        String ip = RequestUtils.getIp();
+
         codeList.parallelStream()
                 .filter(gasMap::containsKey)
                 .map(s -> {
                     GasStation gasStation = gasMap.get(s);
                     return GasStationVote.builder()
                             .districtCode(gasStation.getDistrictCode())
-                            .gasStationName(gasStation.getContactsName())
+                            .districtName(gasStation.getDistrictName())
+                            .voterIdCard(sysUser.getIdCard())
                             .voterName(sysUser.getNickName()).voterPhone(sysUser.getPhone())
-                            .voterIp(RequestUtils.getIp()).voteTime(date).gasStationCode(s)
+                            .voterIp(ip).voteTime(date).gasStationCode(s)
                             .gasStationName(gasStation.getName())
                             .build();
                 })

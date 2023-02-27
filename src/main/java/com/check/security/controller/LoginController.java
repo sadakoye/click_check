@@ -76,7 +76,7 @@ public class LoginController {
      */
     @ApiOperation(value = "CAS-门户登录")
     @RequestMapping("/cas/login")
-    public String casLogin(String ticket,
+    public Result<Object> casLogin(String ticket,
                            HttpServletRequest request,
                            HttpServletResponse response) {
         return service.casLogin(ticket, request, response);

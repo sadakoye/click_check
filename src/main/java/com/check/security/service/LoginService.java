@@ -40,7 +40,7 @@ public interface LoginService {
      * @return String
      * @author zzc
      */
-    String casLogin(String ticket, HttpServletRequest request, HttpServletResponse response);
+    Result<Object> casLogin(String ticket, HttpServletRequest request, HttpServletResponse response);
 
     /**
      * CAS-从门户系统同步用户

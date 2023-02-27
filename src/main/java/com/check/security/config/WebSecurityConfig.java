@@ -66,6 +66,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 //设置无状态登录
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 //过滤登录退出请求
+
                 .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .antMatchers("/login/**").permitAll()

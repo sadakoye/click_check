@@ -28,6 +28,7 @@ import javax.annotation.Resource;
 import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.net.URLEncoder;
@@ -95,7 +96,7 @@ public class LoginServiceImpl implements LoginService {
      * @author zzc
      */
     @Override
-    public String casLogin(String ticket, HttpServletRequest request, HttpServletResponse response) {
+    public Result<Object> casLogin(String ticket, HttpServletRequest request, HttpServletResponse response) {
         log.info("cas登录：ticket=" + ticket);
 
         String casUrl = casConfig.getCasUrl();
@@ -106,7 +107,13 @@ public class LoginServiceImpl implements LoginService {
 
         //未登录
         if (ticket == null) {
-            return "redirect:" + casUrl + "/cas/login?service=" + service;
+            try {
+                response.sendRedirect(casUrl +
+                        "/cas/login?service=" + service);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return Result.error("未登录");
         }
 
         StringBuilder sb = new StringBuilder(casUrl);
@@ -127,30 +134,39 @@ public class LoginServiceImpl implements LoginService {
                     //根据用户登录请求 获得code
                     User user = (User) jwtUserService.loadUserByUsername(casName);
                     if (null == user) {
-                        return "redirect:" + loginError + "?code=400&description=" + URLEncoder.encode("用户不存在", "UTF-8");
+                        response.sendRedirect(loginError + "?code=400&description=" +
+                                URLEncoder.encode("用户不存在", "UTF-8"));
+                        return Result.error("用户不存在");
                     }
                     String token = user.getToken();
 
                     response.setHeader("Authorization", token);
-
+                    //验证通过跳转页面
+                    log.info("cas验证通过，登录成功");
+                    response.sendRedirect(casConfig.getHomePage() +
+                            "?token=" + user.getToken());
                 }
-                //验证通过跳转页面
-                log.info("cas验证通过，登录成功");
-                return "redirect:" + loginSuccess;
+                return Result.success("登陆成功");
             } else {
                 //cas验证失败
                 Element failureObj = root.element("authenticationFailure");
                 String code = failureObj.attributeValue("code");
                 String description = failureObj.getText();
                 log.error("cas验证失败：code=" + code + "description=" + description);
-                return "redirect:" + loginError + "?code=" + code + "&description=" + description;
+                response.sendRedirect(loginError + "?code=" + code + "&description=" + description);
+                return Result.error("cas验证失败code=" + code+ " description=" + description);
             }
         } catch (Exception e) {
             StringWriter sw = new StringWriter();
             e.printStackTrace(new PrintWriter(sw, true));
             String infoMsg = sw.toString();
             log.error("cas登录失败：" + infoMsg);
-            return "redirect:" + loginError + "?description=" + e.getMessage();
+            try {
+                response.sendRedirect(loginError + "?description=" + e.getMessage());
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+            return Result.error("cas登录失败description=" + e.getMessage());
         }
     }
 

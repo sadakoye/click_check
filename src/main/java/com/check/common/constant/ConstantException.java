@@ -33,5 +33,6 @@ public interface ConstantException {
      * GasStation 加油站投票模块
      */
     CommonException GAS_STATION_VOTE_COUNT_GT_THREE = new CommonException(10201, "七天内投票数不能超过3");
+    CommonException GAS_STATION_VOTE_GT_ZERO = new CommonException(10202, "七天内只能投一次票");
 
 }

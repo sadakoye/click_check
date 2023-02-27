@@ -109,7 +109,7 @@ public class GasStationVoteController {
      * @return Result
      * @author zzc
      */
-    @PreAuthorize("hasAnyAuthority('GasStationVote:vote') OR hasAnyAuthority('Admin')")
+    //@PreAuthorize("hasAnyAuthority('GasStationVote:vote') OR hasAnyAuthority('Admin')")
     @ApiOperation(value = "投票")
     @PostMapping("/vote")
     public Result<Object> vote(@RequestBody @NotNull @ApiParam("加油站code集合") List<String> codeList) {

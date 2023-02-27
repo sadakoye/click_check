@@ -286,7 +286,9 @@ public class GasStationServiceImpl extends ServiceImpl<GasStationMapper, GasStat
         list.add(not);
         LambdaQueryWrapper<GasStation> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(GasStation::getIsDelete, "0");
-        queryWrapper.eq(GasStation::getDistrictCode, code);
+        if (code != null) {
+            queryWrapper.eq(GasStation::getDistrictCode, code);
+        }
         Integer integer = gasStationMapper.selectCount(queryWrapper);
         GasStationExamineStatisticsVo is = GasStationExamineStatisticsVo.builder()
                 .examine("1").count(integer - notInt)

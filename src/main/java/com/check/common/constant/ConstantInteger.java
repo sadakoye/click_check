@@ -7,6 +7,7 @@ package com.check.common.constant;
  */
 public interface ConstantInteger {
 
+    Integer ZERO = 0;
     Integer THREE = 3;
 
 }

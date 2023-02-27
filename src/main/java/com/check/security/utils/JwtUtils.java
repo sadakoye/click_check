@@ -2,9 +2,8 @@ package com.check.security.utils;
 
 import com.check.security.config.JwtProperties;
 import com.check.security.pojo.bean.User;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -20,6 +19,7 @@ import java.util.Map;
  * @author zzc
  */
 @Component
+@Slf4j
 public class JwtUtils {
 
     @Resource
@@ -56,12 +56,20 @@ public class JwtUtils {
      */
     public String analysisToken(String token) {
         if (StringUtils.isNotBlank(token)) {
-            Claims body = Jwts.parser()
-                    .setSigningKey(jwtProperties.getBase64Secret().getBytes(StandardCharsets.UTF_8))
-                    .parseClaimsJws(token)
-                    .getBody();
+            Claims body = null;
+            try {
+                body = Jwts.parser()
+                        .setSigningKey(jwtProperties.getBase64Secret()
+                                .getBytes(StandardCharsets.UTF_8))
+                        .parseClaimsJws(token)
+                        .getBody();
+            } catch (Exception e) {
+                log.error(e.getMessage());
+            }
 
-            return body.get("username").toString();
+            if (body != null) {
+                return body.get("username").toString();
+            }
         }
         return null;
     }

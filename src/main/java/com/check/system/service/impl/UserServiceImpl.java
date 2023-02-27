@@ -33,6 +33,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Base64;
 import java.util.List;
 
@@ -196,11 +197,13 @@ public class UserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impleme
 
         try {
             response.sendRedirect(casConfig.getHomePage() +
-                    "?token=" + user.getToken());
+                    "?token=" + user.getToken() + "&userName=" + URLEncoder.encode(user.getNickName(), "UTF-8") +
+                    "&idCard=" + user.getIdCard() + "&phone=" + user.getPhone());
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         return Result.success();
     }
+
 }
